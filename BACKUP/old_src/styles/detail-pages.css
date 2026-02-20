@@ -1,0 +1,429 @@
+/* ═══════════════════════════════════════════════════════════════
+   DETAIL PAGES - ALBUM & ARTIST & PLAYLIST
+   Clean, responsive, modern design
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Album Detail ─────────────────────────────────────────────── */
+.album-detail-root {
+    display: flex;
+    min-height: 100%;
+    background: #0a0a0a;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.album-detail-photo {
+    flex: 0 0 42%;
+    min-width: 350px;
+    position: relative;
+}
+
+.album-detail-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.album-detail-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 40px 60px;
+    position: relative;
+    z-index: 1;
+}
+
+.album-detail-header {
+    margin-bottom: 32px;
+}
+
+.album-detail-title {
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 900;
+    margin-bottom: 12px;
+    line-height: 1.1;
+}
+
+.album-detail-artists {
+    font-size: 18px;
+    color: #a7a7a7;
+    margin-bottom: 8px;
+}
+
+.album-detail-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #9f9f9f;
+    margin-bottom: 24px;
+}
+
+.album-detail-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.album-detail-play-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #1db954;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.album-detail-play-btn:hover {
+    background: #1ed760;
+    transform: scale(1.05);
+}
+
+/* Track List */
+.album-track-list {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.album-track-row {
+    display: grid;
+    grid-template-columns: 40px 40px 1fr auto 40px;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.album-track-row:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.album-track-number {
+    color: #a7a7a7;
+    font-size: 14px;
+    text-align: center;
+}
+
+.album-track-title {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.album-track-duration {
+    color: #a7a7a7;
+    font-size: 14px;
+    text-align: right;
+}
+
+/* ─── Artist Detail ─────────────────────────────────────────────── */
+.artist-detail-root {
+    display: flex;
+    min-height: 100%;
+    background: #0a0a0a;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.artist-detail-photo {
+    flex: 0 0 42%;
+    min-width: 350px;
+    position: relative;
+}
+
+.artist-detail-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artist-detail-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 40px 60px;
+    position: relative;
+    z-index: 1;
+}
+
+.artist-detail-name {
+    font-size: clamp(40px, 7vw, 80px);
+    font-weight: 900;
+    margin-bottom: 16px;
+    line-height: 1;
+}
+
+.artist-detail-stats {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+    color: #a7a7a7;
+    margin-bottom: 24px;
+}
+
+.artist-detail-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+}
+
+.artist-detail-play-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #1db954;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.artist-detail-play-btn:hover {
+    background: #1ed760;
+    transform: scale(1.05);
+}
+
+.artist-detail-follow-btn {
+    padding: 12px 32px;
+    border-radius: 500px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.artist-detail-follow-btn:hover {
+    border-color: white;
+    transform: scale(1.02);
+}
+
+/* Sections */
+.artist-section {
+    margin-bottom: 48px;
+}
+
+.artist-section-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Top Tracks */
+.artist-track-row {
+    display: grid;
+    grid-template-columns: 40px 50px 1fr auto 40px;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.artist-track-row:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Albums Scroll (Horizontal natif) */
+.artist-albums-scroll {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding: 0 0 20px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.artist-albums-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.artist-albums-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.artist-albums-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.artist-albums-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.artist-album-card {
+    flex: 0 0 180px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.artist-album-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-4px);
+}
+
+.artist-album-cover {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 4px;
+    object-fit: cover;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.artist-album-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.artist-album-year {
+    color: #a7a7a7;
+    font-size: 13px;
+}
+
+/* Related Artists Scroll */
+.artist-related-scroll {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding: 0 0 20px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.artist-related-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.artist-related-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.artist-related-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.artist-related-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.artist-related-card {
+    flex: 0 0 160px;
+    text-align: center;
+    cursor: pointer;
+    padding: 16px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    transition: all 0.2s;
+}
+
+.artist-related-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-4px);
+}
+
+.artist-related-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.artist-related-name {
+    font-weight: 600;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+
+    .album-detail-photo,
+    .artist-detail-photo {
+        flex: 0 0 35%;
+        min-width: 300px;
+    }
+
+    .album-detail-content,
+    .artist-detail-content {
+        padding: 24px 28px 60px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .album-detail-root,
+    .artist-detail-root {
+        flex-direction: column;
+    }
+
+    .album-detail-photo,
+    .artist-detail-photo {
+        flex: none;
+        min-width: 100%;
+        height: 400px;
+    }
+
+    .album-track-row,
+    .artist-track-row {
+        grid-template-columns: 30px auto 1fr auto;
+        gap: 8px;
+    }
+
+    .album-track-row>div:nth-child(2),
+    .artist-track-row>div:nth-child(2) {
+        display: none;
+    }
+}
+
+/* ─── Common Back Button ─────────────────────────────────────── */
+.detail-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 500px;
+    cursor: pointer;
+    margin-bottom: 32px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.detail-back-btn:hover {
+    background: rgba(0, 0, 0, 0.6);
+    transform: scale(1.02);
+}

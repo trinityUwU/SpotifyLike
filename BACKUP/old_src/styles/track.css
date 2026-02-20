@@ -1,0 +1,79 @@
+/* ══════════════════════════════════════════════════════════
+   TRACK DETAIL
+   ══════════════════════════════════════════════════════════ */
+.track-detail {
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.track-detail__hero {
+    position: relative;
+    padding: 24px 32px 40px;
+    flex-shrink: 0;
+}
+
+.track-detail__cover {
+    width: 220px;
+    height: 220px;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+}
+
+.track-detail__title {
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.05;
+    margin-bottom: 12px;
+}
+
+.track-detail__body {
+    flex: 1;
+    padding: 32px;
+}
+
+.track-detail__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.track-detail__tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #a7a7a7;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 20px;
+    cursor: pointer;
+}
+
+.track-detail__tab--active {
+    color: white;
+    border-bottom-color: white;
+}
+
+/* ── Audio Stats ── */
+.audio-stat {
+    display: grid;
+    grid-template-columns: 100px 1fr 60px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.audio-stat__bar-wrap {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 2px;
+}
+
+.audio-stat__bar-fill {
+    height: 100%;
+    background: #1db954;
+    border-radius: 2px;
+}

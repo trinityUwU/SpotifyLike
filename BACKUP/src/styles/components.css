@@ -1,0 +1,196 @@
+/* ── Player panels ─────────────────────────────────────────── */
+.panel-overlay {
+  position: fixed;
+  bottom: calc(var(--player-height) + 8px);
+  right: 16px;
+  width: 340px;
+  max-height: 480px;
+  background: #282828;
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.panel-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #a7a7a7;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  transition: color 0.15s, background 0.15s;
+}
+.panel-close:hover {
+  color: white;
+  background: rgba(255,255,255,0.1);
+}
+
+.player-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panel-header {
+  padding: 16px 20px 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+
+.panel-scroll {
+  overflow-y: auto;
+  flex: 1;
+  padding: 8px 12px 16px;
+}
+
+.panel-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #a7a7a7;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 8px 6px;
+}
+
+/* Queue items */
+.queue-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: default;
+  transition: background 0.15s;
+}
+.queue-item:hover {
+  background: rgba(255,255,255,0.07);
+}
+.queue-item--active {
+  background: rgba(255,255,255,0.1);
+}
+
+.queue-thumb {
+  width: 38px;
+  height: 38px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #181818;
+}
+
+.queue-info {
+  flex: 1;
+  min-width: 0;
+}
+.queue-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.queue-artist {
+  font-size: 11px;
+  color: #a7a7a7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.queue-duration {
+  font-size: 11px;
+  color: #a7a7a7;
+  flex-shrink: 0;
+}
+
+/* Lyrics */
+.lyrics-scroll {
+  padding: 16px 20px;
+}
+.lyrics-line {
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.5;
+  margin-bottom: 8px;
+  transition: color 0.3s, font-size 0.2s;
+  cursor: default;
+}
+.lyrics-line--active {
+  color: white;
+  font-size: 22px;
+}
+
+/* Devices */
+.device-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.device-item:hover {
+  background: rgba(255,255,255,0.07);
+}
+.device-item--active {
+  cursor: default;
+}
+
+/* Panel icon buttons */
+.panel-btn {
+  background: none;
+  border: none;
+  color: #a7a7a7;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+.panel-btn:hover {
+  color: white;
+}
+.panel-btn--active {
+  color: #1db954;
+}
+.panel-btn--active:hover {
+  color: #1fdf64;
+}
+
+/* ══════════════════════════════════════════════════════════
+   LOGIN SCREEN
+══════════════════════════════════════════════════════════ */
+.login-screen {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-screen__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+.login-screen__logo { margin-bottom: 8px; }
+.login-screen__title { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; }
+.login-screen__sub { color: #a7a7a7; font-size: 15px; margin-bottom: 8px; }
+
+/* ══════════════════════════════════════════════════════════
+   HOMEPAGE
+══════════════════════════════════════════════════════════ */

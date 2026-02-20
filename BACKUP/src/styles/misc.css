@@ -1,0 +1,724 @@
+.ad-show-more {
+  background: none;
+  border: none;
+  color: #a7a7a7;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.15s;
+}
+
+.ad-show-more:hover {
+  color: white;
+}
+
+/* ── Latest release ── */
+.ad-latest-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ad-latest-img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  display: block;
+}
+
+.ad-latest-info {
+  padding: 12px;
+}
+
+.ad-latest-date {
+  font-size: 11px;
+  color: #a7a7a7;
+  margin-bottom: 4px;
+}
+
+.ad-latest-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ad-latest-meta {
+  font-size: 12px;
+  color: #a7a7a7;
+  margin-bottom: 10px;
+}
+
+.ad-latest-play {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #1db954;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ── Discography ── */
+.ad-discography {
+  margin-bottom: 28px;
+}
+
+.ad-albums-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  padding-bottom: 8px;
+}
+
+.ad-album-card {
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ad-album-card__img-wrap {
+  position: relative;
+  width: 124px;
+  height: 124px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #282828;
+  margin-bottom: 8px;
+}
+
+.ad-album-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ad-album-card__img--placeholder {
+  background: #333;
+  width: 100%;
+  height: 100%;
+}
+
+.ad-album-card__play {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #1db954;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.ad-album-card__name {
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+
+.ad-album-card__sub {
+  font-size: 11px;
+  color: #a7a7a7;
+}
+
+/* Keep old .artist-detail for backward compat (unused now) */
+.artist-detail {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #121212;
+  position: relative;
+  scroll-behavior: smooth;
+}
+
+/* ── Hero ── */
+.artist-detail__hero {
+  position: relative;
+  height: 420px;
+  min-height: 320px;
+  overflow: hidden;
+}
+
+.artist-detail__hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.artist-detail__hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.05) 30%,
+      rgba(18, 18, 18, 0.7) 70%,
+      #121212 100%);
+}
+
+/* ── Back button ── */
+.artist-detail__back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.55);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+  transition: background 0.15s;
+}
+
+.artist-detail__back:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.artist-detail__back--sticky {
+  position: static;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.artist-detail__back--sticky:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Hero content (name, followers) ── */
+.artist-detail__hero-content {
+  position: absolute;
+  bottom: 24px;
+  left: 28px;
+  right: 28px;
+  z-index: 2;
+}
+
+.artist-detail__verified {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #3d9bff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+
+.artist-detail__name {
+  font-size: clamp(40px, 8vw, 88px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.artist-detail__followers {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ── Sticky header ── */
+.artist-detail__sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(18, 18, 18, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.artist-detail__sticky-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ── Actions bar ── */
+.artist-detail__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 28px 12px;
+}
+
+.artist-detail__play-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--spotify-green);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(29, 185, 84, 0.4);
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.artist-detail__play-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 6px 28px rgba(29, 185, 84, 0.55);
+}
+
+.artist-detail__follow-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+  color: white;
+  padding: 7px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: border-color 0.15s;
+}
+
+.artist-detail__follow-btn:hover {
+  border-color: white;
+}
+
+.artist-detail__ext-btn {
+  background: none;
+  border: none;
+  color: #a7a7a7;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+
+.artist-detail__ext-btn:hover {
+  color: white;
+}
+
+/* ── Genres ── */
+.artist-detail__genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 28px 20px;
+}
+
+.genre-tag {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+}
+
+/* ── Sections ── */
+.artist-detail__section {
+  padding: 0 28px 32px;
+}
+
+.artist-detail__section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+}
+
+/* ── Tracks header ── */
+.artist-detail__tracks-header {
+  display: grid;
+  grid-template-columns: 40px 44px 1fr 1fr 70px;
+  gap: 8px;
+  padding: 0 8px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 4px;
+  color: #a7a7a7;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Track row ── */
+.artist-track-row {
+  display: grid;
+  grid-template-columns: 40px 44px 1fr 1fr 70px;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.artist-track-row__num {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.artist-track-row__play {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.artist-track-row__img {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.artist-track-row__info {
+  min-width: 0;
+}
+
+.artist-track-row__name {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.artist-track-row__streams {
+  font-size: 12px;
+  color: #a7a7a7;
+  margin-top: 2px;
+}
+
+.artist-track-row__album {
+  font-size: 13px;
+  color: #a7a7a7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.artist-track-row__dur {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #a7a7a7;
+  justify-content: flex-end;
+  padding-right: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Show more ── */
+.artist-detail__show-more {
+  background: none;
+  border: none;
+  color: #a7a7a7;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 12px 8px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+
+.artist-detail__show-more:hover {
+  color: white;
+}
+
+/* ── Albums row ── */
+.artist-detail__albums-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+/* ── Album card ── */
+.album-card {
+  flex-shrink: 0;
+  width: 160px;
+  cursor: pointer;
+}
+
+.album-card__img-wrap {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background: #282828;
+}
+
+.album-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.album-card__img--placeholder {
+  background: #333;
+}
+
+.album-card__play {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--spotify-green);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.album-card__name {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.album-card__sub {
+  font-size: 12px;
+  color: #a7a7a7;
+}
+
+/* ══════════════════════════════════════════════════════════
+   ARTIST DETAIL — new enriched sections
+══════════════════════════════════════════════════════════ */
+
+/* Photo overlay (popularity bar at bottom of photo col) */
+.ad-photo--placeholder {
+  background: #1a1a1a;
+  width: 100%;
+  height: 100%;
+}
+
+.ad-photo-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 16px 16px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+}
+
+.ad-photo-popularity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ad-photo-popularity>span {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.04em;
+}
+
+.ad-photo-pop-bar {
+  height: 3px;
+  background: #1db954;
+  border-radius: 2px;
+}
+
+/* Stats row below name */
+.ad-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.ad-stat {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.ad-stat svg {
+  flex-shrink: 0;
+}
+
+/* ── Main smart grid: popular (left) + latest (right) ── */
+.ad-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 24px;
+  margin-bottom: 28px;
+  align-items: start;
+}
+
+/* Generic content card */
+.ad-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ad-card--popular {
+  /* no extra rules — takes natural height */
+}
+
+.ad-card--latest {
+  /* fixed right column */
+}
+
+/* ── Related artists row ── */
+.ad-related-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.ad-related-row::-webkit-scrollbar {
+  display: none;
+}
+
+.ad-related-card {
+  flex-shrink: 0;
+  width: 110px;
+  border-radius: 8px;
+  padding: 10px 8px;
+  cursor: pointer;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.15s;
+}
+
+.ad-related-card__img-wrap {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #282828;
+  margin: 0 auto 8px;
+}
+
+.ad-related-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ad-related-card__img--placeholder {
+  background: #333;
+}
+
+.ad-related-card__name {
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+
+.ad-related-card__sub {
+  font-size: 10px;
+  color: #a7a7a7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── About card ── */
+.ad-about-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 12px;
+}
+
+.ad-about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+  margin-bottom: 4px;
+}
+
+.ad-about-item {
+  min-width: 0;
+}
+
+.ad-about-label {
+  font-size: 10px;
+  color: #a7a7a7;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 3px;
+}
+
+.ad-about-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.02em;
+}
+
+/* ── Homepage greeting bar (no avatar — avatar is in Topbar) ── */
+.homepage__greeting-bar {
+  padding: 20px 24px 12px;
+  flex-shrink: 0;
+}

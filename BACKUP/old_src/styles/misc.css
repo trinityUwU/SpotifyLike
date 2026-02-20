@@ -1,0 +1,66 @@
+/* Fallback for misc styles not yet migrated */
+.track-detail__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 500px;
+    cursor: pointer;
+    margin-bottom: 32px;
+    backdrop-filter: blur(8px);
+}
+
+.artist-card {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.artist-card__img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.genre-tag {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 500px;
+    padding: 4px 10px;
+    font-size: 11px;
+}
+
+.full-lyrics-line {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+/* Navigation styles */
+.topbar__nav-link {
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.topbar__nav-link:hover {
+    color: white;
+}
+
+.topbar__nav-link:active {
+    transform: scale(0.98);
+}
+
+.topbar__logo {
+    transition: filter 0.2s ease;
+}
+
+.topbar__logo:hover {
+    filter: brightness(1.2);
+}

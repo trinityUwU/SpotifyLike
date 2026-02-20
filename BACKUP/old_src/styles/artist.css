@@ -1,0 +1,133 @@
+/* ═══════════════════════════════════════════════════════════════
+   ARTIST DETAIL PAGE
+   ═══════════════════════════════════════════════════════════════ */
+
+.ad-root {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+    background: #0a0a0a;
+    position: relative;
+}
+
+.ad-photo-col {
+    flex: 0 0 42%;
+    position: relative;
+    overflow: hidden;
+}
+
+.ad-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+.ad-photo-fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent 60%, rgba(10, 10, 10, 0.6) 80%, #0a0a0a 100%);
+}
+
+.ad-content-col {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 36px 40px;
+}
+
+.ad-name {
+    font-size: clamp(32px, 5vw, 72px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 10px;
+}
+
+.ad-followers {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.ad-verified {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #3d9bff;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.ad-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.ad-play-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #1db954;
+    border: none;
+    color: black;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 28px;
+    border-radius: 500px;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(29, 185, 84, 0.35);
+}
+
+.ad-track-row {
+    display: grid;
+    grid-template-columns: 32px 40px 1fr 60px 44px;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 8px;
+    cursor: pointer;
+}
+
+.ad-track-row:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.ad-track-row__thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.ad-album-card {
+    border-radius: 8px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+}
+
+.ad-album-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.ad-album-card__img {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* ── Legacy Artist Detail ── */
+.artist-detail__hero {
+    position: relative;
+    height: 420px;
+    overflow: hidden;
+}
+
+.artist-detail__name {
+    font-size: clamp(40px, 8vw, 88px);
+    font-weight: 900;
+}
