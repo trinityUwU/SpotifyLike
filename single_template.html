@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single - Réseaux (Niska)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        spotifyGreen: '#1DB954',
+                        spotifyDarkGray: '#181818',
+                        spotifyLightGray: '#282828',
+                        spotifyTextGray: '#B3B3B3'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #000; color: white; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        .bg-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: radial-gradient(circle at 20% 0%, #3a1c1c 0%, #000000 80%); z-index: -1; }
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="bg-overlay"></div>
+
+    <header class="flex items-center justify-between px-8 py-4 flex-shrink-0 z-50">
+        <i class="fa-brands fa-spotify text-3xl text-spotifyGreen"></i>
+        <div class="w-8 h-8 rounded-full bg-white/10 overflow-hidden"><img src="https://i.pravatar.cc/150?img=11"></div>
+    </header>
+
+    <main class="flex-grow overflow-y-auto custom-scrollbar pb-32">
+        
+        <section class="flex flex-col md:flex-row items-end gap-8 px-8 pt-12 pb-8">
+            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=500" class="w-64 h-64 object-cover shadow-2xl rounded-sm">
+            <div class="flex flex-col gap-4">
+                <span class="text-xs font-bold uppercase tracking-widest">Single</span>
+                <h1 class="text-8xl font-black tracking-tighter">Réseaux</h1>
+                <div class="flex items-center gap-2 font-bold">
+                    <a href="#" class="hover:underline">Niska</a>
+                    <span class="text-spotifyTextGray">• 2017 • 1 titre, 3 min 15 s</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="sticky top-0 z-30 bg-transparent backdrop-blur-md px-8 py-4 flex items-center gap-8 border-b border-white/5">
+            <button class="bg-spotifyGreen text-black rounded-full w-14 h-14 flex items-center justify-center hover:scale-105 transition">
+                <i class="fa-solid fa-play text-xl ml-1"></i>
+            </button>
+            <i class="fa-regular fa-heart text-3xl text-spotifyTextGray hover:text-white cursor-pointer"></i>
+            <button class="border border-white/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest hover:border-white transition">Partager</button>
+        </div>
+
+        <div class="px-8 mt-12">
+            <h2 class="text-2xl font-bold mb-6">De Niska</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <div class="bg-white/5 p-4 rounded-xl hover:bg-white/10 transition border border-white/5 cursor-pointer group">
+                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300" class="w-full aspect-square object-cover rounded-md mb-4">
+                    <p class="font-bold text-sm truncate">Mr Sal</p>
+                    <p class="text-spotifyTextGray text-xs">Album • 2019</p>
+                </div>
+                <div class="bg-white/5 p-4 rounded-xl hover:bg-white/10 transition border border-white/5 cursor-pointer group">
+                    <img src="https://images.unsplash.com/photo-1493225457124-a1a2a5f5f9af?w=300" class="w-full aspect-square object-cover rounded-md mb-4">
+                    <p class="font-bold text-sm truncate">Le monde est méchant</p>
+                    <p class="text-spotifyTextGray text-xs">Mixtape • 2021</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-xl border-t border-white/5 px-6 py-4 flex items-center justify-between z-50">
+        <div class="flex items-center gap-4 w-1/4">
+            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=100" class="w-14 h-14 object-cover rounded">
+            <div class="truncate"><p class="text-white text-sm font-bold">Réseaux</p><p class="text-xs text-spotifyTextGray">Niska</p></div>
+        </div>
+        <div class="flex-grow flex flex-col items-center max-w-md">
+            <div class="flex items-center gap-6 mb-2 text-spotifyTextGray"><i class="fa-solid fa-backward-step"></i><i class="fa-solid fa-play text-3xl text-white"></i><i class="fa-solid fa-forward-step"></i></div>
+            <div class="w-full h-1 bg-white/10 rounded-full"></div>
+        </div>
+        <div class="w-1/4"></div>
+    </footer>
+</body>
+</html>

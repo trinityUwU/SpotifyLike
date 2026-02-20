@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Clone - Mes Playlists & Artistes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        spotifyGreen: '#1DB954',
+                        spotifyBlack: '#121212',
+                        spotifyDarkGray: '#181818',
+                        spotifyLightGray: '#282828',
+                        spotifyTextGray: '#B3B3B3'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #000; 
+            color: white; 
+            overflow: hidden; 
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(to bottom, #1e3a8a 0%, #000000 100%); /* Bleu profond pour la bibliothèque */
+            z-index: -1;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body>
+    <div class="bg-overlay"></div>
+
+    <header class="flex items-center justify-between px-8 py-4 flex-shrink-0 z-50">
+        <div class="flex items-center gap-6 w-1/3">
+            <i class="fa-brands fa-spotify text-3xl text-spotifyGreen cursor-pointer"></i>
+            <div class="relative w-full max-w-xs">
+                <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
+                <input type="text" placeholder="Rechercher dans la bibliothèque" class="bg-spotifyLightGray/50 text-white text-sm rounded-full pl-10 pr-4 py-2 w-full focus:outline-none border border-transparent focus:border-white/20">
+            </div>
+        </div>
+        <nav class="flex gap-8 text-xs font-bold tracking-widest uppercase text-spotifyTextGray">
+            <a href="#" class="hover:text-white transition">Home</a>
+            <a href="#" class="hover:text-white transition">Search</a>
+            <a href="#" class="text-white border-b-2 border-spotifyGreen pb-1">Playlists</a>
+        </nav>
+        <div class="w-1/3 flex justify-end items-center gap-4">
+            <img src="https://i.pravatar.cc/150?img=11" alt="User" class="w-8 h-8 rounded-full object-cover ring-1 ring-white/20">
+        </div>
+    </header>
+
+    <main class="flex-grow overflow-y-auto custom-scrollbar relative">
+        
+        <div class="sticky top-0 z-30 bg-transparent backdrop-blur-md flex items-center justify-between border-b border-white/10 px-8 pb-4 pt-6">
+            <div class="flex gap-6 items-center">
+                <h2 class="text-3xl font-black tracking-tighter">Votre bibliothèque</h2>
+                <nav class="flex gap-4 ml-6">
+                    <button class="bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-full text-xs font-bold transition">Playlists</button>
+                    <button class="bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-full text-xs font-bold transition">Artistes</button>
+                    <button class="bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-full text-xs font-bold transition">Albums</button>
+                </nav>
+            </div>
+            <div class="flex gap-3">
+                <button title="Créer une playlist" class="bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition active:scale-90">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <button title="Options d'affichage" class="bg-white/10 hover:bg-white/20 w-10 h-10 rounded-full flex items-center justify-center transition">
+                    <i class="fa-solid fa-list"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="px-8 pt-8 pb-32">
+            
+            <section class="mb-12">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold">Mes Playlists</h3>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                    
+                    <div class="bg-white/5 hover:bg-white/10 transition-all duration-300 rounded-xl p-4 border border-dashed border-white/20 flex flex-col items-center justify-center gap-4 cursor-pointer group aspect-square">
+                        <div class="w-16 h-16 bg-white/10 rounded-lg flex items-center justify-center group-hover:bg-white/20 transition">
+                            <i class="fa-solid fa-plus text-2xl"></i>
+                        </div>
+                        <p class="font-bold text-sm text-center">Créer une playlist</p>
+                    </div>
+
+                    <div class="bg-white/5 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 cursor-pointer group border border-white/5 relative">
+                        <div class="relative mb-4">
+                            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300" class="w-full aspect-square object-cover rounded-lg shadow-2xl">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2">
+                                <button title="Renommer" class="w-8 h-8 bg-black/60 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition"><i class="fa-solid fa-pen text-xs"></i></button>
+                                <button title="Supprimer" class="w-8 h-8 bg-black/60 rounded-full flex items-center justify-center hover:bg-red-500 transition"><i class="fa-solid fa-trash text-xs"></i></button>
+                            </div>
+                            <div class="absolute bottom-2 right-2 bg-spotifyGreen text-black rounded-full w-10 h-10 flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transition transform translate-y-2 group-hover:translate-y-0">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </div>
+                        </div>
+                        <p class="font-bold text-sm mb-1 truncate">Ma Playlist Rap</p>
+                        <p class="text-spotifyTextGray text-xs font-medium">Par Vous • 24 titres</p>
+                    </div>
+
+                    <div class="bg-white/5 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 cursor-pointer group border border-white/5 relative">
+                        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300" class="w-full aspect-square object-cover rounded-lg shadow-2xl mb-4">
+                        <p class="font-bold text-sm mb-1 truncate">Soirée Été</p>
+                        <p class="text-spotifyTextGray text-xs font-medium">Par Vous • 112 titres</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold">Artistes suivis</h3>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                    
+                    <div class="bg-white/5 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 cursor-pointer group border border-white/5 text-center">
+                        <div class="relative mb-4 px-2">
+                            <img src="https://images.unsplash.com/photo-1493225457124-a1a2a5f5f9af?w=300" class="w-full aspect-square object-cover rounded-full shadow-2xl">
+                            <div class="absolute bottom-2 right-4 bg-spotifyGreen text-black rounded-full w-10 h-10 flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transition transform translate-y-2 group-hover:translate-y-0">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </div>
+                        </div>
+                        <p class="font-bold text-sm mb-1">Niska</p>
+                        <p class="text-spotifyTextGray text-xs font-medium uppercase tracking-widest">Artiste</p>
+                    </div>
+
+                    <div class="bg-white/5 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 cursor-pointer group border border-white/5 text-center">
+                        <div class="relative mb-4 px-2">
+                            <img src="https://images.unsplash.com/photo-1516280440503-6c8a82c4f746?w=300" class="w-full aspect-square object-cover rounded-full shadow-2xl">
+                            <div class="absolute bottom-2 right-4 bg-spotifyGreen text-black rounded-full w-10 h-10 flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transition transform translate-y-2 group-hover:translate-y-0">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </div>
+                        </div>
+                        <p class="font-bold text-sm mb-1">Justin Bieber</p>
+                        <p class="text-spotifyTextGray text-xs font-medium uppercase tracking-widest">Artiste</p>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-xl border-t border-white/5 px-6 py-4 flex items-center justify-between z-50">
+        <div class="flex items-center gap-4 w-1/4">
+            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=100" class="w-14 h-14 object-cover rounded-md shadow-lg">
+            <div class="truncate">
+                <p class="text-white text-sm font-bold truncate">Réseaux</p>
+                <p class="text-xs text-spotifyTextGray">Niska</p>
+            </div>
+            <i class="fa-regular fa-heart text-spotifyTextGray hover:text-spotifyGreen cursor-pointer transition ml-4"></i>
+        </div>
+
+        <div class="flex flex-col items-center justify-center w-2/4 max-w-[700px]">
+            <div class="flex items-center gap-8 mb-3 text-spotifyTextGray">
+                <i class="fa-solid fa-shuffle hover:text-spotifyGreen text-sm cursor-pointer transition"></i>
+                <i class="fa-solid fa-backward-step text-xl hover:text-white cursor-pointer transition"></i>
+                <div class="bg-white text-black rounded-full w-9 h-9 flex items-center justify-center hover:scale-110 transition cursor-pointer">
+                    <i class="fa-solid fa-play text-xs ml-0.5"></i>
+                </div>
+                <i class="fa-solid fa-forward-step text-xl hover:text-white cursor-pointer transition"></i>
+                <i class="fa-solid fa-repeat hover:text-spotifyGreen text-sm cursor-pointer transition"></i>
+            </div>
+            <div class="flex items-center gap-3 w-full text-[10px] font-bold text-spotifyTextGray">
+                <span>1:20</span>
+                <div class="h-1.5 bg-white/10 rounded-full w-full relative">
+                    <div class="h-full bg-spotifyGreen rounded-full absolute w-[40%]"></div>
+                </div>
+                <span>3:15</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-4 w-1/4 text-spotifyTextGray">
+            <i class="fa-solid fa-microphone text-xs hover:text-white cursor-pointer"></i>
+            <i class="fa-solid fa-list-ul text-xs hover:text-white cursor-pointer"></i>
+            <i class="fa-solid fa-volume-high text-xs hover:text-white cursor-pointer"></i>
+            <div class="h-1 bg-white/10 rounded-full w-24">
+                <div class="h-full bg-white rounded-full w-[60%]"></div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

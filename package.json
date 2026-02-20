@@ -1,0 +1,24 @@
+{
+  "name": "spotifylike",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node scripts/smoke-backend.js",
+    "smoke:backend": "node scripts/smoke-backend.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "axios": "^1.13.5",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "open": "^11.0.0",
+    "spotify-playlist": "^0.0.4",
+    "spotify-uri": "^4.1.0"
+  }
+}

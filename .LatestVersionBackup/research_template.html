@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Clone - Recherche Niska</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        spotifyGreen: '#1DB954',
+                        spotifyBlack: '#121212',
+                        spotifyDarkGray: '#181818',
+                        spotifyLightGray: '#282828',
+                        spotifyTextGray: '#B3B3B3'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #000; 
+            color: white; 
+            overflow: hidden; 
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: radial-gradient(circle at 20% 0%, #2a2a2a 0%, #000000 80%);
+            z-index: -1;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body>
+    <div class="bg-overlay"></div>
+
+    <header class="flex items-center justify-between px-8 py-4 flex-shrink-0 z-50">
+        <div class="flex items-center gap-6 w-1/3">
+            <i class="fa-brands fa-spotify text-3xl text-spotifyGreen"></i>
+            <div class="relative w-full max-w-md">
+                <i class="fa-solid fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-black text-lg"></i>
+                <input type="text" value="Niska" class="bg-white text-black text-sm rounded-full pl-12 pr-4 py-3 w-full focus:outline-none font-medium">
+            </div>
+        </div>
+        <nav class="flex gap-8 text-xs font-bold tracking-widest uppercase text-spotifyTextGray">
+            <a href="#" class="hover:text-white transition">Home</a>
+            <a href="#" class="text-white">Search</a>
+            <a href="#" class="hover:text-white transition">Radio</a>
+        </nav>
+        <div class="w-1/3 flex justify-end items-center gap-4">
+            <img src="https://i.pravatar.cc/150?img=11" alt="User" class="w-8 h-8 rounded-full object-cover ring-1 ring-white/20">
+        </div>
+    </header>
+
+    <main class="flex-grow overflow-y-auto custom-scrollbar px-8 pb-32">
+        
+        <div class="flex flex-col lg:flex-row gap-8 mt-6">
+            
+            <div class="w-full lg:w-[40%]">
+                <h2 class="text-2xl font-bold mb-4">Meilleur résultat</h2>
+                <div class="bg-white/5 hover:bg-white/10 transition-all duration-300 p-6 rounded-xl relative group cursor-pointer border border-white/5">
+                    <img src="https://images.unsplash.com/photo-1493225457124-a1a2a5f5f9af?w=300" class="w-24 h-24 object-cover rounded-full shadow-2xl mb-6">
+                    <h3 class="text-4xl font-black mb-2 tracking-tighter">Niska</h3>
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-bold uppercase tracking-widest text-spotifyTextGray">Artiste</span>
+                        <i class="fa-solid fa-circle-check text-blue-500"></i>
+                    </div>
+                    
+                    <button onclick="window.location.reload();" class="absolute bottom-6 right-8 bg-spotifyGreen text-black rounded-full w-14 h-14 flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 scale-90 group-hover:scale-100">
+                        <i class="fa-solid fa-play text-xl ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-[60%]">
+                <h2 class="text-2xl font-bold mb-4">Titres</h2>
+                <div class="flex flex-col" id="search-tracks">
+                    </div>
+            </div>
+        </div>
+
+        <section class="mt-12">
+            <h2 class="text-2xl font-bold mb-6">Albums</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <div class="bg-white/5 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 cursor-pointer group border border-white/5">
+                    <div class="relative mb-4">
+                        <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300" class="w-full aspect-square object-cover rounded-lg shadow-2xl">
+                        <div class="absolute bottom-2 right-2 bg-spotifyGreen text-black rounded-full w-12 h-12 flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transition transform translate-y-2 group-hover:translate-y-0">
+                            <i class="fa-solid fa-play text-lg ml-1"></i>
+                        </div>
+                    </div>
+                    <p class="font-bold text-sm mb-1 truncate">Commando</p>
+                    <p class="text-spotifyTextGray text-xs font-medium">2017 • Album</p>
+                </div>
+
+                <div class="bg-white/5 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 cursor-pointer group border border-white/5">
+                    <div class="relative mb-4">
+                        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300" class="w-full aspect-square object-cover rounded-lg shadow-2xl">
+                        <div class="absolute bottom-2 right-2 bg-spotifyGreen text-black rounded-full w-12 h-12 flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transition transform translate-y-2 group-hover:translate-y-0">
+                            <i class="fa-solid fa-play text-lg ml-1"></i>
+                        </div>
+                    </div>
+                    <p class="font-bold text-sm mb-1 truncate">Mr Sal</p>
+                    <p class="text-spotifyTextGray text-xs font-medium">2019 • Album</p>
+                </div>
+
+                <div class="bg-white/5 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 cursor-pointer group border border-white/5">
+                    <div class="relative mb-4">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a1a2a5f5f9af?w=300" class="w-full aspect-square object-cover rounded-lg shadow-2xl">
+                        <div class="absolute bottom-2 right-2 bg-spotifyGreen text-black rounded-full w-12 h-12 flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transition transform translate-y-2 group-hover:translate-y-0">
+                            <i class="fa-solid fa-play text-lg ml-1"></i>
+                        </div>
+                    </div>
+                    <p class="font-bold text-sm mb-1 truncate">Le Monde est méchant</p>
+                    <p class="text-spotifyTextGray text-xs font-medium">2021 • Mixtape</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-xl border-t border-white/5 px-6 py-4 flex items-center justify-between z-50">
+        <div class="flex items-center gap-4 w-1/4">
+            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=100" class="w-14 h-14 object-cover rounded-md">
+            <div class="truncate">
+                <p class="text-white text-sm font-bold truncate">Réseaux</p>
+                <p class="text-xs text-spotifyTextGray hover:underline cursor-pointer">Niska</p>
+            </div>
+            <i class="fa-regular fa-heart text-spotifyTextGray hover:text-spotifyGreen cursor-pointer transition ml-4"></i>
+        </div>
+
+        <div class="flex flex-col items-center justify-center w-2/4 max-w-[700px]">
+            <div class="flex items-center gap-8 mb-3 text-spotifyTextGray">
+                <i class="fa-solid fa-shuffle hover:text-spotifyGreen text-sm cursor-pointer transition"></i>
+                <i class="fa-solid fa-backward-step text-xl hover:text-white cursor-pointer transition"></i>
+                <div class="bg-white text-black rounded-full w-9 h-9 flex items-center justify-center hover:scale-110 transition cursor-pointer">
+                    <i class="fa-solid fa-play text-xs ml-0.5"></i>
+                </div>
+                <i class="fa-solid fa-forward-step text-xl hover:text-white cursor-pointer transition"></i>
+                <i class="fa-solid fa-repeat hover:text-spotifyGreen text-sm cursor-pointer transition"></i>
+            </div>
+            <div class="flex items-center gap-3 w-full text-[10px] font-bold text-spotifyTextGray">
+                <span>0:45</span>
+                <div class="h-1.5 bg-white/10 rounded-full w-full relative group cursor-pointer">
+                    <div class="h-full bg-spotifyGreen rounded-full absolute w-[20%] group-hover:bg-[#1ed760]"></div>
+                </div>
+                <span>3:12</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-4 w-1/4 text-spotifyTextGray">
+            <i class="fa-solid fa-microphone text-xs hover:text-white cursor-pointer"></i>
+            <i class="fa-solid fa-list-ul text-xs hover:text-white cursor-pointer"></i>
+            <i class="fa-solid fa-volume-high text-xs hover:text-white cursor-pointer"></i>
+            <div class="h-1 bg-white/10 rounded-full w-24">
+                <div class="h-full bg-white rounded-full w-[60%]"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const tracks = [
+            { id: 1, title: "Réseaux", album: "Commando", duration: "3:15", img: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=50" },
+            { id: 2, title: "Matuidi Charo", album: "Zifukoro", duration: "3:08", img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=50" },
+            { id: 3, title: "Médicament (feat. Booba)", album: "Mr Sal", duration: "3:25", img: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=50" },
+            { id: 4, title: "Silvadore", album: "Mr Sal", duration: "3:02", img: "https://images.unsplash.com/photo-1493225457124-a1a2a5f5f9af?w=50" }
+        ];
+
+        const container = document.getElementById('search-tracks');
+        tracks.forEach(t => {
+            container.innerHTML += `
+                <div class="flex items-center justify-between p-2 hover:bg-white/10 rounded-lg group transition-all duration-200 cursor-pointer">
+                    <div class="flex items-center gap-4 flex-1 truncate">
+                        <div class="relative w-10 h-10 flex-shrink-0">
+                            <img src="${t.img}" class="w-full h-full object-cover rounded">
+                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                <i class="fa-solid fa-play text-white text-xs"></i>
+                            </div>
+                        </div>
+                        <div class="truncate">
+                            <p class="text-white text-sm font-bold truncate">${t.title}</p>
+                            <p class="text-spotifyTextGray text-xs hover:underline">${t.album}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6 opacity-0 group-hover:opacity-100 transition pr-4">
+                         <i class="fa-regular fa-heart text-spotifyTextGray hover:text-white text-sm"></i>
+                         <span class="text-xs text-spotifyTextGray font-medium">${t.duration}</span>
+                         <i class="fa-solid fa-ellipsis text-spotifyTextGray hover:text-white text-sm"></i>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

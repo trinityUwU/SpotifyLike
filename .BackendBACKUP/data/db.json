@@ -1,0 +1,1864 @@
+{
+  "playlists": [
+    {
+      "id": "1771491706739",
+      "name": "Destin",
+      "description": "Album by Ninho",
+      "cover": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg",
+      "creator": {
+        "name": "Ninho",
+        "id": 5542343
+      },
+      "tracks": [
+        {
+          "id": 652380162,
+          "readable": true,
+          "title": "Sans peine",
+          "title_short": "Sans peine",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380162",
+          "duration": 157,
+          "rank": 830404,
+          "explicit_lyrics": false,
+          "explicit_content_lyrics": 6,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/a/5/8/0/a580d3e424654ceb29eb76e935076771.mp3?hdnea=exp=1771492605~acl=/api/1/1/a/5/8/0/a580d3e424654ceb29eb76e935076771.mp3*~data=user_id=0,application_id=42~hmac=0420bb574650a6278c82adab2bfe458213a70f4b1e2e5a94d70b970f2f7cbe85",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380172,
+          "readable": true,
+          "title": "La vie qu'on mène",
+          "title_short": "La vie qu'on mène",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380172",
+          "duration": 193,
+          "rank": 969796,
+          "explicit_lyrics": false,
+          "explicit_content_lyrics": 6,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/2/f/5/0/2f5441ccda40b74779f27f8cbe5cea20.mp3?hdnea=exp=1771492605~acl=/api/1/1/2/f/5/0/2f5441ccda40b74779f27f8cbe5cea20.mp3*~data=user_id=0,application_id=42~hmac=c58643d9c9ee476b6fa15030c70c45fd2d71bf5380ad806007f32f04e38bbc06",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380182,
+          "readable": true,
+          "title": "Goutte d'eau",
+          "title_short": "Goutte d'eau",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380182",
+          "duration": 157,
+          "rank": 922710,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/d/d/2/0/dd22374a9ec009bde1cec9fc1760849b.mp3?hdnea=exp=1771492605~acl=/api/1/1/d/d/2/0/dd22374a9ec009bde1cec9fc1760849b.mp3*~data=user_id=0,application_id=42~hmac=d438db4e1132284cf8e4b78feb4d5fc61bb79e43daad3e5f7b37d9fcfa2c1d02",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380192,
+          "readable": true,
+          "title": "Paris c'est magique",
+          "title_short": "Paris c'est magique",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380192",
+          "duration": 187,
+          "rank": 737149,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/a/9/e/0/a9e67e3083e6db4fd705ad70cbe01c94.mp3?hdnea=exp=1771492605~acl=/api/1/1/a/9/e/0/a9e67e3083e6db4fd705ad70cbe01c94.mp3*~data=user_id=0,application_id=42~hmac=67de7ce83eb19a34a7741b63d985ae66c89405561d393f212d73c96d671e2c87",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380202,
+          "readable": true,
+          "title": "Jeune Lossa",
+          "title_short": "Jeune Lossa",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380202",
+          "duration": 217,
+          "rank": 869208,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/f/b/e/0/fbea36eec84551f36172151112a7c0cc.mp3?hdnea=exp=1771492605~acl=/api/1/1/f/b/e/0/fbea36eec84551f36172151112a7c0cc.mp3*~data=user_id=0,application_id=42~hmac=534b71150f719e558fd386b076fb25df206ddf44ed13be10ec7bd6627ca8bbb9",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380212,
+          "readable": true,
+          "title": "Tokarev",
+          "title_short": "Tokarev",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380212",
+          "duration": 228,
+          "rank": 738832,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/c/6/a/0/c6a74ad85ff75a7d66ea76593203e9e6.mp3?hdnea=exp=1771492605~acl=/api/1/1/c/6/a/0/c6a74ad85ff75a7d66ea76593203e9e6.mp3*~data=user_id=0,application_id=42~hmac=44b842fbe4a23c9174a801da625203b3037e21dd16bd0b34be9e549bfe300bde",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380222,
+          "readable": true,
+          "title": "La vivance (feat. Koba LaD)",
+          "title_short": "La vivance (feat. Koba LaD)",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380222",
+          "duration": 181,
+          "rank": 780008,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/8/1/f/0/81f8278ff5fd03a3956cb1dcbc0e79bd.mp3?hdnea=exp=1771492605~acl=/api/1/1/8/1/f/0/81f8278ff5fd03a3956cb1dcbc0e79bd.mp3*~data=user_id=0,application_id=42~hmac=1c3d3d6cacdf5a541d68c34bbfc89710274128e72045bb54a49908cc581c36bf",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380232,
+          "readable": true,
+          "title": "Big Pac",
+          "title_short": "Big Pac",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380232",
+          "duration": 183,
+          "rank": 714987,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/9/3/8/0/9381420dd05423b7ceb68d80c09e6d02.mp3?hdnea=exp=1771492605~acl=/api/1/1/9/3/8/0/9381420dd05423b7ceb68d80c09e6d02.mp3*~data=user_id=0,application_id=42~hmac=5d7ef8c8c8bd503169c88bed8d09fe8ad1ce98d0cead6854484e2c37a26ea3b5",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380242,
+          "readable": true,
+          "title": "NI",
+          "title_short": "NI",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380242",
+          "duration": 160,
+          "rank": 648095,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/0/4/3/0/0433fd5947ccc70c4645b8868647551e.mp3?hdnea=exp=1771492605~acl=/api/1/1/0/4/3/0/0433fd5947ccc70c4645b8868647551e.mp3*~data=user_id=0,application_id=42~hmac=2149939931b9e4345b56c9ecf585740d49b845f4fa666203d7fef45efaff11b8",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380252,
+          "readable": true,
+          "title": "Maman ne le sait pas (feat. Niska)",
+          "title_short": "Maman ne le sait pas (feat. Niska)",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380252",
+          "duration": 203,
+          "rank": 915226,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/4/9/7/0/4974ac7c7fbe2de554a82c0b27709286.mp3?hdnea=exp=1771492605~acl=/api/1/1/4/9/7/0/4974ac7c7fbe2de554a82c0b27709286.mp3*~data=user_id=0,application_id=42~hmac=7a10a66e4976184efa87589f9833d8d70c7cc5d87137be920c99f45d2e92fcaf",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380262,
+          "readable": true,
+          "title": "L'ancien",
+          "title_short": "L'ancien",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380262",
+          "duration": 182,
+          "rank": 774798,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/e/b/7/0/eb7897c7693848927dfece06c674beed.mp3?hdnea=exp=1771492605~acl=/api/1/1/e/b/7/0/eb7897c7693848927dfece06c674beed.mp3*~data=user_id=0,application_id=42~hmac=83f62124c4eaa03c05edbb4e38f86359d2b8b488aec4efa418bcc7ced32458cd",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380272,
+          "readable": true,
+          "title": "Jamais (feat. Dadju)",
+          "title_short": "Jamais (feat. Dadju)",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380272",
+          "duration": 229,
+          "rank": 802439,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/f/2/e/0/f2e880b4515c9c79be36795356d558a5.mp3?hdnea=exp=1771492605~acl=/api/1/1/f/2/e/0/f2e880b4515c9c79be36795356d558a5.mp3*~data=user_id=0,application_id=42~hmac=f256e55fdffab2b08d31830fda72641b292ac234dec9a19e53291a16ba92c5b4",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380282,
+          "readable": true,
+          "title": "Jusqu'à minuit (feat. JuL)",
+          "title_short": "Jusqu'à minuit (feat. JuL)",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380282",
+          "duration": 260,
+          "rank": 907586,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/f/2/8/0/f28b18f76a2f7dbd6e17e60cbed7d010.mp3?hdnea=exp=1771492605~acl=/api/1/1/f/2/8/0/f28b18f76a2f7dbd6e17e60cbed7d010.mp3*~data=user_id=0,application_id=42~hmac=f3b64ccdf1fe3968b7c5c5d0c4e9748a80cf476930b67ea18412e1ce7d149a52",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380292,
+          "readable": true,
+          "title": "Putana",
+          "title_short": "Putana",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380292",
+          "duration": 184,
+          "rank": 936339,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/8/0/c/0/80c5a8da6182534e4cc536b74fe82729.mp3?hdnea=exp=1771492605~acl=/api/1/1/8/0/c/0/80c5a8da6182534e4cc536b74fe82729.mp3*~data=user_id=0,application_id=42~hmac=e2db10341bd25b407039316a817c7d55602dc73b0f9e67150d1427ced570bba7",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380302,
+          "readable": true,
+          "title": "À Kinshasa (feat. Fally Ipupa)",
+          "title_short": "À Kinshasa (feat. Fally Ipupa)",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380302",
+          "duration": 177,
+          "rank": 775652,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/1/8/5/0/185dc9c8cb0498f037786bb9b3711ef5.mp3?hdnea=exp=1771492605~acl=/api/1/1/1/8/5/0/185dc9c8cb0498f037786bb9b3711ef5.mp3*~data=user_id=0,application_id=42~hmac=42fb70630f2191ba7e8f881b3255245353ed5a4c6d6fc2b732e1e7fbebece76d",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380312,
+          "readable": true,
+          "title": "Zéro paluche (feat. Tito)",
+          "title_short": "Zéro paluche (feat. Tito)",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380312",
+          "duration": 180,
+          "rank": 682413,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/d/5/6/0/d564071173059c608bdadefc13799cd3.mp3?hdnea=exp=1771492605~acl=/api/1/1/d/5/6/0/d564071173059c608bdadefc13799cd3.mp3*~data=user_id=0,application_id=42~hmac=794244385bc232550460eefba04df49cb5a251b494f09c8d08599b6e054948a8",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380322,
+          "readable": true,
+          "title": "Money (feat. Faouzia)",
+          "title_short": "Money (feat. Faouzia)",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380322",
+          "duration": 192,
+          "rank": 859610,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/e/4/a/0/e4ab644b74a699b93676c0fcc1da54c6.mp3?hdnea=exp=1771492605~acl=/api/1/1/e/4/a/0/e4ab644b74a699b93676c0fcc1da54c6.mp3*~data=user_id=0,application_id=42~hmac=cbda0db2779104842f771445c7f6f0c89e5b1835630e27831bb57df4e42bf1c0",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 652380332,
+          "readable": true,
+          "title": "Outro",
+          "title_short": "Outro",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/652380332",
+          "duration": 134,
+          "rank": 760808,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/7/5/4/0/7540fc7fa968c6fc20decd50035561d3.mp3?hdnea=exp=1771492605~acl=/api/1/1/7/5/4/0/7540fc7fa968c6fc20decd50035561d3.mp3*~data=user_id=0,application_id=42~hmac=f54a6be8e25ac744bf1238bef64e8352d5daf5f9a276954e61c1b9efd16422a6",
+          "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 91095382,
+            "title": "Destin",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        }
+      ],
+      "createdAt": "2026-02-19T09:01:46.739Z"
+    },
+    {
+      "id": "1771491715897",
+      "name": "M.I.L.S 4",
+      "description": "Album by Ninho",
+      "cover": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg",
+      "creator": {
+        "name": "Ninho",
+        "id": 5542343
+      },
+      "tracks": [
+        {
+          "id": 3757199822,
+          "readable": true,
+          "title": "INTRO - LA PRESSION",
+          "title_short": "INTRO - LA PRESSION",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199822",
+          "duration": 208,
+          "rank": 888933,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/4/e/5/0/4e5e3ce6840893be399a409c6d30ac72.mp3?hdnea=exp=1771492613~acl=/api/1/1/4/e/5/0/4e5e3ce6840893be399a409c6d30ac72.mp3*~data=user_id=0,application_id=42~hmac=003c47e21b54e3970fcc971dfd96e2536651ec672e6d89ad746a818287b97267",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199832,
+          "readable": true,
+          "title": "+971",
+          "title_short": "+971",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199832",
+          "duration": 201,
+          "rank": 924237,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/f/3/f/0/f3f187717bfd8b34d8ee76c9ef754508.mp3?hdnea=exp=1771492613~acl=/api/1/1/f/3/f/0/f3f187717bfd8b34d8ee76c9ef754508.mp3*~data=user_id=0,application_id=42~hmac=ba41e193a4502966859f8515a0bcc0e0bd7f7f6e55d6081f5933429eb9f6430b",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199842,
+          "readable": true,
+          "title": "WALLET",
+          "title_short": "WALLET",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199842",
+          "duration": 172,
+          "rank": 883540,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/f/4/9/0/f493030fa949c68b1ecc70c18d50edf5.mp3?hdnea=exp=1771492613~acl=/api/1/1/f/4/9/0/f493030fa949c68b1ecc70c18d50edf5.mp3*~data=user_id=0,application_id=42~hmac=38893bc89fc1981fd9df32ca6a64f77781b84a50af615884d87a0a2ac434214c",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199852,
+          "readable": true,
+          "title": "KING VON",
+          "title_short": "KING VON",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199852",
+          "duration": 197,
+          "rank": 855751,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/1/3/6/0/136e27e0327c4461aa35f7a2aee9d7f4.mp3?hdnea=exp=1771492613~acl=/api/1/1/1/3/6/0/136e27e0327c4461aa35f7a2aee9d7f4.mp3*~data=user_id=0,application_id=42~hmac=cb32389c1bb81d83226590705373be5b37048ef9fe9754be2a037f968405e9b7",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199862,
+          "readable": true,
+          "title": "RÉSINE",
+          "title_short": "RÉSINE",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199862",
+          "duration": 110,
+          "rank": 849266,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/5/b/1/0/5b1b8d939fc396793a598eeec4dece22.mp3?hdnea=exp=1771492613~acl=/api/1/1/5/b/1/0/5b1b8d939fc396793a598eeec4dece22.mp3*~data=user_id=0,application_id=42~hmac=503a7ffdf59cbbc4677fe786d9dbe145262cd2069832378ca3d410bc2c51f896",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199872,
+          "readable": true,
+          "title": "J’AI PAS CHANGÉ",
+          "title_short": "J’AI PAS CHANGÉ",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199872",
+          "duration": 139,
+          "rank": 934993,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/b/c/6/0/bc69891174e4a2feeae7ccc89224b60b.mp3?hdnea=exp=1771492613~acl=/api/1/1/b/c/6/0/bc69891174e4a2feeae7ccc89224b60b.mp3*~data=user_id=0,application_id=42~hmac=f954c050911d1e6cf3facabfbd8ade50ada027aff8bb8a678a4a7d00049016db",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199882,
+          "readable": true,
+          "title": "AU 33ÈME",
+          "title_short": "AU 33ÈME",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199882",
+          "duration": 249,
+          "rank": 932034,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/2/2/5/0/225eec8d786884d2157c86ead6875340.mp3?hdnea=exp=1771492613~acl=/api/1/1/2/2/5/0/225eec8d786884d2157c86ead6875340.mp3*~data=user_id=0,application_id=42~hmac=f1852ed955597ad15dadecbf86427677a37eab29569a304bc2466e683b680969",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199892,
+          "readable": true,
+          "title": "LETTRE À UN FILS",
+          "title_short": "LETTRE À UN FILS",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199892",
+          "duration": 184,
+          "rank": 928030,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/1/2/2/0/122caec1b5fcf8c222da1ee75f70eb62.mp3?hdnea=exp=1771492613~acl=/api/1/1/1/2/2/0/122caec1b5fcf8c222da1ee75f70eb62.mp3*~data=user_id=0,application_id=42~hmac=f6d757b1990ca5ca6998bf5a24af7d856b419af00a5356f581b6243e0d3a7ce9",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199902,
+          "readable": true,
+          "title": "NWAR",
+          "title_short": "NWAR",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199902",
+          "duration": 198,
+          "rank": 866849,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/0/0/b/0/00ba5b954eb3617793edcaa3d70e5c2c.mp3?hdnea=exp=1771492613~acl=/api/1/1/0/0/b/0/00ba5b954eb3617793edcaa3d70e5c2c.mp3*~data=user_id=0,application_id=42~hmac=e905631ebbcbd7f91104e0471c652560e78a6ae2696e97878e32088526774ae9",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199912,
+          "readable": true,
+          "title": "DICTIONNAIRES",
+          "title_short": "DICTIONNAIRES",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199912",
+          "duration": 205,
+          "rank": 967246,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/a/e/c/0/aecddf19366ea2a418da16c683fd116d.mp3?hdnea=exp=1771492613~acl=/api/1/1/a/e/c/0/aecddf19366ea2a418da16c683fd116d.mp3*~data=user_id=0,application_id=42~hmac=cdded017948983e0429c7021b2dbb47b641664e8d74437ca0ffc0f40f22ac47d",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199922,
+          "readable": true,
+          "title": "N.W.A",
+          "title_short": "N.W.A",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199922",
+          "duration": 225,
+          "rank": 807758,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/f/f/a/0/ffa261f03b19592515b0f6729a647d65.mp3?hdnea=exp=1771492613~acl=/api/1/1/f/f/a/0/ffa261f03b19592515b0f6729a647d65.mp3*~data=user_id=0,application_id=42~hmac=d5eb5ef522aca0338c113670b8345de47d488eb2007edfa0e67175615de7ef38",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199932,
+          "readable": true,
+          "title": "LES DIAMANTS DE BOKASSA",
+          "title_short": "LES DIAMANTS DE BOKASSA",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199932",
+          "duration": 152,
+          "rank": 999856,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/4/5/c/0/45c3786cd9c866b13d8ae13491b1918d.mp3?hdnea=exp=1771492613~acl=/api/1/1/4/5/c/0/45c3786cd9c866b13d8ae13491b1918d.mp3*~data=user_id=0,application_id=42~hmac=299d03e21a649ab1d5778713738f5d811233150fb88abdf317e0390f7d6a620d",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199942,
+          "readable": true,
+          "title": "PILIER",
+          "title_short": "PILIER",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199942",
+          "duration": 190,
+          "rank": 998569,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/b/c/8/0/bc8fc9fa915f16c85b6fd3504179d169.mp3?hdnea=exp=1771492613~acl=/api/1/1/b/c/8/0/bc8fc9fa915f16c85b6fd3504179d169.mp3*~data=user_id=0,application_id=42~hmac=a194cc29e6721844b9e2c1dfac0196f28d4d5e53f7adde22ce90d21494e9458c",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199952,
+          "readable": true,
+          "title": "R9",
+          "title_short": "R9",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199952",
+          "duration": 185,
+          "rank": 860418,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/6/2/8/0/6281f0b60330e5bc0c32d4ad0530444f.mp3?hdnea=exp=1771492613~acl=/api/1/1/6/2/8/0/6281f0b60330e5bc0c32d4ad0530444f.mp3*~data=user_id=0,application_id=42~hmac=b418a212eea2f419344a63a5269900390e63fe0d7468ac85e6f3699d647c3a44",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199962,
+          "readable": true,
+          "title": "LES MAINS DEDANS",
+          "title_short": "LES MAINS DEDANS",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199962",
+          "duration": 148,
+          "rank": 881882,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/4/6/4/0/4640e14b6273cce20cf3614a6f3d4f05.mp3?hdnea=exp=1771492613~acl=/api/1/1/4/6/4/0/4640e14b6273cce20cf3614a6f3d4f05.mp3*~data=user_id=0,application_id=42~hmac=1ebeeb7b3b9a81f8106b6dc59ca027daea2f8ecd7f48a2367708740a85882ec6",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3757199972,
+          "readable": true,
+          "title": "DES PIGES",
+          "title_short": "DES PIGES",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3757199972",
+          "duration": 135,
+          "rank": 965879,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/7/e/2/0/7e20ba682dfe0a6a9b066cf1dd44a8b8.mp3?hdnea=exp=1771492613~acl=/api/1/1/7/e/2/0/7e20ba682dfe0a6a9b066cf1dd44a8b8.mp3*~data=user_id=0,application_id=42~hmac=1343cc501c16149414af6bd5cee6d1f6475d505d5d75b0d255f32523393a80a5",
+          "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 891336772,
+            "title": "M.I.L.S 4",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        }
+      ],
+      "createdAt": "2026-02-19T09:01:55.897Z"
+    },
+    {
+      "id": "1771493543332",
+      "name": "GOAT",
+      "description": "Album by Ninho",
+      "cover": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg",
+      "creator": {
+        "name": "Ninho",
+        "id": 5542343
+      },
+      "tracks": [
+        {
+          "id": 3058139631,
+          "readable": true,
+          "title": "Boucherie",
+          "title_short": "Boucherie",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139631",
+          "duration": 205,
+          "rank": 807417,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/8/f/8/0/8f87cbf49881cc5add6981a583662b1f.mp3?hdnea=exp=1771494442~acl=/api/1/1/8/f/8/0/8f87cbf49881cc5add6981a583662b1f.mp3*~data=user_id=0,application_id=42~hmac=d3bc35b0fd13ca0a9b44f6ec4f08223a17cc27d274c75f4dcf29718ac00afd30",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139641,
+          "readable": true,
+          "title": "Jungle",
+          "title_short": "Jungle",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139641",
+          "duration": 181,
+          "rank": 755002,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/2/e/5/0/2e5bbda68b830720b446f0fbe2b14b1b.mp3?hdnea=exp=1771494442~acl=/api/1/1/2/e/5/0/2e5bbda68b830720b446f0fbe2b14b1b.mp3*~data=user_id=0,application_id=42~hmac=dd08e588b3b74e7ab227597464d1e40cf230ba6a9983716d92a33301bfd1f32b",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139651,
+          "readable": true,
+          "title": "Malsain",
+          "title_short": "Malsain",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139651",
+          "duration": 207,
+          "rank": 579569,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/9/e/2/0/9e287021519df31c0ce6f2d9c98a984c.mp3?hdnea=exp=1771494442~acl=/api/1/1/9/e/2/0/9e287021519df31c0ce6f2d9c98a984c.mp3*~data=user_id=0,application_id=42~hmac=f2389113dcca2de34777c94183c55b542687f54ad3b7a19d14aa3e28eebe3936",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139671,
+          "readable": true,
+          "title": "Guitare",
+          "title_short": "Guitare",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139671",
+          "duration": 188,
+          "rank": 619504,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/7/8/9/0/7893ba5800bd5375b92654fb3ea35622.mp3?hdnea=exp=1771494442~acl=/api/1/1/7/8/9/0/7893ba5800bd5375b92654fb3ea35622.mp3*~data=user_id=0,application_id=42~hmac=b9882099d8048627caf7d575369dc0e38586f3c7e41d0d585dd11b000d325de1",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139681,
+          "readable": true,
+          "title": "Coco",
+          "title_short": "Coco",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139681",
+          "duration": 148,
+          "rank": 592914,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/1/0/f/0/10fddb77dc3af0e4b43fe6659232dc91.mp3?hdnea=exp=1771494442~acl=/api/1/1/1/0/f/0/10fddb77dc3af0e4b43fe6659232dc91.mp3*~data=user_id=0,application_id=42~hmac=1a31b96b48f303ae1f04ae349be7a1dd5f7e49f680db804258502e82a9affcbc",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139691,
+          "readable": true,
+          "title": "Du Sal",
+          "title_short": "Du Sal",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139691",
+          "duration": 164,
+          "rank": 613593,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/5/7/e/0/57e7094876cf811beccd63d49e13b760.mp3?hdnea=exp=1771494442~acl=/api/1/1/5/7/e/0/57e7094876cf811beccd63d49e13b760.mp3*~data=user_id=0,application_id=42~hmac=5d10c4fa0b3f8bd86919df4ab4222fba70e2d0ed78da40dfc1eb2ac506a53dd0",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139701,
+          "readable": true,
+          "title": "Broly",
+          "title_short": "Broly",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139701",
+          "duration": 140,
+          "rank": 539958,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/f/0/1/0/f01a2f676796dc35c4473e7b3d2ca622.mp3?hdnea=exp=1771494442~acl=/api/1/1/f/0/1/0/f01a2f676796dc35c4473e7b3d2ca622.mp3*~data=user_id=0,application_id=42~hmac=610a352a682184f9242ef60dce3024cc896c7da7e0bfecee0cd6f059456587aa",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139711,
+          "readable": true,
+          "title": "Ghetto Star",
+          "title_short": "Ghetto Star",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139711",
+          "duration": 168,
+          "rank": 666115,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/c/2/1/0/c2133bee4312cd495615d9ade3935650.mp3?hdnea=exp=1771494442~acl=/api/1/1/c/2/1/0/c2133bee4312cd495615d9ade3935650.mp3*~data=user_id=0,application_id=42~hmac=3d0a4d4ff7900b3c7fbdc9948508b1fe8318bb6450ceb765029732a0970ff9b7",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139721,
+          "readable": true,
+          "title": "HAQ",
+          "title_short": "HAQ",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139721",
+          "duration": 149,
+          "rank": 588145,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/e/1/2/0/e1292bacf97f7ad444d4328b615f88b0.mp3?hdnea=exp=1771494442~acl=/api/1/1/e/1/2/0/e1292bacf97f7ad444d4328b615f88b0.mp3*~data=user_id=0,application_id=42~hmac=65f501e1d299a7a0d888d5cb589550e8c1d4d0972a8f5d04c81659f9cd8d84f2",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139731,
+          "readable": true,
+          "title": "Collabo",
+          "title_short": "Collabo",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139731",
+          "duration": 174,
+          "rank": 956040,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/9/f/0/0/9f0ea4a3f6806eb437d285400b225da2.mp3?hdnea=exp=1771494442~acl=/api/1/1/9/f/0/0/9f0ea4a3f6806eb437d285400b225da2.mp3*~data=user_id=0,application_id=42~hmac=dbc410133362ff7d50ca64e3673efcd012a1336e63a047d5a3ac63b2d14f5929",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139741,
+          "readable": true,
+          "title": "Opinel 12",
+          "title_short": "Opinel 12",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139741",
+          "duration": 157,
+          "rank": 639995,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/6/1/d/0/61de3d24a4f1a383a93237cc39924d48.mp3?hdnea=exp=1771494442~acl=/api/1/1/6/1/d/0/61de3d24a4f1a383a93237cc39924d48.mp3*~data=user_id=0,application_id=42~hmac=0c1e56b3564f93985e350f922ddf8a765407752c5134ea8446d7d425869cc8e1",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139751,
+          "readable": true,
+          "title": "Waribana",
+          "title_short": "Waribana",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139751",
+          "duration": 174,
+          "rank": 821617,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/6/e/6/0/6e6fad7b1da780a9d6c97366a30dee90.mp3?hdnea=exp=1771494442~acl=/api/1/1/6/e/6/0/6e6fad7b1da780a9d6c97366a30dee90.mp3*~data=user_id=0,application_id=42~hmac=126a311173613bcd8622f6d1b517deb0d03889f223f990361dc9aa51250db506",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139761,
+          "readable": true,
+          "title": "911",
+          "title_short": "911",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139761",
+          "duration": 261,
+          "rank": 708499,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/9/7/e/0/97e431b5410cd68ca1582270f7695fac.mp3?hdnea=exp=1771494442~acl=/api/1/1/9/7/e/0/97e431b5410cd68ca1582270f7695fac.mp3*~data=user_id=0,application_id=42~hmac=b914cd059ca48a18fbd84095367bf1aba0e875afb38c565a9f306aa041b97d6c",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139771,
+          "readable": true,
+          "title": "Loin d'eux",
+          "title_short": "Loin d'eux",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139771",
+          "duration": 186,
+          "rank": 579385,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/6/d/9/0/6d9742351e413cf58509dea1582a0081.mp3?hdnea=exp=1771494442~acl=/api/1/1/6/d/9/0/6d9742351e413cf58509dea1582a0081.mp3*~data=user_id=0,application_id=42~hmac=23c99c0a88feee8988498ac586728b43e528053014e1b5cbf0bc1b069ecd6f7e",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        },
+        {
+          "id": 3058139781,
+          "readable": true,
+          "title": "Authentique",
+          "title_short": "Authentique",
+          "title_version": "",
+          "link": "https://www.deezer.com/track/3058139781",
+          "duration": 198,
+          "rank": 733801,
+          "explicit_lyrics": true,
+          "explicit_content_lyrics": 1,
+          "explicit_content_cover": 2,
+          "preview": "https://cdnt-preview.dzcdn.net/api/1/1/0/c/2/0/0c2a4c1f84c0683fd21284e702df5260.mp3?hdnea=exp=1771494442~acl=/api/1/1/0/c/2/0/0c2a4c1f84c0683fd21284e702df5260.mp3*~data=user_id=0,application_id=42~hmac=0bbdd5e00186bf08ff46c39e4d4e6a70b1587a596b4f8925bd6f4e10d4ae5762",
+          "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+          "artist": {
+            "id": 5542343,
+            "name": "Ninho",
+            "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+            "type": "artist"
+          },
+          "album": {
+            "id": 660812351,
+            "title": "GOAT",
+            "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+            "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+          },
+          "type": "track"
+        }
+      ],
+      "createdAt": "2026-02-19T09:32:23.332Z"
+    }
+  ],
+  "likes": [
+    {
+      "id": 3758716202,
+      "title": "SPA",
+      "title_short": "SPA",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/3758716202",
+      "duration": 183,
+      "rank": 999858,
+      "explicit_lyrics": false,
+      "explicit_content_lyrics": 0,
+      "explicit_content_cover": 0,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/4/7/2/0/4723865bd27ffeb220f2cd8ae923ba4c.mp3?hdnea=exp=1771483837~acl=/api/1/1/4/7/2/0/4723865bd27ffeb220f2cd8ae923ba4c.mp3*~data=user_id=0,application_id=42~hmac=8702b8e9f5d4e1f7ccf3afd9d38281267bfffbdf7629eb7bb0df625a5baa2044",
+      "md5_image": "96234fff2333de42b22858be5c4fabcb",
+      "position": 1,
+      "artist": {
+        "id": 4429712,
+        "name": "GIMS",
+        "link": "https://www.deezer.com/artist/4429712",
+        "picture": "https://api.deezer.com/artist/4429712/image",
+        "picture_small": "https://cdn-images.dzcdn.net/images/artist/ba02785ee0a58180ca0e8dd37190d107/56x56-000000-80-0-0.jpg",
+        "picture_medium": "https://cdn-images.dzcdn.net/images/artist/ba02785ee0a58180ca0e8dd37190d107/250x250-000000-80-0-0.jpg",
+        "picture_big": "https://cdn-images.dzcdn.net/images/artist/ba02785ee0a58180ca0e8dd37190d107/500x500-000000-80-0-0.jpg",
+        "picture_xl": "https://cdn-images.dzcdn.net/images/artist/ba02785ee0a58180ca0e8dd37190d107/1000x1000-000000-80-0-0.jpg",
+        "radio": true,
+        "tracklist": "https://api.deezer.com/artist/4429712/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 891920462,
+        "title": "SPA",
+        "cover": "https://api.deezer.com/album/891920462/image",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/96234fff2333de42b22858be5c4fabcb/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/96234fff2333de42b22858be5c4fabcb/250x250-000000-80-0-0.jpg",
+        "cover_big": "https://cdn-images.dzcdn.net/images/cover/96234fff2333de42b22858be5c4fabcb/500x500-000000-80-0-0.jpg",
+        "cover_xl": "https://cdn-images.dzcdn.net/images/cover/96234fff2333de42b22858be5c4fabcb/1000x1000-000000-80-0-0.jpg",
+        "md5_image": "96234fff2333de42b22858be5c4fabcb",
+        "tracklist": "https://api.deezer.com/album/891920462/tracks",
+        "type": "album"
+      },
+      "type": "track"
+    },
+    {
+      "id": 3674551372,
+      "readable": true,
+      "title": "OG",
+      "title_short": "OG",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/3674551372",
+      "duration": 164,
+      "rank": 995867,
+      "explicit_lyrics": true,
+      "explicit_content_lyrics": 1,
+      "explicit_content_cover": 2,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/a/6/8/0/a682b6134bfe8245791c135f7e425b2c.mp3?hdnea=exp=1771483880~acl=/api/1/1/a/6/8/0/a682b6134bfe8245791c135f7e425b2c.mp3*~data=user_id=0,application_id=42~hmac=a5e300ce7a9ecee213e4643a48af406be86f8efff9566caccaf2172b301f14b3",
+      "contributors": [
+        {
+          "id": 51968652,
+          "name": "Genezio",
+          "link": "https://www.deezer.com/artist/51968652",
+          "share": "https://www.deezer.com/artist/51968652?utm_source=deezer&utm_content=artist-51968652&utm_term=0_1771482980&utm_medium=web",
+          "picture": "https://api.deezer.com/artist/51968652/image",
+          "picture_small": "https://cdn-images.dzcdn.net/images/artist/0db3f030324e14f46a5a9e076acb9643/56x56-000000-80-0-0.jpg",
+          "picture_medium": "https://cdn-images.dzcdn.net/images/artist/0db3f030324e14f46a5a9e076acb9643/250x250-000000-80-0-0.jpg",
+          "picture_big": "https://cdn-images.dzcdn.net/images/artist/0db3f030324e14f46a5a9e076acb9643/500x500-000000-80-0-0.jpg",
+          "picture_xl": "https://cdn-images.dzcdn.net/images/artist/0db3f030324e14f46a5a9e076acb9643/1000x1000-000000-80-0-0.jpg",
+          "radio": true,
+          "tracklist": "https://api.deezer.com/artist/51968652/top?limit=50",
+          "type": "artist",
+          "role": "Main"
+        },
+        {
+          "id": 5288900,
+          "name": "Niska",
+          "link": "https://www.deezer.com/artist/5288900",
+          "share": "https://www.deezer.com/artist/5288900?utm_source=deezer&utm_content=artist-5288900&utm_term=0_1771482980&utm_medium=web",
+          "picture": "https://api.deezer.com/artist/5288900/image",
+          "picture_small": "https://cdn-images.dzcdn.net/images/artist/f03af182a46b9f16be9c3a16d0771286/56x56-000000-80-0-0.jpg",
+          "picture_medium": "https://cdn-images.dzcdn.net/images/artist/f03af182a46b9f16be9c3a16d0771286/250x250-000000-80-0-0.jpg",
+          "picture_big": "https://cdn-images.dzcdn.net/images/artist/f03af182a46b9f16be9c3a16d0771286/500x500-000000-80-0-0.jpg",
+          "picture_xl": "https://cdn-images.dzcdn.net/images/artist/f03af182a46b9f16be9c3a16d0771286/1000x1000-000000-80-0-0.jpg",
+          "radio": true,
+          "tracklist": "https://api.deezer.com/artist/5288900/top?limit=50",
+          "type": "artist",
+          "role": "Main"
+        }
+      ],
+      "md5_image": "84abe6773b98352985485dfa6956303b",
+      "artist": {
+        "id": 51968652,
+        "name": "Genezio",
+        "tracklist": "https://api.deezer.com/artist/51968652/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 862918082,
+        "title": "LES DENTS DU BONHEUR",
+        "cover": "https://api.deezer.com/album/862918082/image",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/84abe6773b98352985485dfa6956303b/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/84abe6773b98352985485dfa6956303b/250x250-000000-80-0-0.jpg",
+        "cover_big": "https://cdn-images.dzcdn.net/images/cover/84abe6773b98352985485dfa6956303b/500x500-000000-80-0-0.jpg",
+        "cover_xl": "https://cdn-images.dzcdn.net/images/cover/84abe6773b98352985485dfa6956303b/1000x1000-000000-80-0-0.jpg",
+        "md5_image": "84abe6773b98352985485dfa6956303b",
+        "tracklist": "https://api.deezer.com/album/862918082/tracks",
+        "type": "album"
+      },
+      "type": "track"
+    },
+    {
+      "id": 652380162,
+      "readable": true,
+      "title": "Sans peine",
+      "title_short": "Sans peine",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/652380162",
+      "duration": 157,
+      "rank": 830404,
+      "explicit_lyrics": false,
+      "explicit_content_lyrics": 6,
+      "explicit_content_cover": 2,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/a/5/8/0/a580d3e424654ceb29eb76e935076771.mp3?hdnea=exp=1771484711~acl=/api/1/1/a/5/8/0/a580d3e424654ceb29eb76e935076771.mp3*~data=user_id=0,application_id=42~hmac=7293c9959fbb5df278a45e662fa4f864871044fc9fd500522b1093360cfb306f",
+      "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+      "artist": {
+        "id": 5542343,
+        "name": "Ninho",
+        "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 91095382,
+        "title": "Destin",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+      },
+      "type": "track"
+    },
+    {
+      "id": 652380172,
+      "readable": true,
+      "title": "La vie qu'on mène",
+      "title_short": "La vie qu'on mène",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/652380172",
+      "duration": 193,
+      "rank": 969796,
+      "explicit_lyrics": false,
+      "explicit_content_lyrics": 6,
+      "explicit_content_cover": 2,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/2/f/5/0/2f5441ccda40b74779f27f8cbe5cea20.mp3?hdnea=exp=1771484711~acl=/api/1/1/2/f/5/0/2f5441ccda40b74779f27f8cbe5cea20.mp3*~data=user_id=0,application_id=42~hmac=c318d1814108b3495553a4290395b7a17669c5fd7bafd8c0e8c2d647a3cfc661",
+      "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+      "artist": {
+        "id": 5542343,
+        "name": "Ninho",
+        "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 91095382,
+        "title": "Destin",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+      },
+      "type": "track"
+    },
+    {
+      "id": 652380182,
+      "readable": true,
+      "title": "Goutte d'eau",
+      "title_short": "Goutte d'eau",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/652380182",
+      "duration": 157,
+      "rank": 922710,
+      "explicit_lyrics": true,
+      "explicit_content_lyrics": 1,
+      "explicit_content_cover": 2,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/d/d/2/0/dd22374a9ec009bde1cec9fc1760849b.mp3?hdnea=exp=1771484711~acl=/api/1/1/d/d/2/0/dd22374a9ec009bde1cec9fc1760849b.mp3*~data=user_id=0,application_id=42~hmac=7204392d6425586616b8a42de7d2ed52ffecf90b3d0bac4590ad8015349b85b0",
+      "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+      "artist": {
+        "id": 5542343,
+        "name": "Ninho",
+        "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 91095382,
+        "title": "Destin",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg"
+      },
+      "type": "track"
+    },
+    {
+      "id": 3757199852,
+      "readable": true,
+      "title": "KING VON",
+      "title_short": "KING VON",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/3757199852",
+      "duration": 197,
+      "rank": 855751,
+      "explicit_lyrics": true,
+      "explicit_content_lyrics": 1,
+      "explicit_content_cover": 2,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/1/3/6/0/136e27e0327c4461aa35f7a2aee9d7f4.mp3?hdnea=exp=1771494718~acl=/api/1/1/1/3/6/0/136e27e0327c4461aa35f7a2aee9d7f4.mp3*~data=user_id=0,application_id=42~hmac=08e369c0b59d8d5933707a1150700f0f80d1105fc0b309ef2e0bdb84c1c31b20",
+      "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+      "artist": {
+        "id": 5542343,
+        "name": "Ninho",
+        "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 891336772,
+        "title": "M.I.L.S 4",
+        "cover": "https://api.deezer.com/album/891336772/image",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg",
+        "cover_big": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/500x500-000000-80-0-0.jpg",
+        "cover_xl": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/1000x1000-000000-80-0-0.jpg",
+        "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+        "tracklist": "https://api.deezer.com/album/891336772/tracks",
+        "type": "album"
+      },
+      "type": "track"
+    }
+  ],
+  "history": [
+    {
+      "id": 3558373981,
+      "title": "melodrama",
+      "title_short": "melodrama",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/3558373981",
+      "duration": 176,
+      "rank": 996934,
+      "explicit_lyrics": false,
+      "explicit_content_lyrics": 0,
+      "explicit_content_cover": 0,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/7/b/0/0/7b0a0bb479cc5badd57186349606d69b.mp3?hdnea=exp=1771483634~acl=/api/1/1/7/b/0/0/7b0a0bb479cc5badd57186349606d69b.mp3*~data=user_id=0,application_id=42~hmac=5e5bf3904dac7d02360cfe8daca8ac761a3a767d7f6c4c7d295a0b979f798c75",
+      "md5_image": "f2d340d41d5612ed3d875e64c300c732",
+      "position": 2,
+      "artist": {
+        "id": 292,
+        "name": "disiz",
+        "link": "https://www.deezer.com/artist/292",
+        "picture": "https://api.deezer.com/artist/292/image",
+        "picture_small": "https://cdn-images.dzcdn.net/images/artist/f431aeec12ae460ce1029bb316f77094/56x56-000000-80-0-0.jpg",
+        "picture_medium": "https://cdn-images.dzcdn.net/images/artist/f431aeec12ae460ce1029bb316f77094/250x250-000000-80-0-0.jpg",
+        "picture_big": "https://cdn-images.dzcdn.net/images/artist/f431aeec12ae460ce1029bb316f77094/500x500-000000-80-0-0.jpg",
+        "picture_xl": "https://cdn-images.dzcdn.net/images/artist/f431aeec12ae460ce1029bb316f77094/1000x1000-000000-80-0-0.jpg",
+        "radio": true,
+        "tracklist": "https://api.deezer.com/artist/292/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 822345001,
+        "title": "melodrama",
+        "cover": "https://api.deezer.com/album/822345001/image",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/f2d340d41d5612ed3d875e64c300c732/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f2d340d41d5612ed3d875e64c300c732/250x250-000000-80-0-0.jpg",
+        "cover_big": "https://cdn-images.dzcdn.net/images/cover/f2d340d41d5612ed3d875e64c300c732/500x500-000000-80-0-0.jpg",
+        "cover_xl": "https://cdn-images.dzcdn.net/images/cover/f2d340d41d5612ed3d875e64c300c732/1000x1000-000000-80-0-0.jpg",
+        "md5_image": "f2d340d41d5612ed3d875e64c300c732",
+        "tracklist": "https://api.deezer.com/album/822345001/tracks",
+        "type": "album"
+      },
+      "type": "track"
+    },
+    {
+      "id": 3843127141,
+      "readable": true,
+      "title": "Antidoping",
+      "title_short": "Antidoping",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/3843127141",
+      "duration": 147,
+      "rank": 414958,
+      "explicit_lyrics": true,
+      "explicit_content_lyrics": 1,
+      "explicit_content_cover": 2,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/3/9/d/0/39d450032407b22c037d1c1b1643d836.mp3?hdnea=exp=1771485183~acl=/api/1/1/3/9/d/0/39d450032407b22c037d1c1b1643d836.mp3*~data=user_id=0,application_id=42~hmac=7b95d7cce283ae8a2b8888108b0a0523ac0379370e515f2861e133d61814af41",
+      "md5_image": "d49f00ec3f38635bd9c406890fc31a05",
+      "artist": {
+        "id": 162070292,
+        "name": "Kerchak",
+        "tracklist": "https://api.deezer.com/artist/162070292/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 918432891,
+        "title": "Antidoping",
+        "cover": "https://api.deezer.com/album/918432891/image",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/d49f00ec3f38635bd9c406890fc31a05/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/d49f00ec3f38635bd9c406890fc31a05/250x250-000000-80-0-0.jpg",
+        "cover_big": "https://cdn-images.dzcdn.net/images/cover/d49f00ec3f38635bd9c406890fc31a05/500x500-000000-80-0-0.jpg",
+        "cover_xl": "https://cdn-images.dzcdn.net/images/cover/d49f00ec3f38635bd9c406890fc31a05/1000x1000-000000-80-0-0.jpg",
+        "md5_image": "d49f00ec3f38635bd9c406890fc31a05",
+        "tracklist": "https://api.deezer.com/album/918432891/tracks",
+        "type": "album"
+      },
+      "type": "track"
+    },
+    {
+      "id": 3758716202,
+      "title": "SPA",
+      "title_short": "SPA",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/3758716202",
+      "duration": 183,
+      "rank": 999858,
+      "explicit_lyrics": false,
+      "explicit_content_lyrics": 0,
+      "explicit_content_cover": 0,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/4/7/2/0/4723865bd27ffeb220f2cd8ae923ba4c.mp3?hdnea=exp=1771490189~acl=/api/1/1/4/7/2/0/4723865bd27ffeb220f2cd8ae923ba4c.mp3*~data=user_id=0,application_id=42~hmac=0f76114a6e8cf9cdb27e5afdcd4d7f3b8172b72db0513c8da6e287f1eed7f7fb",
+      "md5_image": "96234fff2333de42b22858be5c4fabcb",
+      "position": 1,
+      "artist": {
+        "id": 4429712,
+        "name": "GIMS",
+        "link": "https://www.deezer.com/artist/4429712",
+        "picture": "https://api.deezer.com/artist/4429712/image",
+        "picture_small": "https://cdn-images.dzcdn.net/images/artist/ba02785ee0a58180ca0e8dd37190d107/56x56-000000-80-0-0.jpg",
+        "picture_medium": "https://cdn-images.dzcdn.net/images/artist/ba02785ee0a58180ca0e8dd37190d107/250x250-000000-80-0-0.jpg",
+        "picture_big": "https://cdn-images.dzcdn.net/images/artist/ba02785ee0a58180ca0e8dd37190d107/500x500-000000-80-0-0.jpg",
+        "picture_xl": "https://cdn-images.dzcdn.net/images/artist/ba02785ee0a58180ca0e8dd37190d107/1000x1000-000000-80-0-0.jpg",
+        "radio": true,
+        "tracklist": "https://api.deezer.com/artist/4429712/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 891920462,
+        "title": "SPA",
+        "cover": "https://api.deezer.com/album/891920462/image",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/96234fff2333de42b22858be5c4fabcb/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/96234fff2333de42b22858be5c4fabcb/250x250-000000-80-0-0.jpg",
+        "cover_big": "https://cdn-images.dzcdn.net/images/cover/96234fff2333de42b22858be5c4fabcb/500x500-000000-80-0-0.jpg",
+        "cover_xl": "https://cdn-images.dzcdn.net/images/cover/96234fff2333de42b22858be5c4fabcb/1000x1000-000000-80-0-0.jpg",
+        "md5_image": "96234fff2333de42b22858be5c4fabcb",
+        "tracklist": "https://api.deezer.com/album/891920462/tracks",
+        "type": "album"
+      },
+      "type": "track"
+    },
+    {
+      "id": 652380162,
+      "readable": true,
+      "title": "Sans peine",
+      "title_short": "Sans peine",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/652380162",
+      "duration": 157,
+      "rank": 830404,
+      "explicit_lyrics": false,
+      "explicit_content_lyrics": 6,
+      "explicit_content_cover": 2,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/a/5/8/0/a580d3e424654ceb29eb76e935076771.mp3?hdnea=exp=1771491176~acl=/api/1/1/a/5/8/0/a580d3e424654ceb29eb76e935076771.mp3*~data=user_id=0,application_id=42~hmac=e4d51f95154063e48ea5b9e5b02b3c41bdf3a60d934bf6069e88e29ea574f5d6",
+      "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+      "artist": {
+        "id": 5542343,
+        "name": "Ninho",
+        "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 91095382,
+        "title": "Destin",
+        "cover": "https://api.deezer.com/album/91095382/image",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/250x250-000000-80-0-0.jpg",
+        "cover_big": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/500x500-000000-80-0-0.jpg",
+        "cover_xl": "https://cdn-images.dzcdn.net/images/cover/ac0ec199892ba83b2f8969a592530a79/1000x1000-000000-80-0-0.jpg",
+        "md5_image": "ac0ec199892ba83b2f8969a592530a79",
+        "tracklist": "https://api.deezer.com/album/91095382/tracks",
+        "type": "album"
+      },
+      "type": "track"
+    },
+    {
+      "id": 3058139631,
+      "readable": true,
+      "title": "Boucherie",
+      "title_short": "Boucherie",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/3058139631",
+      "duration": 205,
+      "rank": 807417,
+      "explicit_lyrics": true,
+      "explicit_content_lyrics": 1,
+      "explicit_content_cover": 2,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/8/f/8/0/8f87cbf49881cc5add6981a583662b1f.mp3?hdnea=exp=1771493272~acl=/api/1/1/8/f/8/0/8f87cbf49881cc5add6981a583662b1f.mp3*~data=user_id=0,application_id=42~hmac=4708777bc7bd83a54e437f322198d8ae02c1145dbcaaf9f510d4bfebedf4d388",
+      "md5_image": "5f0aba69cde73b8c7a5ada7547ae5354",
+      "artist": {
+        "id": 5542343,
+        "name": "Ninho",
+        "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 660812351,
+        "title": "GOAT",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/5f0aba69cde73b8c7a5ada7547ae5354/250x250-000000-80-0-0.jpg"
+      },
+      "type": "track"
+    },
+    {
+      "id": 3757199842,
+      "readable": true,
+      "title": "WALLET",
+      "title_short": "WALLET",
+      "title_version": "",
+      "link": "https://www.deezer.com/track/3757199842",
+      "duration": 172,
+      "rank": 883540,
+      "explicit_lyrics": true,
+      "explicit_content_lyrics": 1,
+      "explicit_content_cover": 2,
+      "preview": "https://cdnt-preview.dzcdn.net/api/1/1/f/4/9/0/f493030fa949c68b1ecc70c18d50edf5.mp3?hdnea=exp=1771492613~acl=/api/1/1/f/4/9/0/f493030fa949c68b1ecc70c18d50edf5.mp3*~data=user_id=0,application_id=42~hmac=38893bc89fc1981fd9df32ca6a64f77781b84a50af615884d87a0a2ac434214c",
+      "md5_image": "f9cc9ebf4512262e027f47fb1d965086",
+      "artist": {
+        "id": 5542343,
+        "name": "Ninho",
+        "tracklist": "https://api.deezer.com/artist/5542343/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 891336772,
+        "title": "M.I.L.S 4",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/f9cc9ebf4512262e027f47fb1d965086/250x250-000000-80-0-0.jpg"
+      },
+      "type": "track"
+    }
+  ],
+  "artists": [
+    {
+      "id": 5542343,
+      "name": "Ninho",
+      "picture_medium": "https://cdn-images.dzcdn.net/images/artist/7601c5c0e2bd16cb585898316fd0dfec/250x250-000000-80-0-0.jpg",
+      "nb_fan": 8513306
+    },
+    {
+      "id": 162070292,
+      "name": "Kerchak",
+      "picture_medium": "https://cdn-images.dzcdn.net/images/artist/315f465f791f6994828b7d66f9d8ced6/250x250-000000-80-0-0.jpg",
+      "nb_fan": 359430
+    }
+  ]
+}
