@@ -1451,10 +1451,12 @@ function startRotation() {
 
 async function recordHistory(track) {
     try {
+        const payload = { ...track, id: track.id || track.spotify_id || track.uri };
+        if (!payload.id) return; // rien à enregistrer sans identifiant
         await fetch('/api/local/history', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(track)
+            body: JSON.stringify(payload)
         });
     } catch (e) {
         console.error('Failed to record history', e);
@@ -2411,8 +2413,17 @@ async function togglePlay() {
             // SDK disponible (browser ou Electron+castlabs) : SDK gère tout
             const state = await spotifyPlayer.getCurrentState();
             if (!state) {
-                if (currentTrack) playTrack(currentTrack);
-                else await spotifyFetch('/me/player/play', 'PUT');
+                // Pas d'état SDK (device switché ou pas encore actif) — REST API sans restart
+                if (isPlaying) {
+                    await spotifyFetch('/me/player/pause', 'PUT');
+                    isPlaying = false;
+                } else {
+                    const deviceParam = spotifyDeviceId ? `?device_id=${spotifyDeviceId}` : '';
+                    await spotifyFetch(`/me/player/play${deviceParam}`, 'PUT');
+                    isPlaying = true;
+                }
+                updatePlayIcon();
+                if (isPlaying) startProgressTicker(); else stopProgressTicker();
             } else {
                 spotifyPlayer.togglePlay();
             }
@@ -2473,7 +2484,9 @@ function updatePlayerUI(track) {
         els.npArtist.innerText = track.artist ? track.artist.name : '-';
     }
 
-    els.npCover.src = track.album ? track.album.cover_small : '';
+    els.npCover.src = track.album
+        ? (track.album.cover_small || track.album.cover || (track.album.images && track.album.images[0]?.url) || '')
+        : '';
 
     // MPRIS : notifier le changement de piste
     mprisUpdateTrack(track);
