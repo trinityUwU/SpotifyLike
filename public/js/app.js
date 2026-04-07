@@ -1482,7 +1482,7 @@ async function fetchAllSpotifyPlaylists() {
 /** Récupère toutes les pistes d'une playlist Spotify (paginé) */
 async function fetchSpotifyPlaylistTracks(playlistId) {
     const tracks = [];
-    let endpoint = `/playlists/${playlistId}/tracks?limit=100`;
+    let endpoint = `/playlists/${playlistId}/items?limit=100`;
     while (endpoint) {
         const data = await spotifyFetch(endpoint);
         console.log('[DEBUG tracks] endpoint:', endpoint, '| data keys:', data ? Object.keys(data) : null, '| items length:', data?.items?.length, '| total:', data?.total, '| error:', data?.error);
