@@ -1,6 +1,6 @@
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const { app, BrowserWindow, shell, session, Menu } = require('electron');
+const { app, BrowserWindow, shell, session, Menu, components } = require('electron');
 const { startServer } = require('../src/server');
 
 // ── Widevine / EME (requis par le Spotify Web Playback SDK) ──────────────────
@@ -56,7 +56,11 @@ function createWindow() {
 // Supprimer la barre de menu native (File, Edit, View, Window, Help)
 Menu.setApplicationMenu(null);
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  // Attendre que le CDM Widevine soit prêt (castlabs +wvcus)
+  await components.whenReady();
+  console.log('[Widevine] CDM components ready:', components.status());
+
   startServer((server) => {
     httpServer = server;
     createWindow();
