@@ -21,24 +21,8 @@ function createSpotifyAuthRouter({ spotify }) {
     'user-read-private user-read-email user-modify-playback-state user-read-playback-state streaming user-library-modify user-library-read playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
 
   // ── Flux browser normal (ou Electron ancien mode) ─────────────────────────
-  router.get('/login', (req, res) => {
-    const state = generateRandomString(16);
-    res.redirect(
-      'https://accounts.spotify.com/authorize?' +
-        querystring.stringify({
-          response_type: 'code',
-          client_id: spotify.clientId,
-          scope: SCOPE,
-          redirect_uri: spotify.redirectUri,
-          state,
-        }),
-    );
-  });
-
-  // ── Electron : ouvrir le navigateur système ────────────────────────────────
-  router.get('/auth/open-browser', (req, res) => {
-    const state = generateRandomString(16);
-    const authUrl =
+  function buildAuthUrl(state) {
+    return (
       'https://accounts.spotify.com/authorize?' +
       querystring.stringify({
         response_type: 'code',
@@ -46,7 +30,20 @@ function createSpotifyAuthRouter({ spotify }) {
         scope: SCOPE,
         redirect_uri: spotify.redirectUri,
         state,
-      });
+        show_dialog: true, // force le dialogue pour garantir les nouveaux scopes
+      })
+    );
+  }
+
+  router.get('/login', (req, res) => {
+    const state = generateRandomString(16);
+    res.redirect(buildAuthUrl(state));
+  });
+
+  // ── Electron : ouvrir le navigateur système ────────────────────────────────
+  router.get('/auth/open-browser', (req, res) => {
+    const state = generateRandomString(16);
+    const authUrl = buildAuthUrl(state);
     openInSystemBrowser(authUrl);
     res.json({ ok: true });
   });
