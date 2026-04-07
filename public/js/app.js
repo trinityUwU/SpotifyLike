@@ -264,8 +264,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     spotifyPlayer.addListener('ready', ({ device_id }) => {
         console.log('Ready with Device ID', device_id);
         spotifyDeviceId = device_id;
-        // Transférer la lecture vers notre player Web
-        spotifyFetch('/me/player', 'PUT', { device_ids: [device_id] });
+        // Ne pas transférer automatiquement — on laisse la lecture en cours sur l'appareil actif
+        // On sync juste l'état pour mettre à jour l'UI
         setTimeout(fetchSpotifyState, 500);
     });
 
@@ -609,13 +609,13 @@ async function showDeviceSelector(e) {
 }
 
 async function switchDevice(deviceId) {
-    await spotifyFetch('/me/player', 'PUT', {
-        device_ids: [deviceId],
-        play: true
-    });
+    // Sans play:true → transfère sans forcer la reprise ni perturber la piste en cours
+    await spotifyFetch('/me/player', 'PUT', { device_ids: [deviceId] });
     spotifyDeviceId = deviceId;
+    _hideMenu(els.deviceMenu);
     els.deviceMenu.classList.remove('show');
     console.log('Switched to device', deviceId);
+    setTimeout(fetchSpotifyState, 600);
 }
 
 window.switchDevice = switchDevice; // Expose to global scope for onclick
