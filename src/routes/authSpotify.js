@@ -1,28 +1,67 @@
 const express = require('express');
 const axios = require('axios');
 const querystring = require('querystring');
+const { spawn } = require('child_process');
 const { generateRandomString } = require('../utils/random');
+
+// Tokens temporaires stockés côté serveur après OAuth (mode Electron browser externe)
+let pendingTokens = null;
+
+function openInSystemBrowser(url) {
+  const opener = process.platform === 'darwin' ? 'open'
+               : process.platform === 'win32'  ? 'explorer'
+               : 'xdg-open';
+  spawn(opener, [url], { detached: true, stdio: 'ignore' }).unref();
+}
 
 function createSpotifyAuthRouter({ spotify }) {
   const router = express.Router();
 
-  router.get('/login', (req, res) => {
-    const scope =
-      'user-read-private user-read-email user-modify-playback-state user-read-playback-state streaming user-library-modify user-library-read playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
-    const state = generateRandomString(16);
+  const SCOPE =
+    'user-read-private user-read-email user-modify-playback-state user-read-playback-state streaming user-library-modify user-library-read playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
 
+  // ── Flux browser normal (ou Electron ancien mode) ─────────────────────────
+  router.get('/login', (req, res) => {
+    const state = generateRandomString(16);
     res.redirect(
       'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
           response_type: 'code',
           client_id: spotify.clientId,
-          scope,
+          scope: SCOPE,
           redirect_uri: spotify.redirectUri,
           state,
         }),
     );
   });
 
+  // ── Electron : ouvrir le navigateur système ────────────────────────────────
+  router.get('/auth/open-browser', (req, res) => {
+    const state = generateRandomString(16);
+    const authUrl =
+      'https://accounts.spotify.com/authorize?' +
+      querystring.stringify({
+        response_type: 'code',
+        client_id: spotify.clientId,
+        scope: SCOPE,
+        redirect_uri: spotify.redirectUri,
+        state,
+      });
+    openInSystemBrowser(authUrl);
+    res.json({ ok: true });
+  });
+
+  // ── Electron : polling — retourne les tokens une fois disponibles ──────────
+  router.get('/auth/pending', (req, res) => {
+    if (pendingTokens) {
+      const tokens = pendingTokens;
+      pendingTokens = null;
+      return res.json({ ok: true, ...tokens });
+    }
+    res.json({ ok: false });
+  });
+
+  // ── Callback OAuth (commun browser + Electron) ────────────────────────────
   router.get('/callback', async (req, res) => {
     const code = req.query.code || null;
     const state = req.query.state || null;
@@ -50,13 +89,13 @@ function createSpotifyAuthRouter({ spotify }) {
 
       const { access_token, refresh_token } = response.data;
 
-      res.redirect(
-        '/#' +
-          querystring.stringify({
-            access_token,
-            refresh_token,
-          }),
-      );
+      // Stocker pour le polling Electron
+      pendingTokens = { access_token, refresh_token };
+      // Expiration auto après 5 min si jamais le polling ne se fait pas
+      setTimeout(() => { pendingTokens = null; }, 5 * 60 * 1000);
+
+      // Redirection browser normal (navigateur web standard)
+      res.redirect('/#' + querystring.stringify({ access_token, refresh_token }));
     } catch (error) {
       console.error('Auth Error:', error.response ? error.response.data : error.message);
       res.redirect('/#' + querystring.stringify({ error: 'invalid_token' }));
