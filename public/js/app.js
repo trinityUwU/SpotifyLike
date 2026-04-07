@@ -597,6 +597,7 @@ const els = {
     // Playlists View
     playlistsView: document.getElementById('playlists-view'),
     playlistsGrid: document.getElementById('playlists-grid'),
+    spotifyPlaylistsGrid: document.getElementById('spotify-playlists-grid'),
     createPlaylistBtn: document.getElementById('create-playlist-btn'),
     followedArtistsGrid: document.getElementById('followed-artists-grid'),
 
@@ -979,16 +980,20 @@ async function init() {
 
             const filter = btn.dataset.filter;
             const playlistsSection = document.getElementById('playlists-section');
+            const spotifySection = document.getElementById('spotify-playlists-section');
             const artistsSection = document.getElementById('artists-section');
 
             if (filter === 'all') {
                 playlistsSection.style.display = 'block';
+                if (spotifySection) spotifySection.style.display = 'block';
                 artistsSection.style.display = 'block';
             } else if (filter === 'playlists') {
                 playlistsSection.style.display = 'block';
+                if (spotifySection) spotifySection.style.display = 'block';
                 artistsSection.style.display = 'none';
             } else if (filter === 'artists') {
                 playlistsSection.style.display = 'none';
+                if (spotifySection) spotifySection.style.display = 'none';
                 artistsSection.style.display = 'block';
             }
         });
@@ -1378,7 +1383,65 @@ function createAlbumCard(album, container) {
     container.appendChild(div);
 }
 
-// Playlists Logic
+// ── Spotify Playlists helpers ────────────────────────────────────────────────
+
+/** Récupère toutes les pages de /me/playlists (owned + collaborative) */
+async function fetchAllSpotifyPlaylists() {
+    const playlists = [];
+    let endpoint = '/me/playlists?limit=50';
+    while (endpoint) {
+        const data = await spotifyFetch(endpoint);
+        if (!data || !data.items) break;
+        playlists.push(...data.items.filter(Boolean));
+        endpoint = data.next
+            ? data.next.replace('https://api.spotify.com/v1', '')
+            : null;
+    }
+    return playlists;
+}
+
+/** Récupère toutes les pistes d'une playlist Spotify (paginé) */
+async function fetchSpotifyPlaylistTracks(playlistId) {
+    const tracks = [];
+    let endpoint = `/playlists/${playlistId}/tracks?limit=100&fields=items(track(id,name,uri,artists,album,duration_ms,type)),next`;
+    while (endpoint) {
+        const data = await spotifyFetch(endpoint);
+        if (!data || !data.items) break;
+        const valid = data.items
+            .map(item => normalizeSpotifyTrack(item))
+            .filter(Boolean);
+        tracks.push(...valid);
+        endpoint = data.next
+            ? data.next.replace('https://api.spotify.com/v1', '')
+            : null;
+    }
+    return tracks;
+}
+
+/** Convertit un item de playlist Spotify au format interne de l'app */
+function normalizeSpotifyTrack(item) {
+    const t = item && item.track;
+    if (!t || t.type === 'episode' || !t.id) return null; // ignore podcasts et locaux
+    const images = t.album && t.album.images ? t.album.images : [];
+    return {
+        id: null,
+        spotify_id: t.id,
+        spotify_uri: t.uri,          // déjà résolu → pas d'appel API à la lecture
+        title: t.name,
+        artist: { name: t.artists && t.artists[0] ? t.artists[0].name : 'Inconnu', id: null },
+        album: {
+            title: t.album ? t.album.name : '',
+            id: null,
+            cover_small: images[images.length - 1] ? images[images.length - 1].url : '',
+            cover_medium: images[1] ? images[1].url : '',
+            cover_big: images[0] ? images[0].url : ''
+        },
+        duration: Math.floor(t.duration_ms / 1000),
+        preview: null
+    };
+}
+
+// ── Playlists Logic ───────────────────────────────────────────────────────────
 async function loadPlaylists() {
     switchView('playlists');
     pushHistory({ type: 'playlists' });
@@ -1389,22 +1452,25 @@ async function loadPlaylists() {
     if (allBtn) allBtn.classList.add('active');
 
     const playlistsSection = document.getElementById('playlists-section');
+    const spotifySection = document.getElementById('spotify-playlists-section');
     const artistsSection = document.getElementById('artists-section');
     if (playlistsSection) playlistsSection.style.display = 'block';
+    if (spotifySection) spotifySection.style.display = 'block';
     if (artistsSection) artistsSection.style.display = 'block';
 
     try {
-        const [playlists, followed] = await Promise.all([
+        const [localPlaylists, followed, spotifyPlaylists] = await Promise.all([
             fetch('/api/local/playlists').then(r => r.json()),
-            fetch('/api/local/artists').then(r => r.json())
+            fetch('/api/local/artists').then(r => r.json()),
+            fetchAllSpotifyPlaylists()
         ]);
-        renderPlaylists(playlists, followed);
+        renderPlaylists(localPlaylists, followed, spotifyPlaylists);
     } catch (e) {
         console.error('Failed to load playlists', e);
     }
 }
 
-function renderPlaylists(playlists, followed) {
+function renderPlaylists(playlists, followed, spotifyPlaylists = []) {
     els.playlistsGrid.innerHTML = '';
 
     // Fixed "Liked Tracks" Playlist Virtual Card
@@ -1448,6 +1514,34 @@ function renderPlaylists(playlists, followed) {
         div.addEventListener('click', () => openDetailView('playlist', p.id));
         els.playlistsGrid.appendChild(div);
     });
+
+    // Spotify Playlists
+    els.spotifyPlaylistsGrid.innerHTML = '';
+    const spotifySection = document.getElementById('spotify-playlists-section');
+    if (spotifyPlaylists.length > 0) {
+        if (spotifySection) spotifySection.style.display = 'block';
+        spotifyPlaylists.forEach(p => {
+            const cover = p.images && p.images[0] ? p.images[0].url : '';
+            const trackCount = p.tracks ? p.tracks.total : 0;
+            const isCollab = p.collaborative;
+            const div = document.createElement('div');
+            div.className = 'playlist-card group';
+            div.innerHTML = `
+                <div class="playlist-img-wrapper">
+                    <img src="${cover || 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300'}" class="playlist-img" onerror="this.src='https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300'">
+                    <div class="playlist-actions-overlay">
+                        <button class="action-btn-sm" title="Lire"><i class="fa-solid fa-play"></i></button>
+                    </div>
+                </div>
+                <p class="font-bold text-sm mb-1 truncate">${p.name}</p>
+                <p class="text-spotify-text-gray text-xs">${isCollab ? 'Collaborative' : 'Par ' + (p.owner ? p.owner.display_name : 'Spotify')} • ${trackCount} titres</p>
+            `;
+            div.addEventListener('click', () => openDetailView('spotify-playlist', p.id));
+            els.spotifyPlaylistsGrid.appendChild(div);
+        });
+    } else {
+        if (spotifySection) spotifySection.style.display = 'none';
+    }
 
     // Followed Artists
     els.followedArtistsGrid.innerHTML = '';
@@ -1683,6 +1777,34 @@ async function openDetailView(type, id) {
                 meta: `• ${tracks.length} titres`
             });
             els.detailFollowBtn.style.display = 'none';
+        } else if (type === 'spotify-playlist') {
+            // Afficher un état de chargement immédiatement
+            els.detailType.innerText = 'PLAYLIST';
+            els.detailTitle.innerText = 'Chargement…';
+            els.detailTracksList.innerHTML = '<p style="padding:1rem;color:var(--text-gray)">Chargement des titres…</p>';
+            els.detailFollowBtn.style.display = 'none';
+            els.detailHeaderLike.style.display = 'none';
+
+            // Récupérer les métadonnées de la playlist
+            const playlistMeta = await spotifyFetch(`/playlists/${id}?fields=id,name,images,owner,tracks(total),collaborative,description`);
+            const cover = playlistMeta.images && playlistMeta.images[0] ? playlistMeta.images[0].url : '';
+            const ownerName = playlistMeta.collaborative
+                ? 'Collaborative'
+                : (playlistMeta.owner ? playlistMeta.owner.display_name : 'Spotify');
+
+            // Récupérer toutes les pistes
+            const tracks = await fetchSpotifyPlaylistTracks(id);
+            currentDetailTracks = tracks;
+            currentDetailData = { id, name: playlistMeta.name, type: 'spotify-playlist' };
+
+            renderDetailView({
+                type: 'PLAYLIST SPOTIFY',
+                title: playlistMeta.name,
+                cover,
+                ownerName,
+                ownerImg: 'https://i.pravatar.cc/150?img=11',
+                meta: `• ${tracks.length} titres`
+            });
         } else {
             const all = await fetch('/api/local/playlists').then(r => r.json());
             data = all.find(p => p.id === id);
