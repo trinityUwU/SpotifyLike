@@ -220,13 +220,17 @@ async function findAvailableSpotifyDevice() {
 }
 
 window.onSpotifyWebPlaybackSDKReady = () => {
-    const token = localStorage.getItem('spotify_access_token');
-    if (!token) return;
+    if (!localStorage.getItem('spotify_access_token')) return;
 
     // SDK initialisé dans tous les contextes (Browser ET Electron avec castlabs/Widevine)
+    // getOAuthToken : toujours lire depuis localStorage pour avoir le token le plus récent
     spotifyPlayer = new Spotify.Player({
         name: 'SpotifyLIKE Player',
-        getOAuthToken: cb => { cb(token); },
+        getOAuthToken: async cb => {
+            let t = localStorage.getItem('spotify_access_token');
+            if (!t) t = await refreshSpotifyToken();
+            cb(t || '');
+        },
         volume: 0.5
     });
 
@@ -243,11 +247,14 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         }
     });
     spotifyPlayer.addListener('authentication_error', async ({ message }) => {
-        console.error('SDK Auth Error:', message);
+        console.warn('SDK Auth Error:', message, '— tentative de refresh...');
         const t = await refreshSpotifyToken();
         if (t) {
-            window.location.reload();
+            // Token refreshé : reconnecter le player sans recharger la page
+            spotifyPlayer.disconnect();
+            setTimeout(() => spotifyPlayer.connect(), 500);
         } else {
+            console.error('Refresh impossible — déconnexion');
             localStorage.removeItem('spotify_access_token');
             localStorage.removeItem('spotify_refresh_token');
             window.location.href = 'login.html';
