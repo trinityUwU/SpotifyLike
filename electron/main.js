@@ -33,6 +33,14 @@ function createWindow() {
 
   mainWindow.loadURL(`http://127.0.0.1:${config.PORT}/`);
 
+  // F12 / Ctrl+Shift+I → DevTools (menu supprimé, raccourcis réactivés manuellement)
+  mainWindow.webContents.on('before-input-event', (_event, input) => {
+    if (input.key === 'F12' ||
+        (input.control && input.shift && input.key.toLowerCase() === 'i')) {
+      mainWindow.webContents.toggleDevTools();
+    }
+  });
+
   // ── Flux OAuth Spotify ────────────────────────────────────────────────────
   // Le flux complet se déroule dans la fenêtre Electron :
   //   /login → Spotify OAuth (accounts.spotify.com) → /callback → /#access_token=...

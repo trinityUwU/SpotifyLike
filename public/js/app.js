@@ -1452,10 +1452,12 @@ async function fetchSpotifyPlaylistTracks(playlistId) {
     let endpoint = `/playlists/${playlistId}/tracks?limit=100`;
     while (endpoint) {
         const data = await spotifyFetch(endpoint);
+        console.log('[DEBUG tracks] endpoint:', endpoint, '| data keys:', data ? Object.keys(data) : null, '| items length:', data?.items?.length, '| total:', data?.total, '| error:', data?.error);
         if (!data || !data.items) break;
         const valid = data.items
             .map(item => normalizeSpotifyTrack(item))
             .filter(Boolean);
+        console.log('[DEBUG tracks] raw items:', data.items.length, '| after normalize:', valid.length, '| sample raw:', JSON.stringify(data.items[0])?.slice(0, 200));
         tracks.push(...valid);
         endpoint = data.next
             ? data.next.replace('https://api.spotify.com/v1', '')

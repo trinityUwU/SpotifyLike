@@ -8,7 +8,7 @@ function createSpotifyAuthRouter({ spotify }) {
 
   router.get('/login', (req, res) => {
     const scope =
-      'user-read-private user-read-email user-modify-playback-state user-read-playback-state streaming user-library-modify user-library-read playlist-modify-public playlist-modify-private playlist-read-private';
+      'user-read-private user-read-email user-modify-playback-state user-read-playback-state streaming user-library-modify user-library-read playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
     const state = generateRandomString(16);
 
     res.redirect(
