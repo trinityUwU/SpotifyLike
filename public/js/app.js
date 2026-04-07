@@ -895,31 +895,35 @@ function _buildCtxItems(type, data) {
     const isLiked = data && isTrackLiked(data.id || data.spotify_id);
     const SEP = 'sep';
     switch (type) {
-        case 'track':
+        case 'track': {
+            const hasArtist = data && (data.artist?.name || data.artist_name);
+            const hasAlbum  = data && (data.album?.title || data.album_title);
             return [
                 { action: 'play',         icon: 'fa-solid fa-play',                      label: 'Lire maintenant' },
                 { action: 'queue',        icon: 'fa-solid fa-circle-plus',               label: 'Ajouter à la file' },
                 SEP,
                 { action: 'like',         icon: `fa-${isLiked ? 'solid' : 'regular'} fa-heart`, label: isLiked ? "Retirer des J'aime" : "Ajouter aux J'aime" },
                 SEP,
-                ...(data && (data.artist_id || data.artist?.id) ? [{ action: 'goto-artist', icon: 'fa-solid fa-user',          label: "Aller à l'artiste" }] : []),
-                ...(data && (data.album_id  || data.album?.id)  ? [{ action: 'goto-album',  icon: 'fa-solid fa-record-vinyl',   label: "Aller à l'album" }]  : []),
+                ...(hasArtist ? [{ action: 'goto-artist', icon: 'fa-solid fa-user',         label: "Aller à l'artiste" }] : []),
+                ...(hasAlbum  ? [{ action: 'goto-album',  icon: 'fa-solid fa-record-vinyl', label: "Aller à l'album"   }] : []),
                 SEP,
                 { action: 'copy-link',    icon: 'fa-solid fa-link',                      label: 'Copier le lien Spotify' },
             ];
+        }
         case 'playlist':
         case 'spotify-playlist':
             return [
                 { action: 'play', icon: 'fa-solid fa-play',                              label: 'Lire' },
                 { action: 'open', icon: 'fa-solid fa-arrow-up-right-from-square',        label: 'Ouvrir' },
             ];
-        case 'album':
+        case 'album': {
+            const hasAlbumArtist = data && (data.artist_name || data.artist?.name);
             return [
                 { action: 'play', icon: 'fa-solid fa-play',                              label: 'Lire' },
                 { action: 'open', icon: 'fa-solid fa-arrow-up-right-from-square',        label: 'Ouvrir' },
-                SEP,
-                { action: 'goto-artist', icon: 'fa-solid fa-user',                       label: "Aller à l'artiste" },
+                ...(hasAlbumArtist ? [SEP, { action: 'goto-artist', icon: 'fa-solid fa-user', label: "Aller à l'artiste" }] : []),
             ];
+        }
         case 'artist':
             return [
                 { action: 'play', icon: 'fa-solid fa-play',                              label: 'Lire' },
@@ -1002,14 +1006,21 @@ async function _handleContextAction(action, ctx) {
                 toggleLikeTrack(data, heartEl || els.npLikeIcon);
             }
             break;
-        case 'goto-artist':
-            if (data.artist_id || data.artist?.id) loadArtist(data.artist_id || data.artist.id);
-            else handleArtistClick(data.artist_name || data.artist?.name);
+        case 'goto-artist': {
+            const artistId   = data.artist_id   || data.artist?.id;
+            const artistName = data.artist_name  || data.artist?.name;
+            if (artistId) loadArtist(artistId);
+            else if (artistName) handleArtistClick(artistName);
             break;
-        case 'goto-album':
-            if (data.album_id || data.album?.id) openDetailView('album', data.album_id || data.album.id);
-            else handleAlbumClick(data.album_title || data.album?.title, data.artist_name || data.artist?.name);
+        }
+        case 'goto-album': {
+            const albumId    = data.album_id    || data.album?.id;
+            const albumTitle = data.album_title || data.album?.title;
+            const artName    = data.artist_name || data.artist?.name;
+            if (albumId) openDetailView('album', albumId);
+            else if (albumTitle) handleAlbumClick(albumTitle, artName);
             break;
+        }
         case 'copy-link': {
             const trackId = data.spotify_id || data.id;
             if (trackId) navigator.clipboard.writeText(`https://open.spotify.com/track/${trackId}`).catch(() => {});
@@ -1816,7 +1827,7 @@ function createAlbumCard(album, container) {
         <div class="album-card-title">${album.title}</div>
         <div class="album-card-year">${album.release_date.split('-')[0]} • ${album.record_type.toUpperCase()}</div>
     `;
-    div.dataset.ctx = JSON.stringify({ id: album.id, title: album.title, artist_name: album.artist?.name });
+    div.dataset.ctx = JSON.stringify({ id: album.id, title: album.title, artist_id: album.artist?.id || null, artist_name: album.artist?.name || '' });
     div.addEventListener('click', () => openDetailView('album', album.id));
     container.appendChild(div);
 }
@@ -2925,7 +2936,7 @@ function renderSearchPage(bestArtist, tracks, albums) {
             <div class="album-card-title">${album.title}</div>
             <div class="album-card-year">${album.artist ? album.artist.name : ''}</div>
         `;
-        div.dataset.ctx = JSON.stringify({ id: album.id, title: album.title, artist_name: album.artist?.name });
+        div.dataset.ctx = JSON.stringify({ id: album.id, title: album.title, artist_id: album.artist?.id || null, artist_name: album.artist?.name || '' });
         div.addEventListener('click', () => openDetailView('album', album.id));
         els.searchAlbumsGrid.appendChild(div);
     });
