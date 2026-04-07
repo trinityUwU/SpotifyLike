@@ -54,6 +54,10 @@ let currentBgIndex = 0;
 
 let spotifyPlayer = null;
 let spotifyDeviceId = null;
+
+// Détection Electron (userAgent contient "Electron") — le SDK Spotify y est inutilisable
+// sans Widevine CDM. On utilise l'API REST Spotify Connect à la place.
+const isElectron = /Electron\//.test(navigator.userAgent);
 let progressInterval = null;
 let currentProgressMs = 0;
 let currentDurationMs = 0;
@@ -200,32 +204,37 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     const token = localStorage.getItem('spotify_access_token');
     if (!token) return;
 
+    // ── Mode Electron : SDK non fonctionnel sans Widevine → Spotify Connect REST ──
+    if (isElectron) {
+        console.log('[Electron] Web Playback SDK désactivé (Widevine requis). Utilisation de Spotify Connect REST.');
+        findAvailableSpotifyDevice().then(deviceId => {
+            if (deviceId) {
+                spotifyDeviceId = deviceId;
+                console.log(`[Electron] Appareil Connect trouvé : ${deviceId}`);
+                // Transférer la lecture sur cet appareil et sync l'état
+                spotifyFetch('/me/player', 'PUT', { device_ids: [deviceId] });
+                setTimeout(fetchSpotifyState, 800);
+            } else {
+                console.warn('[Electron] Aucun appareil Spotify trouvé. Ouvrez Spotify sur votre téléphone ou PC.');
+            }
+        });
+        return; // Ne pas initialiser le SDK
+    }
+
+    // ── Mode Browser : SDK complet avec Widevine natif ──────────────────────────
     spotifyPlayer = new Spotify.Player({
         name: 'SpotifyLIKE Player',
         getOAuthToken: cb => { cb(token); },
         volume: 0.5
     });
 
-    spotifyPlayer.addListener('initialization_error', async ({ message }) => {
-        console.error('SDK Init Error:', message);
-        // Tentative de fallback sur un appareil Spotify Connect existant
-        const deviceId = await findAvailableSpotifyDevice();
-        if (deviceId) {
-            spotifyDeviceId = deviceId;
-            console.log('[Fallback] Lecture via Spotify Connect, SDK non disponible (Widevine manquant)');
-        } else {
-            console.warn('[Fallback] Aucun appareil Spotify trouvé. Ouvrez Spotify sur un autre appareil.');
-        }
-    });
+    spotifyPlayer.addListener('initialization_error', ({ message }) => { console.error('SDK Init Error:', message); });
     spotifyPlayer.addListener('authentication_error', async ({ message }) => {
         console.error('SDK Auth Error:', message);
-        // Try to refresh once
         const t = await refreshSpotifyToken();
         if (t) {
-            console.log('Token refreshed, reloading...');
             window.location.reload();
         } else {
-            console.log('Token refresh failed, redirecting to login');
             localStorage.removeItem('spotify_access_token');
             localStorage.removeItem('spotify_refresh_token');
             window.location.href = 'login.html';
@@ -242,10 +251,8 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     spotifyPlayer.addListener('ready', ({ device_id }) => {
         console.log('Ready with Device ID', device_id);
         spotifyDeviceId = device_id;
-        // Transfer playback to our player WITHOUT forcing a pause (removed play: false)
+        // Transférer la lecture vers notre player Web
         spotifyFetch('/me/player', 'PUT', { device_ids: [device_id] });
-
-        // Initial state sync once ready
         setTimeout(fetchSpotifyState, 500);
     });
 
@@ -420,7 +427,7 @@ async function setSpotifyVolume(vol) {
     if (vol < 0) vol = 0;
     if (vol > 100) vol = 100;
 
-    if (spotifyPlayer) {
+    if (spotifyPlayer && !isElectron) {
         spotifyPlayer.setVolume(vol / 100);
     }
 
@@ -861,16 +868,18 @@ async function init() {
 
     // Progress bar click to seek
     document.querySelector('.progress-bar-container').addEventListener('click', (e) => {
-        if (!spotifyPlayer) return;
         const rect = e.currentTarget.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const pct = x / rect.width;
-        spotifyPlayer.getCurrentState().then(state => {
-            if (state) {
-                const duration = state.duration;
-                spotifyPlayer.seek(duration * pct);
-            }
-        });
+        const pct = (e.clientX - rect.left) / rect.width;
+        const duration = currentDurationMs;
+        if (!duration) return;
+        const positionMs = Math.floor(duration * pct);
+        currentProgressMs = positionMs;
+        updateProgressBarUI(positionMs, duration);
+        if (spotifyPlayer && !isElectron) {
+            spotifyPlayer.seek(positionMs);
+        } else {
+            spotifyFetch(`/me/player/seek?position_ms=${positionMs}`, 'PUT');
+        }
     });
 
     // History Nav Events
@@ -883,10 +892,18 @@ async function init() {
 
     // Next/Prev
     if (els.nextBtn) els.nextBtn.addEventListener('click', () => {
-        if (spotifyPlayer) spotifyPlayer.nextTrack();
+        if (spotifyPlayer && !isElectron) {
+            spotifyPlayer.nextTrack();
+        } else {
+            spotifyFetch('/me/player/next', 'POST').then(() => setTimeout(fetchSpotifyState, 500));
+        }
     });
     if (els.prevBtn) els.prevBtn.addEventListener('click', () => {
-        if (spotifyPlayer) spotifyPlayer.previousTrack();
+        if (spotifyPlayer && !isElectron) {
+            spotifyPlayer.previousTrack();
+        } else {
+            spotifyFetch('/me/player/previous', 'POST').then(() => setTimeout(fetchSpotifyState, 500));
+        }
     });
 
     // Queue Menu
@@ -949,12 +966,16 @@ async function init() {
     // Player Like icon event handler
     if (els.npLikeIcon) {
         els.npLikeIcon.addEventListener('click', async () => {
-            // Get current state from SDK to be sure of what's playing
-            if (!spotifyPlayer) return;
-            const state = await spotifyPlayer.getCurrentState();
-            if (!state || !state.track_window.current_track) return;
-
-            const st = state.track_window.current_track;
+            // En Electron ou si le SDK n'est pas dispo : utiliser currentTrack local
+            let st;
+            if (spotifyPlayer && !isElectron) {
+                const state = await spotifyPlayer.getCurrentState();
+                if (!state || !state.track_window.current_track) return;
+                st = state.track_window.current_track;
+            } else {
+                if (!currentTrack) return;
+                st = { id: currentTrack.spotify_id || currentTrack.id, name: currentTrack.title };
+            }
 
             // Try to find if we have this track in our "currentTrack" object locally
             // to preserve more metadata (like Deezer ID if available)
@@ -2133,20 +2154,31 @@ async function addToQueue(track) {
 }
 
 async function togglePlay() {
-    if (!spotifyPlayer) return;
-
     try {
-        const state = await spotifyPlayer.getCurrentState();
-        if (!state) {
-            // No list loaded or player inactive, try to resume if we have a current track
-            if (currentTrack) {
-                playTrack(currentTrack);
+        if (spotifyPlayer && !isElectron) {
+            // Mode browser : SDK gère tout
+            const state = await spotifyPlayer.getCurrentState();
+            if (!state) {
+                if (currentTrack) playTrack(currentTrack);
+                else await spotifyFetch('/me/player/play', 'PUT');
             } else {
-                // Just toggle via API as last resort
-                await spotifyFetch('/me/player/play', 'PUT');
+                spotifyPlayer.togglePlay();
             }
         } else {
-            spotifyPlayer.togglePlay();
+            // Mode Electron (ou SDK absent) : REST API
+            if (isPlaying) {
+                await spotifyFetch('/me/player/pause', 'PUT');
+                isPlaying = false;
+            } else {
+                if (currentTrack) {
+                    await spotifyFetch(`/me/player/play?device_id=${spotifyDeviceId}`, 'PUT');
+                } else {
+                    await spotifyFetch('/me/player/play', 'PUT');
+                }
+                isPlaying = true;
+            }
+            updatePlayIcon();
+            if (isPlaying) startProgressTicker(); else stopProgressTicker();
         }
     } catch (e) {
         console.error('Toggle play failed', e);
