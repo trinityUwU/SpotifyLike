@@ -22,9 +22,11 @@
     <header class="main-header">
         <div class="header-left">
             <i class="fa-brands fa-spotify logo-icon"></i>
-            <div class="search-bar">
-                <i class="fa-solid fa-search search-icon"></i>
-                <input type="text" id="search-input" placeholder="Search">
+            <div class="search-bar" id="search-bar">
+                <button class="search-icon-btn" id="search-icon-btn" title="Rechercher" aria-label="Rechercher">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <input type="text" id="search-input" placeholder="Artistes, titres, podcasts..." autocomplete="off">
             </div>
         </div>
         <nav class="main-nav">
@@ -321,14 +323,7 @@
         </div>
     </footer>
 
-    <div id="context-menu" class="context-menu" style="display: none;">
-        <ul>
-            <li><i class="fa-solid fa-play"></i> Lire</li>
-            <li><i class="fa-solid fa-plus"></i> Ajouter</li>
-            <li class="separator"></li>
-            <li><i class="fa-solid fa-share"></i> Partager</li>
-        </ul>
-    </div>
+    <div id="context-menu" class="context-menu" style="display:none;"></div>
 
     <div id="custom-modal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
