@@ -886,14 +886,14 @@ async function init() {
 
     // Next/Prev
     if (els.nextBtn) els.nextBtn.addEventListener('click', () => {
-        if (spotifyPlayer && !isElectron) {
+        if (spotifyPlayer) {
             spotifyPlayer.nextTrack();
         } else {
             spotifyFetch('/me/player/next', 'POST').then(() => setTimeout(fetchSpotifyState, 500));
         }
     });
     if (els.prevBtn) els.prevBtn.addEventListener('click', () => {
-        if (spotifyPlayer && !isElectron) {
+        if (spotifyPlayer) {
             spotifyPlayer.previousTrack();
         } else {
             spotifyFetch('/me/player/previous', 'POST').then(() => setTimeout(fetchSpotifyState, 500));
@@ -960,13 +960,13 @@ async function init() {
     // Player Like icon event handler
     if (els.npLikeIcon) {
         els.npLikeIcon.addEventListener('click', async () => {
-            // En Electron ou si le SDK n'est pas dispo : utiliser currentTrack local
+            // Utiliser l'état SDK si disponible, sinon currentTrack local
             let st;
-            if (spotifyPlayer && !isElectron) {
+            if (spotifyPlayer) {
                 const state = await spotifyPlayer.getCurrentState();
-                if (!state || !state.track_window.current_track) return;
-                st = state.track_window.current_track;
-            } else {
+                st = state?.track_window?.current_track || null;
+            }
+            if (!st) {
                 if (!currentTrack) return;
                 st = { id: currentTrack.spotify_id || currentTrack.id, name: currentTrack.title };
             }
@@ -2149,8 +2149,8 @@ async function addToQueue(track) {
 
 async function togglePlay() {
     try {
-        if (spotifyPlayer && !isElectron) {
-            // Mode browser : SDK gère tout
+        if (spotifyPlayer) {
+            // SDK disponible (browser ou Electron+castlabs) : SDK gère tout
             const state = await spotifyPlayer.getCurrentState();
             if (!state) {
                 if (currentTrack) playTrack(currentTrack);
@@ -2159,7 +2159,7 @@ async function togglePlay() {
                 spotifyPlayer.togglePlay();
             }
         } else {
-            // Mode Electron (ou SDK absent) : REST API
+            // Fallback REST API (SDK absent / Connect externe)
             if (isPlaying) {
                 await spotifyFetch('/me/player/pause', 'PUT');
                 isPlaying = false;
