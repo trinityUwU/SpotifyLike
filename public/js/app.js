@@ -113,35 +113,60 @@ async function spotifyFetch(endpoint, method = 'GET', body = null) {
 
 async function resolveSpotifyUri(track) {
     if (!track) return null;
-    let spotifyTrack = null;
 
-    // 1. Try ISRC
+    // Déjà résolu lors d'un appel précédent
+    if (track.spotify_uri) return track.spotify_uri;
+
+    // 1. Passer par le backend /api/convert (cache mémoire + DB, ISRC via Deezer full-track)
+    if (track.id) {
+        const token = localStorage.getItem('spotify_access_token');
+        try {
+            const res = await fetch('/api/convert', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ deezerId: track.id, spotifyToken: token })
+            }).then(r => r.json());
+
+            if (res.spotifyUri) {
+                track.spotify_uri = res.spotifyUri;
+                const spotifyId = res.spotifyUri.split(':')[2];
+                track.spotify_id = spotifyId;
+                if (track.id && isTrackLiked(track.id)) {
+                    fetch('/api/local/likes/sync', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: track.id, spotify_id: spotifyId })
+                    }).catch(() => {});
+                    const liked = likedTracks.find(t => t.id == track.id);
+                    if (liked && !liked.spotify_id) liked.spotify_id = spotifyId;
+                }
+                return res.spotifyUri;
+            }
+        } catch (e) {
+            console.warn('Backend convert failed, falling back to direct search:', e.message);
+        }
+    }
+
+    // 2. Fallback : recherche Spotify directe (piste sans ID Deezer, ou échec backend)
+    let spotifyTrack = null;
     if (track.isrc) {
         const res = await spotifyFetch(`/search?q=isrc:${track.isrc}&type=track&limit=1`);
-        if (res.tracks && res.tracks.items.length > 0) {
-            spotifyTrack = res.tracks.items[0];
-        }
+        if (res.tracks?.items?.length > 0) spotifyTrack = res.tracks.items[0];
     }
-    // 2. Fallback to title + artist
-    if (!spotifyTrack) {
+    if (!spotifyTrack && track.title && track.artist?.name) {
         const query = `track:"${track.title}" artist:"${track.artist.name}"`;
         const res = await spotifyFetch(`/search?q=${encodeURIComponent(query)}&type=track&limit=1`);
-        if (res.tracks && res.tracks.items.length > 0) {
-            spotifyTrack = res.tracks.items[0];
-        }
+        if (res.tracks?.items?.length > 0) spotifyTrack = res.tracks.items[0];
     }
-
     if (spotifyTrack) {
-        track.spotify_id = spotifyTrack.id; // Attach for better sync
-        // If track is already liked by id, sync the spotify_id to backend
+        track.spotify_id = spotifyTrack.id;
+        track.spotify_uri = spotifyTrack.uri;
         if (track.id && isTrackLiked(track.id)) {
             fetch('/api/local/likes/sync', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: track.id, spotify_id: spotifyTrack.id })
-            }).catch(e => console.error('Failed to sync like ID', e));
-
-            // Also update the local likedTracks array if needed
+            }).catch(() => {});
             const liked = likedTracks.find(t => t.id == track.id);
             if (liked && !liked.spotify_id) liked.spotify_id = spotifyTrack.id;
         }
@@ -1865,18 +1890,18 @@ async function playTrack(track, context = null) {
     highlightCurrentTrack();
     persistPlayerState();
 
-    // In the background, try to populate the Spotify queue with subsequent tracks
-    // This allows for "Next" button to work natively on Spotify
-    const nextTracks = subsequentTracks.slice(1);
+    // Pré-remplir la queue Spotify avec les 10 pistes suivantes (en parallèle)
+    const nextTracks = subsequentTracks.slice(1, 11);
     if (nextTracks.length > 0) {
-        // Resolve and add to queue asynchronously
-        for (const t of nextTracks) {
-            const nextUri = await resolveSpotifyUri(t);
-            if (nextUri) {
-                spotifyFetch(`/me/player/queue?uri=${nextUri}&device_id=${spotifyDeviceId}`, 'POST')
-                    .catch(e => console.error('Failed to add to Spotify queue', e));
-            }
-        }
+        Promise.allSettled(nextTracks.map(t => resolveSpotifyUri(t)))
+            .then(results => {
+                results.forEach(r => {
+                    if (r.status === 'fulfilled' && r.value) {
+                        spotifyFetch(`/me/player/queue?uri=${r.value}&device_id=${spotifyDeviceId}`, 'POST')
+                            .catch(e => console.error('Failed to add to Spotify queue', e));
+                    }
+                });
+            });
     }
 }
 
