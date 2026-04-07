@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "electron": "electron electron/main.js",
     "test": "node scripts/smoke-backend.js",
     "smoke:backend": "node scripts/smoke-backend.js"
   },
@@ -20,5 +21,8 @@
     "open": "^11.0.0",
     "spotify-playlist": "^0.0.4",
     "spotify-uri": "^4.1.0"
+  },
+  "devDependencies": {
+    "electron": "npm:@castlabs/electron-releases@^34.0.0+wvvmp"
   }
 }

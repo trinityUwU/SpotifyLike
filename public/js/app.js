@@ -175,6 +175,27 @@ async function resolveSpotifyUri(track) {
     return null;
 }
 
+/**
+ * Fallback Spotify Connect : utilisé quand le Web Playback SDK n'est pas disponible
+ * (ex. Electron sans Widevine). Cherche un appareil Spotify actif / disponible.
+ */
+async function findAvailableSpotifyDevice() {
+    try {
+        const res = await spotifyFetch('/me/player/devices');
+        const devices = (res && res.devices) ? res.devices : [];
+        const active = devices.find(d => d.is_active);
+        const any    = devices.find(d => !d.is_restricted);
+        const device = active || any;
+        if (device) {
+            console.log(`[Fallback] Spotify Connect → ${device.name} (${device.id})`);
+            return device.id;
+        }
+    } catch (e) {
+        console.warn('[Fallback] Impossible de trouver un appareil Spotify :', e.message);
+    }
+    return null;
+}
+
 window.onSpotifyWebPlaybackSDKReady = () => {
     const token = localStorage.getItem('spotify_access_token');
     if (!token) return;
@@ -185,7 +206,17 @@ window.onSpotifyWebPlaybackSDKReady = () => {
         volume: 0.5
     });
 
-    spotifyPlayer.addListener('initialization_error', ({ message }) => { console.error('SDK Init Error:', message); });
+    spotifyPlayer.addListener('initialization_error', async ({ message }) => {
+        console.error('SDK Init Error:', message);
+        // Tentative de fallback sur un appareil Spotify Connect existant
+        const deviceId = await findAvailableSpotifyDevice();
+        if (deviceId) {
+            spotifyDeviceId = deviceId;
+            console.log('[Fallback] Lecture via Spotify Connect, SDK non disponible (Widevine manquant)');
+        } else {
+            console.warn('[Fallback] Aucun appareil Spotify trouvé. Ouvrez Spotify sur un autre appareil.');
+        }
+    });
     spotifyPlayer.addListener('authentication_error', async ({ message }) => {
         console.error('SDK Auth Error:', message);
         // Try to refresh once
@@ -1441,6 +1472,24 @@ function normalizeSpotifyTrack(item) {
     };
 }
 
+/** Récupère tous les titres likés Spotify (/v1/me/tracks, paginé) */
+async function fetchSpotifyLikedTracks() {
+    const tracks = [];
+    let endpoint = '/me/tracks?limit=50';
+    while (endpoint) {
+        const data = await spotifyFetch(endpoint);
+        if (!data || !data.items) break;
+        const valid = data.items
+            .map(item => normalizeSpotifyTrack(item))
+            .filter(Boolean);
+        tracks.push(...valid);
+        endpoint = data.next
+            ? data.next.replace('https://api.spotify.com/v1', '')
+            : null;
+    }
+    return tracks;
+}
+
 // ── Playlists Logic ───────────────────────────────────────────────────────────
 async function loadPlaylists() {
     switchView('playlists');
@@ -1764,17 +1813,32 @@ async function openDetailView(type, id) {
             updateAlbumFollowBtn(data);
             els.detailHeaderLike.style.display = 'none'; // Hide for albums as requested
         } else if (type === 'liked') {
-            const tracks = await fetch('/api/local/likes').then(r => r.json());
-            likedTracks = tracks; // Sync
-            currentDetailTracks = tracks;
+            // Afficher loader pendant le chargement
+            els.detailType.innerText = 'PLAYLIST';
+            els.detailTitle.innerText = 'Chargement…';
+            els.detailTracksList.innerHTML = '<p style="padding:1rem;color:var(--text-gray)">Chargement des titres likés…</p>';
+
+            // Charger en parallèle : locaux + Spotify
+            const [localTracks, spotifyTracks] = await Promise.all([
+                fetch('/api/local/likes').then(r => r.json()),
+                fetchSpotifyLikedTracks()
+            ]);
+
+            // Merger : Spotify est la source de vérité ; ajouter les locaux sans doublon (par spotify_id)
+            const spotifyIds = new Set(spotifyTracks.map(t => t.spotify_id).filter(Boolean));
+            const uniqueLocals = localTracks.filter(t => !t.spotify_id || !spotifyIds.has(t.spotify_id));
+            const merged = [...spotifyTracks, ...uniqueLocals];
+
+            likedTracks = merged;
+            currentDetailTracks = merged;
             currentDetailData = { id: 'liked', name: 'Titres likés' };
             renderDetailView({
                 type: 'PLAYLIST',
                 title: 'Titres likés',
-                cover: '', // Styled via background gradient
+                cover: '',
                 ownerName: 'Votre bibliothèque',
                 ownerImg: 'https://i.pravatar.cc/150?img=11',
-                meta: `• ${tracks.length} titres`
+                meta: `• ${merged.length} titres`
             });
             els.detailFollowBtn.style.display = 'none';
         } else if (type === 'spotify-playlist') {
@@ -1987,6 +2051,15 @@ async function playTrack(track, context = null) {
 
     const trackIndex = playbackQueue.findIndex(t => t.id === track.id || t.spotify_id === track.id);
     const subsequentTracks = playbackQueue.slice(trackIndex, trackIndex + 50); // Limit to 50 for performance
+
+    // S'assurer qu'on a un device ID — fallback Spotify Connect si le SDK a échoué
+    if (!spotifyDeviceId) {
+        spotifyDeviceId = await findAvailableSpotifyDevice();
+    }
+    if (!spotifyDeviceId) {
+        console.error('Aucun appareil Spotify disponible. Ouvrez Spotify sur un autre appareil.');
+        return;
+    }
 
     // Resolve URI for the current track first for immediate playback
     const uri = await resolveSpotifyUri(track);
