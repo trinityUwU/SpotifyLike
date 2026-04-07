@@ -1490,7 +1490,10 @@ async function fetchSpotifyPlaylistTracks(playlistId) {
         const valid = data.items
             .map(item => normalizeSpotifyTrack(item))
             .filter(Boolean);
-        console.log('[DEBUG tracks] raw items:', data.items.length, '| after normalize:', valid.length, '| sample raw:', JSON.stringify(data.items[0])?.slice(0, 200));
+        const s = data.items[0];
+        console.log('[DEBUG tracks] raw items:', data.items.length, '| after normalize:', valid.length);
+        console.log('[DEBUG track[0].track]:', JSON.stringify(s?.track)?.slice(0, 400));
+        console.log('[DEBUG track[0] keys]:', s ? Object.keys(s) : null, '| track type:', s?.track?.type, '| track id:', s?.track?.id, '| is_local:', s?.is_local);
         tracks.push(...valid);
         endpoint = data.next
             ? data.next.replace('https://api.spotify.com/v1', '')
@@ -1501,7 +1504,8 @@ async function fetchSpotifyPlaylistTracks(playlistId) {
 
 /** Convertit un item de playlist Spotify au format interne de l'app */
 function normalizeSpotifyTrack(item) {
-    const t = item && item.track;
+    // /playlists/{id}/items → champ "item" ; /me/tracks → champ "track"
+    const t = item && (item.item || item.track);
     if (!t || t.type === 'episode' || !t.id) return null; // ignore podcasts et locaux
     const images = t.album && t.album.images ? t.album.images : [];
     return {
