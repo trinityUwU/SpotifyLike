@@ -35,7 +35,19 @@
                     class="fa-solid fa-chevron-right"></i></button>
         </nav>
         <div class="header-right">
-            <img src="https://i.pravatar.cc/150?img=11" alt="User" class="user-avatar">
+            <div class="user-menu-wrapper" id="user-menu-wrapper">
+                <img src="https://i.pravatar.cc/150?img=11" alt="User" class="user-avatar" id="user-avatar-btn">
+                <div class="user-dropdown" id="user-dropdown">
+                    <div class="user-dropdown-profile">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="User" class="user-dropdown-avatar" id="user-dropdown-avatar">
+                        <span class="user-dropdown-name" id="user-dropdown-name">Profil</span>
+                    </div>
+                    <hr class="user-dropdown-sep">
+                    <button class="user-dropdown-item" id="logout-btn">
+                        <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 

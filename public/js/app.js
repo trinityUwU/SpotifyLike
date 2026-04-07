@@ -689,7 +689,14 @@ const els = {
     npLikeIcon: document.getElementById('np-like-icon'),
     queueBtn: document.getElementById('queue-btn'),
     queueMenu: document.getElementById('queue-menu'),
-    queueListContainer: document.getElementById('queue-list-container')
+    queueListContainer: document.getElementById('queue-list-container'),
+
+    // User menu
+    userAvatarBtn: document.getElementById('user-avatar-btn'),
+    userDropdown: document.getElementById('user-dropdown'),
+    userDropdownAvatar: document.getElementById('user-dropdown-avatar'),
+    userDropdownName: document.getElementById('user-dropdown-name'),
+    logoutBtn: document.getElementById('logout-btn')
 };
 
 let currentArtistData = null;
@@ -954,6 +961,32 @@ async function init() {
     });
 
     els.createPlaylistBtn.addEventListener('click', createPlaylist);
+
+    // ── Menu profil utilisateur ───────────────────────────────────────────────
+    els.userAvatarBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        els.userDropdown.classList.toggle('open');
+    });
+    document.addEventListener('click', () => els.userDropdown.classList.remove('open'));
+
+    els.logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('spotify_access_token');
+        localStorage.removeItem('spotify_refresh_token');
+        window.location.href = 'login.html';
+    });
+
+    // Charger le vrai profil Spotify (photo + nom)
+    spotifyFetch('/me').then(profile => {
+        if (!profile || profile.error) return;
+        const img = profile.images && profile.images[0] ? profile.images[0].url : null;
+        if (img) {
+            els.userAvatarBtn.src = img;
+            els.userDropdownAvatar.src = img;
+        }
+        if (profile.display_name) {
+            els.userDropdownName.textContent = profile.display_name;
+        }
+    }).catch(() => {});
 
     els.followBtn.addEventListener('click', toggleFollow);
 
