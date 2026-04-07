@@ -68,6 +68,24 @@ let lastVolume = 60;
 let playbackQueue = [];
 let queueContext = null; // e.g. 'playlist:123', 'album:456'
 
+// ── Cache Spotify API (évite les 429) ────────────────────────────────────────
+const _spotifyCache = new Map();
+function _getCached(key) {
+    const e = _spotifyCache.get(key);
+    if (!e) return null;
+    if (Date.now() - e.ts > e.ttl) { _spotifyCache.delete(key); return null; }
+    return e.data;
+}
+function _setCache(key, data, ttl) { _spotifyCache.set(key, { data, ts: Date.now(), ttl }); }
+function cachedSpotifyFetch(key, endpoint, ttlMs) {
+    const hit = _getCached(key);
+    if (hit) return Promise.resolve(hit);
+    return spotifyFetch(endpoint).then(data => {
+        if (data && !data.error) _setCache(key, data, ttlMs);
+        return data;
+    });
+}
+
 async function refreshSpotifyToken() {
     const refreshToken = localStorage.getItem('spotify_refresh_token');
     if (!refreshToken) return null;
@@ -1150,84 +1168,120 @@ function switchView(viewName) {
 async function loadHome() {
     switchView('home');
     pushHistory({ type: 'home' });
+
+    // Salutation dynamique
+    const h = new Date().getHours();
+    const greeting = h < 5 ? 'Bonne nuit' : h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
+    const titleEl = document.getElementById('home-title');
+    if (titleEl) titleEl.textContent = greeting;
+
     try {
-        // Fetch data for home - using Gims (4429712) for related artists
-        // and top tracks to simulate user preferences
-        const [artists, gimsTop] = await Promise.all([
-            fetch('/api/deezer/artist/4429712/related').then(r => r.json()),
-            fetch('/api/deezer/artist/4429712/top?limit=6').then(r => r.json())
+        const TTL_LONG  = 60 * 60 * 1000; // 1h — top artists/tracks changent peu
+        const TTL_SHORT =  2 * 60 * 1000; // 2min — recently played
+
+        const [topArtists, recentlyPlayed, topTracks] = await Promise.all([
+            cachedSpotifyFetch('home-top-artists', '/me/top/artists?limit=6&time_range=short_term', TTL_LONG),
+            cachedSpotifyFetch('home-recently-played', '/me/player/recently-played?limit=20', TTL_SHORT),
+            cachedSpotifyFetch('home-top-tracks', '/me/top/tracks?limit=6&time_range=short_term', TTL_LONG),
         ]);
 
-        // Fetch charts for trending section
-        const charts = await fetch('/api/deezer/chart').then(r => r.json());
-
-        // For the shortcuts, we'll use a mix of Gims top tracks and trending chart items
-        const shortcuts = [...gimsTop.data.slice(0, 3), ...charts.tracks.data.slice(0, 3)];
-
-        renderHome(artists.data, shortcuts, charts.albums.data);
+        renderHomeSpotify(topArtists, recentlyPlayed, topTracks);
     } catch (e) {
         console.error('Failed to load home', e);
     }
 }
 
-function renderHome(artists, tracks, albums) {
-    // Shortcuts (using first 6 items from tracks/albums)
+function renderHomeSpotify(topArtists, recentlyPlayed, topTracks) {
+    // ── Shortcuts : récemment joués (dédupliqués par contexte) ──────────────
     els.homeShortcuts.innerHTML = '';
-    const shortcutsData = [...tracks.slice(0, 3), ...albums.slice(0, 3)];
-    shortcutsData.forEach(item => {
-        const title = item.title || item.name;
-        const img = item.album ? item.album.cover_medium : item.cover_medium;
+    const recentItems = recentlyPlayed?.items || [];
+    const seenKeys = new Set();
+    const shortcuts = [];
+    for (const item of recentItems) {
+        if (!item?.track) continue;
+        const key = item.context ? item.context.uri : item.track.id;
+        if (seenKeys.has(key)) continue;
+        seenKeys.add(key);
+        shortcuts.push(item);
+        if (shortcuts.length >= 6) break;
+    }
+    shortcuts.forEach(item => {
+        const track = item.track;
+        const img = track.album?.images?.[0]?.url || '';
         const div = document.createElement('div');
         div.className = 'shortcut-card group';
-        if (item.id) div.setAttribute('data-id', item.id);
-        if (item.spotify_id) div.setAttribute('data-spotify-id', item.spotify_id);
         div.innerHTML = `
             <img src="${img}" class="shortcut-img">
             <div class="shortcut-info">
-                <span class="shortcut-name">${title}</span>
+                <span class="shortcut-name">${track.name}</span>
                 <div class="shortcut-play-btn"><i class="fa-solid fa-play"></i></div>
             </div>
         `;
-        div.addEventListener('click', () => {
-            if (item.preview || item.type === 'track') playTrack(item, tracks);
-            else if (item.type === 'album') openDetailView('album', item.id);
-            else loadArtist(item.artist ? item.artist.id : item.id);
-        });
+        const normalized = normalizeSpotifyTrack({ item: track });
+        if (normalized) div.addEventListener('click', () => playTrack(normalized));
         els.homeShortcuts.appendChild(div);
     });
 
-    // Favorite Artists
+    // ── Genres : extraits des top artists ────────────────────────────────────
+    const genreSection = document.getElementById('home-genres-section');
+    const genreContainer = document.getElementById('home-genres');
+    const spotifyArtists = topArtists?.items || [];
+    if (genreContainer && spotifyArtists.length > 0) {
+        const genreCount = {};
+        spotifyArtists.forEach(a => (a.genres || []).forEach(g => {
+            genreCount[g] = (genreCount[g] || 0) + 1;
+        }));
+        const topGenres = Object.entries(genreCount)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10)
+            .map(([g]) => g);
+        genreContainer.innerHTML = topGenres
+            .map(g => `<span class="genre-pill">${g.charAt(0).toUpperCase() + g.slice(1)}</span>`)
+            .join('');
+        if (genreSection) genreSection.style.display = topGenres.length ? 'block' : 'none';
+    }
+
+    // ── Top Artists ──────────────────────────────────────────────────────────
     els.homeArtists.innerHTML = '';
-    artists.slice(0, 6).forEach(artist => {
+    spotifyArtists.slice(0, 6).forEach(artist => {
+        const img = artist.images?.[0]?.url || '';
         const div = document.createElement('div');
         div.className = 'artist-card';
         div.innerHTML = `
             <div class="artist-card-img-wrapper">
-                <img src="${artist.picture_big}" class="artist-card-img">
+                <img src="${img}" class="artist-card-img" loading="lazy">
                 <div class="artist-card-play"><i class="fa-solid fa-play"></i></div>
             </div>
             <p class="artist-card-name">${artist.name}</p>
             <p class="artist-card-type">Artiste</p>
         `;
-        div.addEventListener('click', () => loadArtist(artist.id));
+        div.addEventListener('click', () => loadArtistByName(artist.name));
         els.homeArtists.appendChild(div);
     });
 
-    // Trends (Albums)
+    // ── Top Tracks ───────────────────────────────────────────────────────────
     els.homeTrends.innerHTML = '';
-    albums.slice(0, 6).forEach(album => {
+    (topTracks?.items || []).slice(0, 6).forEach(track => {
+        const img = track.album?.images?.[0]?.url || '';
         const div = document.createElement('div');
         div.className = 'album-card';
         div.innerHTML = `
-            <img src="${album.cover_medium}" loading="lazy">
-            <div class="album-card-title">${album.title}</div>
-            <div class="album-card-year">${album.artist.name}</div>
+            <img src="${img}" loading="lazy">
+            <div class="album-card-title">${track.name}</div>
+            <div class="album-card-year">${track.artists?.[0]?.name || ''}</div>
         `;
-        div.addEventListener('click', () => {
-            openDetailView('album', album.id);
-        });
+        const normalized = normalizeSpotifyTrack({ item: track });
+        if (normalized) div.addEventListener('click', () => playTrack(normalized));
         els.homeTrends.appendChild(div);
     });
+}
+
+async function loadArtistByName(name) {
+    try {
+        const res = await fetch(`/api/deezer/search/artist?q=${encodeURIComponent(name)}`).then(r => r.json());
+        const artist = res.data?.[0];
+        if (artist) loadArtist(artist.id);
+    } catch (e) { console.error('loadArtistByName failed', e); }
 }
 
 // Background Carousel Logic
@@ -1464,8 +1518,10 @@ function createAlbumCard(album, container) {
 
 // ── Spotify Playlists helpers ────────────────────────────────────────────────
 
-/** Récupère toutes les pages de /me/playlists (owned + collaborative) */
+/** Récupère toutes les pages de /me/playlists (owned + collaborative) — cache 5 min */
 async function fetchAllSpotifyPlaylists() {
+    const cached = _getCached('my-playlists');
+    if (cached) return cached;
     const playlists = [];
     let endpoint = '/me/playlists?limit=50';
     while (endpoint) {
@@ -1476,29 +1532,26 @@ async function fetchAllSpotifyPlaylists() {
             ? data.next.replace('https://api.spotify.com/v1', '')
             : null;
     }
+    if (playlists.length) _setCache('my-playlists', playlists, 5 * 60 * 1000);
     return playlists;
 }
 
-/** Récupère toutes les pistes d'une playlist Spotify (paginé) */
+/** Récupère toutes les pistes d'une playlist Spotify (paginé) — cache 5 min */
 async function fetchSpotifyPlaylistTracks(playlistId) {
+    const cacheKey = `playlist-tracks:${playlistId}`;
+    const cached = _getCached(cacheKey);
+    if (cached) return cached;
     const tracks = [];
     let endpoint = `/playlists/${playlistId}/items?limit=100`;
     while (endpoint) {
         const data = await spotifyFetch(endpoint);
-        console.log('[DEBUG tracks] endpoint:', endpoint, '| data keys:', data ? Object.keys(data) : null, '| items length:', data?.items?.length, '| total:', data?.total, '| error:', data?.error);
         if (!data || !data.items) break;
-        const valid = data.items
-            .map(item => normalizeSpotifyTrack(item))
-            .filter(Boolean);
-        const s = data.items[0];
-        console.log('[DEBUG tracks] raw items:', data.items.length, '| after normalize:', valid.length);
-        console.log('[DEBUG track[0].track]:', JSON.stringify(s?.track)?.slice(0, 400));
-        console.log('[DEBUG track[0] keys]:', s ? Object.keys(s) : null, '| track type:', s?.track?.type, '| track id:', s?.track?.id, '| is_local:', s?.is_local);
-        tracks.push(...valid);
+        tracks.push(...data.items.map(item => normalizeSpotifyTrack(item)).filter(Boolean));
         endpoint = data.next
             ? data.next.replace('https://api.spotify.com/v1', '')
             : null;
     }
+    if (tracks.length) _setCache(cacheKey, tracks, 5 * 60 * 1000);
     return tracks;
 }
 
@@ -1914,6 +1967,10 @@ async function openDetailView(type, id) {
             const tracks = await fetchSpotifyPlaylistTracks(id);
             currentDetailTracks = tracks;
             currentDetailData = { id, name: playlistMeta.name, type: 'spotify-playlist' };
+
+            if (tracks.length === 0) {
+                els.detailTracksList.innerHTML = '<p style="padding:2rem;color:#b3b3b3;text-align:center">Aucun titre disponible pour cette playlist.<br><small style="color:#535353">Les playlists générées par Spotify (Daily Mix, Discover Weekly…) ne sont pas accessibles via l\'API.</small></p>';
+            }
 
             renderDetailView({
                 type: 'PLAYLIST SPOTIFY',

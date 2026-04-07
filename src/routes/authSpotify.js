@@ -18,7 +18,7 @@ function createSpotifyAuthRouter({ spotify }) {
   const router = express.Router();
 
   const SCOPE =
-    'user-read-private user-read-email user-modify-playback-state user-read-playback-state streaming user-library-modify user-library-read playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative';
+    'user-read-private user-read-email user-modify-playback-state user-read-playback-state streaming user-library-modify user-library-read playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative user-top-read user-read-recently-played';
 
   // ── Flux browser normal (ou Electron ancien mode) ─────────────────────────
   function buildAuthUrl(state) {

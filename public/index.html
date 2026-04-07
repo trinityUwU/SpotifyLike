@@ -54,30 +54,27 @@
     <div id="home-view">
         <main class="home-layout custom-scrollbar">
             <section class="home-section">
-                <h2 class="home-title">Bonsoir</h2>
-                <div class="home-grid-top" id="home-shortcuts">
-                    <!-- Shortcuts cards injected via JS -->
-                </div>
+                <h2 class="home-title" id="home-title">Bonsoir</h2>
+                <div class="home-grid-top" id="home-shortcuts"></div>
+            </section>
+
+            <section class="home-section mt-12" id="home-genres-section" style="display:none">
+                <h2 class="section-title">Vos styles musicaux</h2>
+                <div id="home-genres" class="home-genres-wrap"></div>
             </section>
 
             <section class="home-section mt-12">
                 <div class="flex-between">
                     <h2 class="section-title">Vos artistes préférés</h2>
-                    <span class="see-all">Tout afficher</span>
                 </div>
-                <div class="artist-grid" id="home-artists">
-                    <!-- Artists injected via JS -->
-                </div>
+                <div class="artist-grid" id="home-artists"></div>
             </section>
 
             <section class="home-section mt-12">
                 <div class="flex-between">
-                    <h2 class="section-title">Tendances du moment</h2>
-                    <span class="see-all">Tout afficher</span>
+                    <h2 class="section-title">Vos titres du moment</h2>
                 </div>
-                <div class="album-grid" id="home-trends">
-                    <!-- Trends injected via JS -->
-                </div>
+                <div class="album-grid" id="home-trends"></div>
             </section>
         </main>
     </div>

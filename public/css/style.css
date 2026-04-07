@@ -149,6 +149,21 @@ body {
 }
 .user-avatar:hover { opacity: 0.8; }
 
+/* Genre pills */
+.home-genres-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.genre-pill {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.78rem;
+    color: #ccc;
+    transition: background 0.15s, color 0.15s;
+}
+.genre-pill:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
 .user-menu-wrapper {
     position: relative;
 }
