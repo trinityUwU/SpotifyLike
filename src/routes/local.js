@@ -172,6 +172,38 @@ function createLocalRouter({ db }) {
     }
   });
 
+  // PUT /likes → ajouter (idempotent)
+  router.put('/likes', (req, res) => {
+    const track = req.body;
+    const data = db.load();
+    const index = data.likes.findIndex((t) => {
+      const idMatch = track.id && (t.id === track.id || t.spotify_id === track.id);
+      const spotifyIdMatch = track.spotify_id && (t.id === track.spotify_id || t.spotify_id === track.spotify_id);
+      return idMatch || spotifyIdMatch;
+    });
+    if (index === -1) {
+      data.likes.unshift(track);
+      db.save(data);
+    }
+    res.json({ liked: true });
+  });
+
+  // DELETE /likes → retirer (idempotent)
+  router.delete('/likes', (req, res) => {
+    const track = req.body;
+    const data = db.load();
+    const index = data.likes.findIndex((t) => {
+      const idMatch = track.id && (t.id === track.id || t.spotify_id === track.id);
+      const spotifyIdMatch = track.spotify_id && (t.id === track.spotify_id || t.spotify_id === track.spotify_id);
+      return idMatch || spotifyIdMatch;
+    });
+    if (index !== -1) {
+      data.likes.splice(index, 1);
+      db.save(data);
+    }
+    res.json({ liked: false });
+  });
+
   router.post('/likes/sync', (req, res) => {
     const { id, spotify_id } = req.body;
     if (!id || !spotify_id) return res.status(400).json({ error: 'Missing IDs' });

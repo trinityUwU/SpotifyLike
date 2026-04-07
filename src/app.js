@@ -12,6 +12,13 @@ function createApp({ config }) {
   const app = express();
 
   app.use(cors());
+  // HTML toujours servi depuis le disque (pas de cache Chromium/Electron)
+  app.use((req, res, next) => {
+    if (req.path.endsWith('.html') || req.path === '/') {
+      res.setHeader('Cache-Control', 'no-store');
+    }
+    next();
+  });
   app.use(express.static(config.paths.publicDir));
   app.use(express.json());
 

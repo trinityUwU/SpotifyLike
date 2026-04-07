@@ -58,6 +58,7 @@ let spotifyDeviceId = null;
 // Détection Electron (userAgent contient "Electron") — le SDK Spotify y est inutilisable
 // sans Widevine CDM. On utilise l'API REST Spotify Connect à la place.
 const isElectron = /Electron\//.test(navigator.userAgent);
+const hasMpris = isElectron && !!window.electronAPI;
 let progressInterval = null;
 let currentProgressMs = 0;
 let currentDurationMs = 0;
@@ -409,11 +410,13 @@ function updateShuffleRepeatUI() {
     if (repeatMode !== 'off') {
         els.repeatBtn.classList.add('active');
         els.repeatBtn.style.color = '#1db954';
-        // If 'track' mode, we could add a minor indicator, but simple green is good for now
     } else {
         els.repeatBtn.classList.remove('active');
         els.repeatBtn.style.color = '';
     }
+
+    // MPRIS : synchroniser shuffle/loop
+    mprisUpdatePlayback();
 }
 
 async function toggleShuffle() {
@@ -458,16 +461,34 @@ function toggleMute() {
     }
 }
 
-function updatePlayerLikeIcon(trackId) {
-    if (!els.npLikeIcon) return;
-    const isLiked = isTrackLiked(trackId);
-    console.log('Update Like Icon - ID:', trackId, 'IsLiked:', isLiked);
-    if (isLiked) {
+let _lastLikeCheckedId = null;
+
+async function updatePlayerLikeIcon(trackId) {
+    if (!els.npLikeIcon || !trackId) return;
+
+    // Local cache hit — réponse immédiate
+    if (isTrackLiked(trackId)) {
         els.npLikeIcon.classList.remove('fa-regular');
         els.npLikeIcon.classList.add('fa-solid', 'liked');
-    } else {
-        els.npLikeIcon.classList.remove('fa-solid', 'liked');
-        els.npLikeIcon.classList.add('fa-regular');
+        return;
+    }
+
+    // Pas en cache : vérifier auprès de Spotify (une seule fois par titre)
+    if (_lastLikeCheckedId === trackId) return;
+    _lastLikeCheckedId = trackId;
+
+    try {
+        const data = await spotifyFetch(`/me/tracks/contains?ids=${trackId}`);
+        const liked = Array.isArray(data) && data[0] === true;
+        if (liked) {
+            els.npLikeIcon.classList.remove('fa-regular');
+            els.npLikeIcon.classList.add('fa-solid', 'liked');
+        } else {
+            els.npLikeIcon.classList.remove('fa-solid', 'liked');
+            els.npLikeIcon.classList.add('fa-regular');
+        }
+    } catch (_) {
+        // Fallback silencieux — icône déjà en état non-liké
     }
 }
 
@@ -556,7 +577,7 @@ async function showDeviceSelector(e) {
 
     // Toggle if already open
     if (els.deviceMenu.classList.contains('show')) {
-        els.deviceMenu.classList.remove('show');
+        _hideMenu(els.deviceMenu, () => els.deviceMenu.classList.remove('show'));
         return;
     }
 
@@ -583,6 +604,7 @@ async function showDeviceSelector(e) {
     });
 
     els.deviceListContainer.innerHTML = html;
+    _showMenu(els.deviceMenu);
     els.deviceMenu.classList.add('show');
 }
 
@@ -723,6 +745,14 @@ let currentDetailTracks = [];
 let currentDetailPage = 0;
 const TRACKS_PER_PAGE = 50;
 
+// Returns a normalized context descriptor for the currently open detail view
+function getDetailContextInfo() {
+    if (!currentDetailData) return null;
+    if (currentDetailData.id === 'liked') return { type: 'liked', id: 'liked' };
+    if (currentDetailData.type === 'spotify-playlist') return { type: 'spotify-playlist', id: currentDetailData.id };
+    return null; // album / local playlist → fallback queue
+}
+
 // History Navigation State
 let historyBack = [];
 let historyForward = [];
@@ -733,42 +763,67 @@ let likedTracks = [];
 
 function isTrackLiked(trackId) {
     if (!trackId) return false;
-    const found = likedTracks.some(t => {
-        const match = (t.id == trackId || t.spotify_id == trackId);
-        if (match) console.log('Match found in likedTracks:', t.title, 'ID:', t.id, 'SpotifyID:', t.spotify_id);
-        return match;
-    });
-    return found;
+    return likedTracks.some(t => t.id == trackId || t.spotify_id == trackId);
 }
 
 async function toggleLikeTrack(track, heartEl) {
-    try {
-        const res = await fetch('/api/local/likes', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(track)
-        }).then(r => r.json());
+    // L'état visuel de l'icône est la source de vérité (géré par updatePlayerLikeIcon)
+    const wasLiked = heartEl.classList.contains('liked');
+    const spotifyId = track.spotify_id || (track.id && isNaN(track.id) ? track.id : null);
 
-        if (res.liked) {
-            likedTracks.push(track);
-            heartEl.classList.remove('fa-regular');
-            heartEl.classList.add('fa-solid', 'liked');
+    // Mise à jour optimiste de l'icône
+    if (wasLiked) {
+        heartEl.classList.remove('fa-solid', 'liked');
+        heartEl.classList.add('fa-regular');
+    } else {
+        heartEl.classList.remove('fa-regular');
+        heartEl.classList.add('fa-solid', 'liked');
+    }
+    // Anime.js pulse on the heart icon
+    _A.pulse(heartEl, { scale: wasLiked ? 1.2 : 1.5, duration: wasLiked ? 300 : 440 });
+
+    try {
+        if (wasLiked) {
+            // ── Unlike ────────────────────────────────────────────────────────
+            likedTracks = likedTracks.filter(t => t.id != track.id && t.spotify_id != (spotifyId || track.id));
+            if (spotifyId) spotifyFetch(`/me/tracks?ids=${spotifyId}`, 'DELETE').catch(() => {});
+            // Retirer de la DB locale (idempotent)
+            fetch('/api/local/likes', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(track)
+            }).catch(() => {});
         } else {
-            likedTracks = likedTracks.filter(t => (t.id != track.id && t.spotify_id != track.id));
-            heartEl.classList.remove('fa-solid', 'liked');
-            heartEl.classList.add('fa-regular');
+            // ── Like ──────────────────────────────────────────────────────────
+            if (!likedTracks.some(t => t.id == track.id || t.spotify_id == (spotifyId || track.id))) {
+                likedTracks.unshift(track);
+            }
+            if (spotifyId) spotifyFetch(`/me/tracks?ids=${spotifyId}`, 'PUT').catch(() => {});
+            // Ajouter à la DB locale (idempotent)
+            fetch('/api/local/likes', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(track)
+            }).catch(() => {});
         }
 
-        // If we are currently viewing the "Liked Tracks" page, refresh the list immediately
+        // Si on est sur la vue "Titres likés", rafraîchir
         if (currentDetailData && currentDetailData.id === 'liked') {
             currentDetailTracks = [...likedTracks];
             renderPagedTracks();
-            // Update the meta description (count)
             const metaEl = document.getElementById('detail-meta-text');
             if (metaEl) metaEl.innerText = `• ${likedTracks.length} titres`;
         }
     } catch (e) {
         console.error('Failed to toggle like', e);
+        // Rétablir l'icône en cas d'erreur
+        if (wasLiked) {
+            heartEl.classList.remove('fa-regular');
+            heartEl.classList.add('fa-solid', 'liked');
+        } else {
+            heartEl.classList.remove('fa-solid', 'liked');
+            heartEl.classList.add('fa-regular');
+        }
     }
 }
 
@@ -874,15 +929,24 @@ async function init() {
     // is handled locally by startProgressTicker, so no need to poll Spotify more often)
     setInterval(fetchSpotifyState, 30_000);
 
-    // Fetch Liked Tracks
+    // Fetch Liked Tracks (local + premières 50 Spotify pour l'icône cœur immédiate)
     try {
-        likedTracks = await fetch('/api/local/likes').then(r => r.json());
+        const [localLikes, spotifyPage] = await Promise.all([
+            fetch('/api/local/likes').then(r => r.json()),
+            spotifyFetch('/me/tracks?limit=50').catch(() => null)
+        ]);
+        const spotifyLikes = spotifyPage?.items
+            ? spotifyPage.items.map(item => normalizeSpotifyTrack(item)).filter(Boolean)
+            : [];
+        const spotifyIds = new Set(spotifyLikes.map(t => t.spotify_id).filter(Boolean));
+        const uniqueLocals = localLikes.filter(t => !t.spotify_id || !spotifyIds.has(t.spotify_id));
+        likedTracks = [...spotifyLikes, ...uniqueLocals];
     } catch (e) {
         console.error('Failed to fetch likes', e);
     }
 
     // Global Player Events
-    els.playBtn.addEventListener('click', togglePlay);
+    els.playBtn.addEventListener('click', () => { _A.pop(els.playBtn); togglePlay(); });
     // audioPlayer events removed as we use SDK sync
 
     // Progress bar click to seek
@@ -983,9 +1047,21 @@ async function init() {
     // ── Menu profil utilisateur ───────────────────────────────────────────────
     els.userAvatarBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        els.userDropdown.classList.toggle('open');
+        if (els.userDropdown.classList.contains('open')) {
+            anime.remove(els.userDropdown);
+            anime({ targets: els.userDropdown, opacity: [1, 0], translateY: [0, -8], scale: [1, 0.96], duration: _A.d(160), easing: 'easeInQuad', complete: () => els.userDropdown.classList.remove('open') });
+        } else {
+            els.userDropdown.classList.add('open');
+            anime.remove(els.userDropdown);
+            anime({ targets: els.userDropdown, opacity: [0, 1], translateY: [-10, 0], scale: [0.96, 1], duration: _A.d(200), easing: 'easeOutCubic' });
+        }
     });
-    document.addEventListener('click', () => els.userDropdown.classList.remove('open'));
+    document.addEventListener('click', () => {
+        if (els.userDropdown.classList.contains('open')) {
+            anime.remove(els.userDropdown);
+            anime({ targets: els.userDropdown, opacity: [1, 0], translateY: [0, -8], duration: _A.d(150), easing: 'easeInQuad', complete: () => els.userDropdown.classList.remove('open') });
+        }
+    });
 
     els.logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('spotify_access_token');
@@ -994,17 +1070,21 @@ async function init() {
     });
 
     // Charger le vrai profil Spotify (photo + nom)
+    // La photo Spotify n'écrase pas une photo personnalisée définie dans les settings
     spotifyFetch('/me').then(profile => {
         if (!profile || profile.error) return;
-        const img = profile.images && profile.images[0] ? profile.images[0].url : null;
-        if (img) {
-            els.userAvatarBtn.src = img;
-            els.userDropdownAvatar.src = img;
-        }
         if (profile.display_name) {
             els.userDropdownName.textContent = profile.display_name;
         }
+        const img = profile.images && profile.images[0] ? profile.images[0].url : null;
+        if (img && !appSettings.profilePhotoOverride) {
+            els.userAvatarBtn.src = img;
+            els.userDropdownAvatar.src = img;
+        }
     }).catch(() => {});
+
+    initSettings();
+    initMpris();
 
     els.followBtn.addEventListener('click', toggleFollow);
 
@@ -1046,7 +1126,6 @@ async function init() {
             }
 
             toggleLikeTrack(trackToLike, els.npLikeIcon);
-            console.log('Toggling Like for:', trackToLike.title, 'ID:', trackToLike.id, 'SpotifyID:', trackToLike.spotify_id);
         });
     }
 
@@ -1067,6 +1146,17 @@ async function init() {
     });
 
     els.detailFollowBtn.addEventListener('click', toggleAlbumFollow);
+
+    // Detail play button — lance toute la vue avec le contexte approprié
+    if (els.detailPlayBtn) els.detailPlayBtn.addEventListener('click', () => {
+        if (!currentDetailTracks || currentDetailTracks.length === 0) return;
+        const ctx = getDetailContextInfo();
+        // Si shuffle actif, choisir un titre aléatoire ; sinon le premier
+        const startTrack = isShuffle
+            ? currentDetailTracks[Math.floor(Math.random() * currentDetailTracks.length)]
+            : currentDetailTracks[0];
+        playTrack(startTrack, currentDetailTracks, ctx);
+    });
 
     // Library Filters
     document.querySelectorAll('.library-filter-btn').forEach(btn => {
@@ -1132,36 +1222,54 @@ async function init() {
     });
 }
 
+// ── Helpers menus (Anime.js) ─────────────────────────────────────────────────
+function _showMenu(menuEl) {
+    if (!menuEl) return;
+    menuEl.style.display = 'block';
+    anime.remove(menuEl);
+    anime({ targets: menuEl, opacity: [0, 1], translateY: [-10, 0], scale: [0.97, 1], duration: _A.d(200), easing: 'easeOutCubic' });
+}
+
+function _hideMenu(menuEl, cb) {
+    if (!menuEl) return;
+    anime.remove(menuEl);
+    anime({ targets: menuEl, opacity: [1, 0], translateY: [0, -8], scale: [1, 0.97], duration: _A.d(160), easing: 'easeInQuad', complete: () => {
+        menuEl.style.display = 'none';
+        if (cb) cb();
+    }});
+}
+
 function switchView(viewName) {
     // Reset nav active states
     els.navHome.classList.remove('active');
     els.navPlaylists.classList.remove('active');
 
-    // Hide all views
-    els.artistView.style.display = 'none';
-    els.searchView.style.display = 'none';
-    els.homeView.style.display = 'none';
-    els.playlistsView.style.display = 'none';
-    els.detailView.style.display = 'none';
+    // Hide all views instantly (no old-view fade-out to avoid blocking content load)
+    [els.artistView, els.searchView, els.homeView, els.playlistsView, els.detailView].forEach(v => {
+        if (v) { v.style.display = 'none'; v.style.opacity = ''; v.style.transform = ''; }
+    });
 
     // Auto-close Queue on navigation
-    if (els.queueMenu) {
-        els.queueMenu.classList.remove('show');
+    if (els.queueMenu && els.queueMenu.classList.contains('show')) {
+        _hideMenu(els.queueMenu, () => els.queueMenu.classList.remove('show'));
     }
 
+    let target = null;
     if (viewName === 'artist') {
-        els.artistView.style.display = 'flex';
+        els.artistView.style.display = 'flex'; target = els.artistView;
     } else if (viewName === 'search') {
-        els.searchView.style.display = 'flex';
+        els.searchView.style.display = 'flex'; target = els.searchView;
     } else if (viewName === 'home') {
-        els.homeView.style.display = 'flex';
+        els.homeView.style.display = 'flex'; target = els.homeView;
         els.navHome.classList.add('active');
     } else if (viewName === 'playlists') {
-        els.playlistsView.style.display = 'flex';
+        els.playlistsView.style.display = 'flex'; target = els.playlistsView;
         els.navPlaylists.classList.add('active');
     } else if (viewName === 'detail') {
-        els.detailView.style.display = 'flex';
+        els.detailView.style.display = 'flex'; target = els.detailView;
     }
+
+    if (target) _A.fadeIn(target, { duration: 280, y: 14 });
     window.scrollTo(0, 0);
 }
 
@@ -1221,6 +1329,7 @@ function renderHomeSpotify(topArtists, recentlyPlayed, topTracks) {
         if (normalized) div.addEventListener('click', () => playTrack(normalized));
         els.homeShortcuts.appendChild(div);
     });
+    _A.stagger('#home-shortcuts .shortcut-card', { duration: 360, staggerDelay: 55 });
 
     // ── Genres : extraits des top artists ────────────────────────────────────
     const genreSection = document.getElementById('home-genres-section');
@@ -1258,6 +1367,7 @@ function renderHomeSpotify(topArtists, recentlyPlayed, topTracks) {
         div.addEventListener('click', () => loadArtistByName(artist.name));
         els.homeArtists.appendChild(div);
     });
+    _A.stagger('#home-artists .artist-card', { duration: 360, staggerDelay: 60 });
 
     // ── Top Tracks ───────────────────────────────────────────────────────────
     els.homeTrends.innerHTML = '';
@@ -1274,6 +1384,7 @@ function renderHomeSpotify(topArtists, recentlyPlayed, topTracks) {
         if (normalized) div.addEventListener('click', () => playTrack(normalized));
         els.homeTrends.appendChild(div);
     });
+    _A.stagger('#home-trends .album-card', { duration: 360, staggerDelay: 60 });
 }
 
 async function loadArtistByName(name) {
@@ -1463,6 +1574,7 @@ function renderTopTracks(tracks) {
         div.addEventListener('click', () => playTrack(track, tracks));
         els.popularList.appendChild(div);
     });
+    _A.stagger(els.popularList.querySelectorAll('.track-item'), { duration: 320, staggerDelay: 50, y: 14 });
 }
 
 function renderAlbums(albums) {
@@ -1670,6 +1782,7 @@ function renderPlaylists(playlists, followed, spotifyPlaylists = []) {
         div.addEventListener('click', () => openDetailView('playlist', p.id));
         els.playlistsGrid.appendChild(div);
     });
+    _A.stagger('#playlists-grid .playlist-card', { duration: 340, staggerDelay: 50 });
 
     // Spotify Playlists
     els.spotifyPlaylistsGrid.innerHTML = '';
@@ -1695,6 +1808,7 @@ function renderPlaylists(playlists, followed, spotifyPlaylists = []) {
             div.addEventListener('click', () => openDetailView('spotify-playlist', p.id));
             els.spotifyPlaylistsGrid.appendChild(div);
         });
+        _A.stagger('#spotify-playlists-grid .playlist-card', { duration: 340, staggerDelay: 50 });
     } else {
         if (spotifySection) spotifySection.style.display = 'none';
     }
@@ -1715,6 +1829,7 @@ function renderPlaylists(playlists, followed, spotifyPlaylists = []) {
         div.addEventListener('click', () => loadArtist(artist.id));
         els.followedArtistsGrid.appendChild(div);
     });
+    _A.stagger('#followed-artists-grid .artist-card', { duration: 340, staggerDelay: 60 });
 }
 
 async function createPlaylist() {
@@ -1842,6 +1957,10 @@ function showCustomModal({ title, description, showInput = false, showUpload = f
         els.modalInput.value = defaultValue;
         els.modalConfirm.innerText = confirmText;
         els.modal.style.display = 'flex';
+        const modalContent = els.modal.querySelector('.modal-content');
+        anime.remove(els.modal); anime.remove(modalContent);
+        anime({ targets: els.modal, opacity: [0, 1], duration: _A.d(200), easing: 'linear' });
+        if (modalContent) anime({ targets: modalContent, opacity: [0, 1], scale: [0.9, 1], translateY: [-14, 0], duration: _A.d(320), easing: 'easeOutBack' });
 
         // Upload button logic
         if (showUpload) {
@@ -1876,12 +1995,18 @@ function showCustomModal({ title, description, showInput = false, showUpload = f
         };
 
         const close = () => {
-            els.modal.style.display = 'none';
-            els.modalConfirm.removeEventListener('click', onConfirm);
-            els.modalCancel.removeEventListener('click', onCancel);
-            els.modalUploadBtn.removeEventListener('click', onUploadClick);
-            els.modalFileInput.removeEventListener('change', onFileChange);
-            els.modalFileInput.value = ''; // Reset
+            const _cleanup = () => {
+                els.modal.style.display = 'none';
+                els.modalConfirm.removeEventListener('click', onConfirm);
+                els.modalCancel.removeEventListener('click', onCancel);
+                els.modalUploadBtn.removeEventListener('click', onUploadClick);
+                els.modalFileInput.removeEventListener('change', onFileChange);
+                els.modalFileInput.value = '';
+            };
+            const modalContent = els.modal.querySelector('.modal-content');
+            anime.remove(els.modal); anime.remove(modalContent);
+            anime({ targets: els.modal, opacity: [1, 0], duration: _A.d(180), easing: 'easeInQuad', complete: _cleanup });
+            if (modalContent) anime({ targets: modalContent, scale: [1, 0.93], opacity: [1, 0], translateY: [0, 8], duration: _A.d(160), easing: 'easeInQuad' });
         };
 
         els.modalConfirm.addEventListener('click', onConfirm);
@@ -2139,29 +2264,28 @@ function renderPagedTracks() {
             // Future context menu implementation
         });
 
-        div.addEventListener('click', () => playTrack(t, currentDetailTracks));
+        div.addEventListener('click', () => playTrack(t, currentDetailTracks, getDetailContextInfo()));
         els.detailTracksList.appendChild(div);
     });
 
     // Scroll back up to the top of the layout
     els.detailLayout.scrollTo({ top: 0, behavior: 'smooth' });
+    _A.stagger(els.detailTracksList.querySelectorAll('.detail-track-item'), { duration: 300, staggerDelay: 30, y: 12 });
 }
 
 // Player Logic
-async function playTrack(track, context = null) {
+// contextInfo: { type: 'spotify-playlist', id } | { type: 'liked', id: 'liked' } | null
+async function playTrack(track, tracksArray = null, contextInfo = null) {
     if (!track) return;
 
     currentTrack = track;
 
     // Update local queue
-    if (context && Array.isArray(context)) {
-        playbackQueue = context;
+    if (tracksArray && Array.isArray(tracksArray)) {
+        playbackQueue = tracksArray;
     } else if (!playbackQueue.some(t => t.id === track.id || t.spotify_id === track.id)) {
         playbackQueue = [track];
     }
-
-    const trackIndex = playbackQueue.findIndex(t => t.id === track.id || t.spotify_id === track.id);
-    const subsequentTracks = playbackQueue.slice(trackIndex, trackIndex + 50); // Limit to 50 for performance
 
     // S'assurer qu'on a un device ID — fallback Spotify Connect si le SDK a échoué
     if (!spotifyDeviceId) {
@@ -2172,7 +2296,46 @@ async function playTrack(track, context = null) {
         return;
     }
 
-    // Resolve URI for the current track first for immediate playback
+    // ── Spotify playlist : context_uri → shuffle/repeat/next/prev natifs ─────
+    if (contextInfo?.type === 'spotify-playlist' && track.spotify_uri) {
+        await spotifyFetch(`/me/player/play?device_id=${spotifyDeviceId}`, 'PUT', {
+            context_uri: `spotify:playlist:${contextInfo.id}`,
+            offset: { uri: track.spotify_uri }
+        });
+        isPlaying = true;
+        updatePlayerUI(track);
+        updatePlayIcon();
+        recordHistory(track);
+        highlightCurrentTrack();
+        persistPlayerState();
+        return;
+    }
+
+    // ── Titres likés : uris[] complet → shuffle/repeat natifs Spotify ─────────
+    if (contextInfo?.type === 'liked') {
+        const trackUri = track.spotify_uri || (track.spotify_id ? `spotify:track:${track.spotify_id}` : null);
+        if (trackUri) {
+            const allUris = playbackQueue
+                .map(t => t.spotify_uri || (t.spotify_id ? `spotify:track:${t.spotify_id}` : null))
+                .filter(Boolean);
+            if (allUris.length > 0) {
+                const offsetPos = allUris.indexOf(trackUri);
+                await spotifyFetch(`/me/player/play?device_id=${spotifyDeviceId}`, 'PUT', {
+                    uris: allUris.slice(0, 750),
+                    offset: offsetPos >= 0 ? { position: offsetPos } : { uri: trackUri }
+                });
+                isPlaying = true;
+                updatePlayerUI(track);
+                updatePlayIcon();
+                recordHistory(track);
+                highlightCurrentTrack();
+                persistPlayerState();
+                return;
+            }
+        }
+    }
+
+    // ── Fallback : résoudre l'URI Spotify + pré-remplir la queue ─────────────
     const uri = await resolveSpotifyUri(track);
     if (!uri) {
         console.error('Could not resolve Spotify URI for', track.title);
@@ -2183,12 +2346,11 @@ async function playTrack(track, context = null) {
         return;
     }
 
-    // Start playing the current track
-    await spotifyFetch(`/me/player/play?device_id=${spotifyDeviceId}`, 'PUT', {
-        uris: [uri]
-    });
+    const trackIndex = playbackQueue.findIndex(t => t.id === track.id || t.spotify_id === track.id);
+    const subsequentTracks = playbackQueue.slice(trackIndex, trackIndex + 50);
 
-    currentTrack = track;
+    await spotifyFetch(`/me/player/play?device_id=${spotifyDeviceId}`, 'PUT', { uris: [uri] });
+
     isPlaying = true;
     updatePlayerUI(track);
     updatePlayIcon();
@@ -2278,10 +2440,20 @@ async function togglePlay() {
 function updatePlayIcon() {
     const iconClass = isPlaying ? 'fa-pause' : 'fa-play';
     els.playBtn.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+    // MPRIS : mettre à jour l'état play/pause
+    mprisUpdatePlayback();
+    if (isPlaying) startMprisPositionTick(); else stopMprisPositionTick();
 }
 
 function updatePlayerUI(track) {
     if (!track) return;
+
+    // Animate now-playing info change
+    if (els.npCover && els.npTitle && els.npArtist) {
+        anime.remove([els.npCover, els.npTitle, els.npArtist]);
+        anime({ targets: els.npCover, opacity: [0, 1], scale: [0.82, 1], duration: _A.d(380), easing: 'easeOutBack' });
+        anime({ targets: [els.npTitle, els.npArtist], opacity: [0, 1], translateX: [12, 0], delay: anime.stagger(_A.d(50), { start: 60 }), duration: _A.d(300), easing: 'easeOutCubic' });
+    }
 
     // Title link to album
     if (track.album && track.album.id) {
@@ -2302,6 +2474,10 @@ function updatePlayerUI(track) {
     }
 
     els.npCover.src = track.album ? track.album.cover_small : '';
+
+    // MPRIS : notifier le changement de piste
+    mprisUpdateTrack(track);
+    startMprisPositionTick();
 }
 
 // updateProgress is now handled by syncPlayerState
@@ -2357,11 +2533,12 @@ function highlightCurrentTrack() {
 
 function showQueueSelector() {
     if (els.queueMenu.classList.contains('show')) {
-        els.queueMenu.classList.remove('show');
+        _hideMenu(els.queueMenu, () => els.queueMenu.classList.remove('show'));
         return;
     }
     renderQueue();
     els.queueMenu.classList.add('show');
+    _showMenu(els.queueMenu);
 }
 
 function renderQueue() {
@@ -2485,6 +2662,7 @@ function renderSearchPage(bestArtist, tracks, albums) {
         `;
         div.addEventListener('click', () => loadArtist(bestArtist.id));
         els.bestResultCard.appendChild(div);
+        _A.slideScale('#best-result-card', { duration: 320 });
     }
 
     // Tracks
@@ -2532,6 +2710,7 @@ function renderSearchPage(bestArtist, tracks, albums) {
         div.addEventListener('click', () => playTrack(t, tracks));
         els.searchTracksList.appendChild(div);
     });
+    _A.stagger('#search-tracks-list .track-item', { duration: 300, staggerDelay: 40, y: 10 });
 
     // Albums
     els.searchAlbumsGrid.innerHTML = '';
@@ -2546,6 +2725,390 @@ function renderSearchPage(bestArtist, tracks, albums) {
         div.addEventListener('click', () => openDetailView('album', album.id));
         els.searchAlbumsGrid.appendChild(div);
     });
+    _A.stagger('#search-albums-grid .album-card', { duration: 320, staggerDelay: 45 });
 }
+
+// ── MPRIS2 Integration (Electron + D-Bus) ─────────────────────────────────────
+let _mprisPositionTimer = null;
+
+function mprisUpdateTrack(track) {
+    if (!hasMpris) return;
+    const loopMap = { off: 'None', track: 'Track', context: 'Playlist' };
+    window.electronAPI.updateMpris({
+        playbackStatus: isPlaying ? 'Playing' : 'Paused',
+        shuffle: isShuffle,
+        loopStatus: loopMap[repeatMode] || 'None',
+        volume,
+        position: currentProgressMs,
+        metadata: track ? {
+            id:         String(track.spotify_id || track.id || '0'),
+            title:      track.title || 'Unknown',
+            artist:     track.artist ? track.artist.name : 'Unknown',
+            album:      track.album  ? (track.album.title || track.album.name || '') : '',
+            artUrl:     track.album  ? (track.album.cover_medium || track.album.cover_small || track.album.images?.[0]?.url || '') : '',
+            duration:   track.duration || 0,
+            spotifyUrl: track.spotify_uri ? `https://open.spotify.com/track/${track.spotify_id || track.id}` : '',
+        } : null,
+    });
+}
+
+function mprisUpdatePlayback() {
+    if (!hasMpris) return;
+    const loopMap = { off: 'None', track: 'Track', context: 'Playlist' };
+    window.electronAPI.updateMpris({
+        playbackStatus: isPlaying ? 'Playing' : 'Paused',
+        shuffle: isShuffle,
+        loopStatus: loopMap[repeatMode] || 'None',
+        volume,
+        position: currentProgressMs,
+    });
+}
+
+// Met à jour la position MPRIS toutes les 5s pendant la lecture
+function startMprisPositionTick() {
+    if (!hasMpris) return;
+    stopMprisPositionTick();
+    _mprisPositionTimer = setInterval(() => {
+        if (isPlaying) window.electronAPI.updateMpris({ position: currentProgressMs });
+    }, 5000);
+}
+function stopMprisPositionTick() {
+    if (_mprisPositionTimer) { clearInterval(_mprisPositionTimer); _mprisPositionTimer = null; }
+}
+
+function initMpris() {
+    if (!hasMpris) return;
+
+    window.electronAPI.onMprisCommand(({ cmd, ...data }) => {
+        switch (cmd) {
+            case 'play':
+            case 'pause':
+            case 'playpause':
+                togglePlay();
+                break;
+            case 'stop':
+                if (spotifyPlayer) spotifyPlayer.pause();
+                else spotifyFetch('/me/player/pause', 'PUT').then(() => { isPlaying = false; mprisUpdatePlayback(); updatePlayIcon(); });
+                break;
+            case 'next':
+                if (spotifyPlayer) spotifyPlayer.nextTrack();
+                else spotifyFetch('/me/player/next', 'POST').then(() => setTimeout(fetchSpotifyState, 500));
+                break;
+            case 'previous':
+                if (spotifyPlayer) spotifyPlayer.previousTrack();
+                else spotifyFetch('/me/player/previous', 'POST').then(() => setTimeout(fetchSpotifyState, 500));
+                break;
+            case 'seek': {
+                // offset en µs (peut être négatif pour rewind)
+                const newPosMs = Math.max(0, currentProgressMs + Math.round((data.offset || 0) / 1000));
+                currentProgressMs = newPosMs;
+                updateProgressBarUI(newPosMs, currentDurationMs);
+                if (spotifyPlayer) spotifyPlayer.seek(newPosMs);
+                else spotifyFetch(`/me/player/seek?position_ms=${newPosMs}`, 'PUT');
+                break;
+            }
+            case 'position': {
+                // position absolue en µs
+                const posMs = Math.max(0, Math.round((data.position || 0) / 1000));
+                currentProgressMs = posMs;
+                updateProgressBarUI(posMs, currentDurationMs);
+                if (spotifyPlayer) spotifyPlayer.seek(posMs);
+                else spotifyFetch(`/me/player/seek?position_ms=${posMs}`, 'PUT');
+                break;
+            }
+            case 'shuffle':
+                if (data.shuffle !== isShuffle) toggleShuffle();
+                break;
+            case 'loopStatus': {
+                const loopToRepeat = { None: 'off', Track: 'track', Playlist: 'context' };
+                const next = loopToRepeat[data.loopStatus];
+                if (next && next !== repeatMode) {
+                    spotifyFetch(`/me/player/repeat?state=${next}`, 'PUT').then(() => {
+                        repeatMode = next;
+                        updateShuffleRepeatUI();
+                        persistPlayerState();
+                        mprisUpdatePlayback();
+                    });
+                }
+                break;
+            }
+            case 'volume':
+                if (data.volume !== undefined) setSpotifyVolume(data.volume);
+                break;
+        }
+    });
+
+    console.log('[MPRIS] Renderer connecté au service D-Bus');
+}
+
+// ── Settings ──────────────────────────────────────────────────────────────────
+const SETTINGS_DEFAULT = {
+    streamQuality: 'auto',
+    normalizeVolume: false,
+    crossfade: 0,
+    autoplay: true,
+    defaultShuffle: false,
+    downloadQuality: 'high',
+    animatedBg: true,
+    showGenres: true,
+    profilePhotoOverride: null
+};
+
+let appSettings = { ...SETTINGS_DEFAULT };
+
+function loadAppSettings() {
+    try {
+        const saved = localStorage.getItem('appSettings');
+        if (saved) appSettings = { ...SETTINGS_DEFAULT, ...JSON.parse(saved) };
+    } catch (_) {}
+}
+
+function saveAppSettings() {
+    localStorage.setItem('appSettings', JSON.stringify(appSettings));
+}
+
+function applyAppSettings() {
+    // Photo de profil personnalisée
+    if (appSettings.profilePhotoOverride) {
+        if (els.userAvatarBtn) els.userAvatarBtn.src = appSettings.profilePhotoOverride;
+        if (els.userDropdownAvatar) els.userDropdownAvatar.src = appSettings.profilePhotoOverride;
+    }
+    // Fond animé
+    const bgCarousel = document.getElementById('bg-carousel');
+    if (bgCarousel) bgCarousel.style.display = appSettings.animatedBg ? '' : 'none';
+    // Genres (appliqué au prochain loadHome)
+}
+
+function openSettingsPanel() {
+    const overlay = document.getElementById('settings-overlay');
+    if (!overlay) return;
+    overlay.style.display = 'flex';
+    const panel = overlay.querySelector('.settings-panel');
+    if (panel) {
+        anime.remove(panel); anime.remove(overlay);
+        anime({ targets: overlay, opacity: [0, 1], duration: _A.d(250), easing: 'linear' });
+        anime({ targets: panel, opacity: [0, 1], scale: [0.95, 1], translateY: [-18, 0], duration: _A.d(360), easing: 'easeOutBack' });
+    }
+    els.userDropdown.classList.remove('open');
+
+    // Photo
+    const avatarEl = document.getElementById('settings-avatar');
+    if (avatarEl) avatarEl.src = appSettings.profilePhotoOverride || els.userAvatarBtn.src;
+
+    // Nom
+    const nameEl = document.getElementById('settings-display-name');
+    if (nameEl) nameEl.textContent = els.userDropdownName.textContent || '—';
+
+    // Valeurs des contrôles
+    _setVal('settings-stream-quality', appSettings.streamQuality);
+    _setChecked('settings-normalize', appSettings.normalizeVolume);
+    _setVal('settings-crossfade', appSettings.crossfade);
+    const cfVal = document.getElementById('settings-crossfade-val');
+    if (cfVal) cfVal.textContent = `${appSettings.crossfade} s`;
+    _setChecked('settings-autoplay', appSettings.autoplay);
+    _setChecked('settings-default-shuffle', appSettings.defaultShuffle);
+    _setVal('settings-download-quality', appSettings.downloadQuality);
+    _setChecked('settings-animated-bg', appSettings.animatedBg);
+    _setChecked('settings-show-genres', appSettings.showGenres);
+
+    // Aller sur l'onglet Profil
+    document.querySelectorAll('.settings-nav-item').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+    const firstBtn = document.querySelector('.settings-nav-item[data-section="profile"]');
+    const firstSection = document.getElementById('section-profile');
+    if (firstBtn) firstBtn.classList.add('active');
+    if (firstSection) firstSection.classList.add('active');
+
+    // Données Spotify
+    spotifyFetch('/me').then(p => {
+        if (!p || p.error) return;
+        const emailEl = document.getElementById('settings-email');
+        const planEl = document.getElementById('settings-plan');
+        const countryEl = document.getElementById('settings-country');
+        if (emailEl) emailEl.textContent = p.email || '—';
+        if (planEl) planEl.textContent = p.product === 'premium' ? '✓ Premium' : 'Gratuit';
+        if (countryEl) countryEl.textContent = p.country || '—';
+    }).catch(() => {});
+}
+
+function closeSettingsPanel() {
+    const overlay = document.getElementById('settings-overlay');
+    if (!overlay || overlay.style.display === 'none') return;
+    const panel = overlay.querySelector('.settings-panel');
+    anime.remove(overlay); anime.remove(panel);
+    anime({ targets: overlay, opacity: [1, 0], duration: _A.d(220), easing: 'easeInQuad', complete: () => { overlay.style.display = 'none'; } });
+    if (panel) anime({ targets: panel, opacity: [1, 0], scale: [1, 0.95], translateY: [0, -12], duration: _A.d(200), easing: 'easeInQuad' });
+}
+
+function _setVal(id, val) { const el = document.getElementById(id); if (el) el.value = val; }
+function _setChecked(id, val) { const el = document.getElementById(id); if (el) el.checked = !!val; }
+
+function initSettings() {
+    loadAppSettings();
+    applyAppSettings();
+
+    // Bouton Settings dans le dropdown
+    const settingsBtn = document.getElementById('settings-btn');
+    if (settingsBtn) settingsBtn.addEventListener('click', openSettingsPanel);
+
+    const overlay = document.getElementById('settings-overlay');
+    if (!overlay) return;
+
+    // Fermer
+    document.getElementById('settings-close-btn').addEventListener('click', closeSettingsPanel);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeSettingsPanel(); });
+
+    // Navigation entre sections
+    document.querySelectorAll('.settings-nav-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.settings-nav-item').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+            btn.classList.add('active');
+            const sec = document.getElementById(`section-${btn.dataset.section}`);
+            if (sec) sec.classList.add('active');
+        });
+    });
+
+    // ── Profil : photo ────────────────────────────────────────────────────────
+    const avatarInput = document.getElementById('settings-avatar-input');
+    const triggerUpload = () => avatarInput && avatarInput.click();
+    document.getElementById('settings-avatar-overlay').addEventListener('click', triggerUpload);
+    document.getElementById('settings-upload-photo').addEventListener('click', triggerUpload);
+
+    avatarInput.addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+            const dataUrl = ev.target.result;
+            appSettings.profilePhotoOverride = dataUrl;
+            saveAppSettings();
+            document.getElementById('settings-avatar').src = dataUrl;
+            if (els.userAvatarBtn) els.userAvatarBtn.src = dataUrl;
+            if (els.userDropdownAvatar) els.userDropdownAvatar.src = dataUrl;
+        };
+        reader.readAsDataURL(file);
+        avatarInput.value = ''; // reset pour pouvoir ré-importer le même fichier
+    });
+
+    document.getElementById('settings-reset-photo').addEventListener('click', () => {
+        appSettings.profilePhotoOverride = null;
+        saveAppSettings();
+        spotifyFetch('/me').then(p => {
+            const img = p?.images?.[0]?.url;
+            if (img) {
+                document.getElementById('settings-avatar').src = img;
+                if (els.userAvatarBtn) els.userAvatarBtn.src = img;
+                if (els.userDropdownAvatar) els.userDropdownAvatar.src = img;
+            }
+        }).catch(() => {});
+    });
+
+    // ── Audio ─────────────────────────────────────────────────────────────────
+    document.getElementById('settings-stream-quality').addEventListener('change', e => {
+        appSettings.streamQuality = e.target.value;
+        saveAppSettings();
+    });
+
+    document.getElementById('settings-normalize').addEventListener('change', e => {
+        appSettings.normalizeVolume = e.target.checked;
+        saveAppSettings();
+    });
+
+    document.getElementById('settings-crossfade').addEventListener('input', e => {
+        appSettings.crossfade = parseInt(e.target.value);
+        const cfVal = document.getElementById('settings-crossfade-val');
+        if (cfVal) cfVal.textContent = `${appSettings.crossfade} s`;
+        saveAppSettings();
+    });
+
+    // ── Lecture ───────────────────────────────────────────────────────────────
+    document.getElementById('settings-autoplay').addEventListener('change', e => {
+        appSettings.autoplay = e.target.checked;
+        saveAppSettings();
+    });
+
+    document.getElementById('settings-default-shuffle').addEventListener('change', e => {
+        appSettings.defaultShuffle = e.target.checked;
+        saveAppSettings();
+    });
+
+    document.getElementById('settings-download-quality').addEventListener('change', e => {
+        appSettings.downloadQuality = e.target.value;
+        saveAppSettings();
+    });
+
+    // ── Affichage ─────────────────────────────────────────────────────────────
+    document.getElementById('settings-animated-bg').addEventListener('change', e => {
+        appSettings.animatedBg = e.target.checked;
+        saveAppSettings();
+        const bgCarousel = document.getElementById('bg-carousel');
+        if (bgCarousel) bgCarousel.style.display = e.target.checked ? '' : 'none';
+    });
+
+    document.getElementById('settings-show-genres').addEventListener('change', e => {
+        appSettings.showGenres = e.target.checked;
+        saveAppSettings();
+        const genreSection = document.getElementById('home-genres-section');
+        if (genreSection) genreSection.style.display = e.target.checked ? 'block' : 'none';
+    });
+
+    // ── Compte ────────────────────────────────────────────────────────────────
+    document.getElementById('settings-reset-all').addEventListener('click', () => {
+        if (!confirm('Réinitialiser tous les paramètres ?')) return;
+        appSettings = { ...SETTINGS_DEFAULT };
+        saveAppSettings();
+        applyAppSettings();
+        openSettingsPanel();
+    });
+
+    document.getElementById('settings-logout-btn').addEventListener('click', () => {
+        localStorage.removeItem('spotify_access_token');
+        localStorage.removeItem('spotify_refresh_token');
+        window.location.href = 'login.html';
+    });
+}
+
+// ── Anime.js — utilitaires d'animation ────────────────────────────────────────
+const _A = {
+    d: (ms) => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : ms,
+
+    fadeIn(targets, { duration = 300, y = 16, delay = 0 } = {}) {
+        anime.remove(targets);
+        return anime({ targets, opacity: [0, 1], translateY: [y, 0], duration: _A.d(duration), delay, easing: 'easeOutCubic' });
+    },
+
+    popIn(targets, { duration = 320 } = {}) {
+        anime.remove(targets);
+        return anime({ targets, opacity: [0, 1], scale: [0.93, 1], translateY: [-12, 0], duration: _A.d(duration), easing: 'easeOutBack' });
+    },
+
+    fadeOut(targets, { duration = 160, cb } = {}) {
+        anime.remove(targets);
+        return anime({ targets, opacity: [1, 0], translateY: [0, -8], duration: _A.d(duration), easing: 'easeInQuad', complete: () => { if (cb) cb(); } });
+    },
+
+    stagger(targets, { duration = 340, staggerDelay = 45, y = 18 } = {}) {
+        const els = typeof targets === 'string' ? document.querySelectorAll(targets) : targets;
+        if (!els || !els.length) return;
+        anime.remove(els);
+        return anime({ targets: els, opacity: [0, 1], translateY: [y, 0], duration: _A.d(duration), delay: anime.stagger(_A.d(staggerDelay), { start: 20 }), easing: 'easeOutCubic' });
+    },
+
+    pulse(targets, { scale = 1.45, duration = 420 } = {}) {
+        anime.remove(targets);
+        return anime({ targets, scale: [1, scale, 1], duration: _A.d(duration), easing: 'easeInOutElastic(1, .6)' });
+    },
+
+    pop(targets) {
+        anime.remove(targets);
+        return anime({ targets, scale: [1, 0.87, 1.07, 1], duration: _A.d(260), easing: 'easeOutElastic(1, .8)' });
+    },
+
+    slideScale(targets, { duration = 280 } = {}) {
+        anime.remove(targets);
+        return anime({ targets, opacity: [0, 1], scale: [0.95, 1], duration: _A.d(duration), easing: 'easeOutCubic' });
+    }
+};
 
 init();

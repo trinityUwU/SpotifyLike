@@ -43,6 +43,10 @@
                         <span class="user-dropdown-name" id="user-dropdown-name">Profil</span>
                     </div>
                     <hr class="user-dropdown-sep">
+                    <button class="user-dropdown-item" id="settings-btn">
+                        <i class="fa-solid fa-gear"></i> Paramètres
+                    </button>
+                    <hr class="user-dropdown-sep">
                     <button class="user-dropdown-item" id="logout-btn">
                         <i class="fa-solid fa-right-from-bracket"></i> Se déconnecter
                     </button>
@@ -348,6 +352,199 @@
         </div>
     </div>
 
+    <!-- Settings Overlay -->
+    <div id="settings-overlay" class="settings-overlay" style="display:none">
+        <div class="settings-panel">
+            <div class="settings-header">
+                <h2><i class="fa-solid fa-gear"></i> Paramètres</h2>
+                <button id="settings-close-btn" class="settings-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="settings-layout">
+
+                <nav class="settings-nav">
+                    <button class="settings-nav-item active" data-section="profile"><i class="fa-solid fa-user"></i> Profil</button>
+                    <button class="settings-nav-item" data-section="audio"><i class="fa-solid fa-music"></i> Qualité audio</button>
+                    <button class="settings-nav-item" data-section="playback"><i class="fa-solid fa-circle-play"></i> Lecture</button>
+                    <button class="settings-nav-item" data-section="display"><i class="fa-solid fa-display"></i> Affichage</button>
+                    <button class="settings-nav-item" data-section="account"><i class="fa-brands fa-spotify"></i> Compte</button>
+                </nav>
+
+                <div class="settings-content custom-scrollbar">
+
+                    <!-- ── Profil ── -->
+                    <div class="settings-section active" id="section-profile">
+                        <h3 class="settings-section-title">Profil</h3>
+
+                        <div class="settings-avatar-block">
+                            <div class="settings-avatar-wrapper">
+                                <img id="settings-avatar" src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="settings-avatar-img">
+                                <div class="settings-avatar-overlay" id="settings-avatar-overlay">
+                                    <i class="fa-solid fa-camera"></i>
+                                    <span>Modifier</span>
+                                </div>
+                            </div>
+                            <input type="file" id="settings-avatar-input" accept="image/*" style="display:none">
+                            <div class="settings-avatar-btns">
+                                <button class="btn-settings" id="settings-upload-photo"><i class="fa-solid fa-upload"></i> Importer une photo</button>
+                                <button class="btn-settings btn-settings-ghost" id="settings-reset-photo"><i class="fa-solid fa-rotate-left"></i> Photo Spotify</button>
+                            </div>
+                        </div>
+
+                        <div class="settings-field">
+                            <span class="settings-field-label">Nom d'affichage</span>
+                            <span class="settings-field-value" id="settings-display-name">—</span>
+                            <span class="settings-field-hint">Modifiable sur spotify.com</span>
+                        </div>
+                        <div class="settings-field">
+                            <span class="settings-field-label">Email</span>
+                            <span class="settings-field-value" id="settings-email">—</span>
+                        </div>
+                        <div class="settings-field">
+                            <span class="settings-field-label">Abonnement</span>
+                            <span class="settings-field-value" id="settings-plan">—</span>
+                        </div>
+                        <div class="settings-field">
+                            <span class="settings-field-label">Pays</span>
+                            <span class="settings-field-value" id="settings-country">—</span>
+                        </div>
+                    </div>
+
+                    <!-- ── Qualité audio ── -->
+                    <div class="settings-section" id="section-audio">
+                        <h3 class="settings-section-title">Qualité audio</h3>
+
+                        <div class="settings-field">
+                            <span class="settings-field-label">Qualité de streaming</span>
+                            <select class="settings-select" id="settings-stream-quality">
+                                <option value="auto">Automatique</option>
+                                <option value="low">Basse · 24 kbps</option>
+                                <option value="normal">Normale · 96 kbps</option>
+                                <option value="high">Haute · 160 kbps</option>
+                                <option value="very_high">Très haute · 320 kbps</option>
+                            </select>
+                            <span class="settings-field-hint">Avec un compte Premium, la qualité est toujours au maximum disponible.</span>
+                        </div>
+
+                        <div class="settings-field">
+                            <div class="settings-toggle-row">
+                                <div>
+                                    <span class="settings-field-label">Normalisation du volume</span>
+                                    <p class="settings-field-hint">Équilibre le volume entre les titres</p>
+                                </div>
+                                <label class="settings-toggle">
+                                    <input type="checkbox" id="settings-normalize">
+                                    <span class="settings-toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-field">
+                            <span class="settings-field-label">Fondu enchaîné</span>
+                            <div class="settings-range-row">
+                                <input type="range" class="settings-range" id="settings-crossfade" min="0" max="12" step="1" value="0">
+                                <span class="settings-range-val" id="settings-crossfade-val">0 s</span>
+                            </div>
+                            <span class="settings-field-hint">Transition douce entre les titres</span>
+                        </div>
+                    </div>
+
+                    <!-- ── Lecture ── -->
+                    <div class="settings-section" id="section-playback">
+                        <h3 class="settings-section-title">Lecture</h3>
+
+                        <div class="settings-field">
+                            <div class="settings-toggle-row">
+                                <div>
+                                    <span class="settings-field-label">Lecture automatique</span>
+                                    <p class="settings-field-hint">Continue avec des titres similaires en fin de playlist</p>
+                                </div>
+                                <label class="settings-toggle">
+                                    <input type="checkbox" id="settings-autoplay" checked>
+                                    <span class="settings-toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-field">
+                            <div class="settings-toggle-row">
+                                <div>
+                                    <span class="settings-field-label">Shuffle par défaut</span>
+                                    <p class="settings-field-hint">Active la lecture aléatoire automatiquement</p>
+                                </div>
+                                <label class="settings-toggle">
+                                    <input type="checkbox" id="settings-default-shuffle">
+                                    <span class="settings-toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-field">
+                            <span class="settings-field-label">Qualité de téléchargement</span>
+                            <select class="settings-select" id="settings-download-quality">
+                                <option value="normal">Normale · 96 kbps</option>
+                                <option value="high" selected>Haute · 160 kbps</option>
+                                <option value="very_high">Très haute · 320 kbps</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- ── Affichage ── -->
+                    <div class="settings-section" id="section-display">
+                        <h3 class="settings-section-title">Affichage</h3>
+
+                        <div class="settings-field">
+                            <div class="settings-toggle-row">
+                                <div>
+                                    <span class="settings-field-label">Fond animé</span>
+                                    <p class="settings-field-hint">Fond dynamique basé sur la pochette de l'album en cours</p>
+                                </div>
+                                <label class="settings-toggle">
+                                    <input type="checkbox" id="settings-animated-bg" checked>
+                                    <span class="settings-toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-field">
+                            <div class="settings-toggle-row">
+                                <div>
+                                    <span class="settings-field-label">Afficher les styles musicaux</span>
+                                    <p class="settings-field-hint">Section genres sur la page d'accueil</p>
+                                </div>
+                                <label class="settings-toggle">
+                                    <input type="checkbox" id="settings-show-genres" checked>
+                                    <span class="settings-toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── Compte ── -->
+                    <div class="settings-section" id="section-account">
+                        <h3 class="settings-section-title">Compte Spotify</h3>
+
+                        <div class="settings-field">
+                            <span class="settings-field-label">Appareils connectés</span>
+                            <p class="settings-field-hint">Gérez vos appareils Spotify via le bouton <i class="fa-solid fa-laptop-code"></i> dans le lecteur.</p>
+                        </div>
+
+                        <div class="settings-field">
+                            <span class="settings-field-label">Réinitialiser les paramètres</span>
+                            <p class="settings-field-hint">Remet tous les paramètres à leurs valeurs par défaut.</p>
+                            <button class="btn-settings btn-settings-danger" id="settings-reset-all"><i class="fa-solid fa-rotate-left"></i> Réinitialiser</button>
+                        </div>
+
+                        <div class="settings-field" style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08)">
+                            <button class="btn-settings btn-settings-danger" id="settings-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Se déconnecter</button>
+                        </div>
+                    </div>
+
+                </div><!-- /settings-content -->
+            </div><!-- /settings-layout -->
+        </div><!-- /settings-panel -->
+    </div><!-- /settings-overlay -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
     <script src="js/app.js"></script>
 </body>
 
