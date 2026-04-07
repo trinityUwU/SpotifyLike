@@ -16,7 +16,7 @@ function createApp({ config }) {
   app.use(express.json());
 
   const db = createJsonDb({ dbFilePath: config.paths.dbFile });
-  const converter = createDeezerToSpotifyConverter();
+  const converter = createDeezerToSpotifyConverter({ db });
 
   app.use('/', createSpotifyAuthRouter({ spotify: config.spotify }));
   app.use('/api/local', createLocalRouter({ db }));

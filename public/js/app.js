@@ -228,10 +228,16 @@ function updateProgressBarUI(position, duration) {
     els.totalTime.innerText = `${totMin}:${totSec < 10 ? '0' : ''}${totSec}`;
 }
 
+// ID de la piste lors du dernier poll – sert à décider si la queue doit être re-fetchée
+let _lastPolledTrackId = null;
+
 async function fetchSpotifyState() {
     try {
         const state = await spotifyFetch('/me/player');
         if (state && state.item) {
+            const trackChanged = state.item.id !== _lastPolledTrackId;
+            _lastPolledTrackId = state.item.id;
+
             isPlaying = state.is_playing;
             currentProgressMs = state.progress_ms;
             currentDurationMs = state.item.duration_ms;
@@ -253,33 +259,32 @@ async function fetchSpotifyState() {
 
             // Persist the state we just fetched from global Spotify
             persistPlayerState();
-        }
 
-        // Also fetch the queue to sync with global state
-        const queueRes = await spotifyFetch('/me/player/queue');
-        if (queueRes && queueRes.queue) {
-            // Update local queue with global Spotify queue
-            // We map Spotify objects to our format (simplified)
-            const globalQueue = queueRes.queue.map(t => ({
-                id: t.id,
-                title: t.name,
-                artist: { name: t.artists[0].name },
-                album: {
-                    title: t.album.name,
-                    images: t.album.images,
-                    cover_small: t.album.images[t.album.images.length - 1].url
-                },
-                spotify_id: t.id,
-                duration: Math.floor(t.duration_ms / 1000)
-            }));
+            // Sync la queue uniquement si la piste a changé (économise 1 appel Spotify sur 2)
+            if (trackChanged) {
+                const queueRes = await spotifyFetch('/me/player/queue');
+                if (queueRes && queueRes.queue) {
+                    const globalQueue = queueRes.queue.map(t => ({
+                        id: t.id,
+                        title: t.name,
+                        artist: { name: t.artists[0].name },
+                        album: {
+                            title: t.album.name,
+                            images: t.album.images,
+                            cover_small: t.album.images[t.album.images.length - 1].url
+                        },
+                        spotify_id: t.id,
+                        duration: Math.floor(t.duration_ms / 1000)
+                    }));
 
-            // If the queue changed significantly, update it
-            if (JSON.stringify(globalQueue) !== JSON.stringify(playbackQueue)) {
-                playbackQueue = globalQueue;
-                if (els.queueMenu.classList.contains('show')) {
-                    renderQueue();
+                    if (JSON.stringify(globalQueue) !== JSON.stringify(playbackQueue)) {
+                        playbackQueue = globalQueue;
+                        if (els.queueMenu.classList.contains('show')) {
+                            renderQueue();
+                        }
+                        persistPlayerState();
+                    }
                 }
-                persistPlayerState();
             }
         }
     } catch (e) {
@@ -782,8 +787,9 @@ async function init() {
     // Sync with global Spotify state
     setTimeout(fetchSpotifyState, 1500);
 
-    // Start periodic polling for global sync (every 5 seconds)
-    setInterval(fetchSpotifyState, 5000);
+    // Start periodic polling for global sync (every 30 seconds – the progress bar
+    // is handled locally by startProgressTicker, so no need to poll Spotify more often)
+    setInterval(fetchSpotifyState, 30_000);
 
     // Fetch Liked Tracks
     try {

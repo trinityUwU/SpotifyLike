@@ -1,18 +1,51 @@
 const axios = require('axios');
 
-function createDeezerToSpotifyConverter() {
+/**
+ * @param {object} options
+ * @param {object} [options.db] - instance dbJson (optionnel) pour persister le cache entre redémarrages
+ */
+function createDeezerToSpotifyConverter({ db } = {}) {
+  // Cache mémoire : deezerId (string) -> spotifyUri (string | null)
   const trackCache = new Map();
 
+  // Pré-charger le cache depuis la DB si disponible
+  if (db) {
+    try {
+      const data = db.load();
+      const stored = data.conversionCache || {};
+      for (const [id, uri] of Object.entries(stored)) {
+        trackCache.set(id, uri);
+      }
+      console.log(`[ConversionCache] ${trackCache.size} entrées chargées depuis la DB`);
+    } catch (e) {
+      console.warn('[ConversionCache] Impossible de charger depuis la DB:', e.message);
+    }
+  }
+
+  function persistToDb(deezerId, spotifyUri) {
+    if (!db) return;
+    try {
+      const data = db.load();
+      if (!data.conversionCache) data.conversionCache = {};
+      data.conversionCache[deezerId] = spotifyUri;
+      db.save(data); // écriture différée (flush périodique dans dbJson)
+    } catch (e) {
+      console.warn('[ConversionCache] Impossible de persister:', e.message);
+    }
+  }
+
   async function convert({ deezerId, spotifyToken }) {
-    if (trackCache.has(deezerId)) {
-      console.log(`[Cache Hit] ${deezerId} -> ${trackCache.get(deezerId)}`);
-      return { spotifyUri: trackCache.get(deezerId) };
+    const key = String(deezerId);
+
+    if (trackCache.has(key)) {
+      console.log(`[Cache Hit] ${key} -> ${trackCache.get(key)}`);
+      return { spotifyUri: trackCache.get(key) };
     }
 
     let spotifyUri = null;
 
     try {
-      const deezerRes = await axios.get(`https://api.deezer.com/track/${deezerId}`);
+      const deezerRes = await axios.get(`https://api.deezer.com/track/${key}`);
       const track = deezerRes.data;
 
       if (track.error) {
@@ -21,20 +54,20 @@ function createDeezerToSpotifyConverter() {
         throw error;
       }
 
-      const isrc = track.isrc;
-      const title = track.title;
+      const { isrc, title, duration } = track;
       const artist = track.artist.name;
-      const duration = track.duration;
 
+      // Tentative 1 : recherche par ISRC (précis, 1 seul appel Spotify)
       if (isrc) {
         try {
-          const spotifyIsrcRes = await axios.get(`https://api.spotify.com/v1/search`, {
+          const spotifyIsrcRes = await axios.get('https://api.spotify.com/v1/search', {
             params: { q: `isrc:${isrc}`, type: 'track', limit: 1 },
             headers: { Authorization: `Bearer ${spotifyToken}` },
           });
 
-          if (spotifyIsrcRes.data.tracks && spotifyIsrcRes.data.tracks.items.length > 0) {
-            spotifyUri = spotifyIsrcRes.data.tracks.items[0].uri;
+          const items = spotifyIsrcRes.data.tracks?.items;
+          if (items && items.length > 0) {
+            spotifyUri = items[0].uri;
             console.log(`[ISRC Match] ${isrc} -> ${spotifyUri}`);
           }
         } catch (err) {
@@ -42,27 +75,27 @@ function createDeezerToSpotifyConverter() {
         }
       }
 
+      // Tentative 2 : recherche floue titre+artiste (seulement si ISRC a échoué)
       if (!spotifyUri) {
         console.log(`[Fallback Search] ${title} - ${artist}`);
         try {
-          const query = `track:${title} artist:${artist}`;
-          const spotifySearchRes = await axios.get(`https://api.spotify.com/v1/search`, {
-            params: { q: query, type: 'track', limit: 5 },
+          const spotifySearchRes = await axios.get('https://api.spotify.com/v1/search', {
+            params: { q: `track:${title} artist:${artist}`, type: 'track', limit: 5 },
             headers: { Authorization: `Bearer ${spotifyToken}` },
           });
 
-          if (spotifySearchRes.data.tracks && spotifySearchRes.data.tracks.items.length > 0) {
-            const items = spotifySearchRes.data.tracks.items;
+          const items = spotifySearchRes.data.tracks?.items;
+          if (items && items.length > 0) {
             items.sort((a, b) => {
               const durA = Math.abs(a.duration_ms / 1000 - duration);
               const durB = Math.abs(b.duration_ms / 1000 - duration);
               return durA - durB;
             });
 
-            const bestMatch = items[0];
-            if (Math.abs(bestMatch.duration_ms / 1000 - duration) < 10) {
-              spotifyUri = bestMatch.uri;
-              console.log(`[Fuzzy Match] Found: ${bestMatch.name} (${bestMatch.uri})`);
+            const best = items[0];
+            if (Math.abs(best.duration_ms / 1000 - duration) < 10) {
+              spotifyUri = best.uri;
+              console.log(`[Fuzzy Match] ${best.name} -> ${spotifyUri}`);
             }
           }
         } catch (err) {
@@ -70,10 +103,13 @@ function createDeezerToSpotifyConverter() {
         }
       }
 
-      trackCache.set(deezerId, spotifyUri);
+      trackCache.set(key, spotifyUri);
+      persistToDb(key, spotifyUri);
       return { spotifyUri };
     } catch (err) {
-      trackCache.set(deezerId, spotifyUri);
+      // Mettre en cache même les échecs pour éviter de re-interroger
+      trackCache.set(key, null);
+      persistToDb(key, null);
       throw err;
     }
   }
