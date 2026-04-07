@@ -1,6 +1,6 @@
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const { app, BrowserWindow, shell, session } = require('electron');
+const { app, BrowserWindow, shell, session, Menu } = require('electron');
 const { startServer } = require('../src/server');
 
 // ── Widevine / EME (requis par le Spotify Web Playback SDK) ──────────────────
@@ -52,6 +52,9 @@ function createWindow() {
     shell.openExternal(url);
   });
 }
+
+// Supprimer la barre de menu native (File, Edit, View, Window, Help)
+Menu.setApplicationMenu(null);
 
 app.whenReady().then(() => {
   startServer((server) => {

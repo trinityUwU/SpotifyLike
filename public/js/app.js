@@ -204,31 +204,25 @@ window.onSpotifyWebPlaybackSDKReady = () => {
     const token = localStorage.getItem('spotify_access_token');
     if (!token) return;
 
-    // ── Mode Electron : SDK non fonctionnel sans Widevine → Spotify Connect REST ──
-    if (isElectron) {
-        console.log('[Electron] Web Playback SDK désactivé (Widevine requis). Utilisation de Spotify Connect REST.');
-        findAvailableSpotifyDevice().then(deviceId => {
-            if (deviceId) {
-                spotifyDeviceId = deviceId;
-                console.log(`[Electron] Appareil Connect trouvé : ${deviceId}`);
-                // Transférer la lecture sur cet appareil et sync l'état
-                spotifyFetch('/me/player', 'PUT', { device_ids: [deviceId] });
-                setTimeout(fetchSpotifyState, 800);
-            } else {
-                console.warn('[Electron] Aucun appareil Spotify trouvé. Ouvrez Spotify sur votre téléphone ou PC.');
-            }
-        });
-        return; // Ne pas initialiser le SDK
-    }
-
-    // ── Mode Browser : SDK complet avec Widevine natif ──────────────────────────
+    // SDK initialisé dans tous les contextes (Browser ET Electron avec castlabs/Widevine)
     spotifyPlayer = new Spotify.Player({
         name: 'SpotifyLIKE Player',
         getOAuthToken: cb => { cb(token); },
         volume: 0.5
     });
 
-    spotifyPlayer.addListener('initialization_error', ({ message }) => { console.error('SDK Init Error:', message); });
+    spotifyPlayer.addListener('initialization_error', async ({ message }) => {
+        console.error('SDK Init Error:', message);
+        // Widevine absent (Electron sans castlabs) → fallback Spotify Connect
+        const deviceId = await findAvailableSpotifyDevice();
+        if (deviceId) {
+            spotifyDeviceId = deviceId;
+            console.warn('[Fallback] SDK indisponible, lecture via Spotify Connect →', deviceId);
+            setTimeout(fetchSpotifyState, 800);
+        } else {
+            console.error('[Fallback] Aucun appareil Spotify Connect trouvé. Lancez Spotify sur un appareil.');
+        }
+    });
     spotifyPlayer.addListener('authentication_error', async ({ message }) => {
         console.error('SDK Auth Error:', message);
         const t = await refreshSpotifyToken();
@@ -427,7 +421,7 @@ async function setSpotifyVolume(vol) {
     if (vol < 0) vol = 0;
     if (vol > 100) vol = 100;
 
-    if (spotifyPlayer && !isElectron) {
+    if (spotifyPlayer) {
         spotifyPlayer.setVolume(vol / 100);
     }
 
@@ -875,7 +869,7 @@ async function init() {
         const positionMs = Math.floor(duration * pct);
         currentProgressMs = positionMs;
         updateProgressBarUI(positionMs, duration);
-        if (spotifyPlayer && !isElectron) {
+        if (spotifyPlayer) {
             spotifyPlayer.seek(positionMs);
         } else {
             spotifyFetch(`/me/player/seek?position_ms=${positionMs}`, 'PUT');
@@ -1455,7 +1449,7 @@ async function fetchAllSpotifyPlaylists() {
 /** Récupère toutes les pistes d'une playlist Spotify (paginé) */
 async function fetchSpotifyPlaylistTracks(playlistId) {
     const tracks = [];
-    let endpoint = `/playlists/${playlistId}/tracks?limit=100&fields=items(track(id,name,uri,artists,album,duration_ms,type)),next`;
+    let endpoint = `/playlists/${playlistId}/tracks?limit=100`;
     while (endpoint) {
         const data = await spotifyFetch(endpoint);
         if (!data || !data.items) break;

@@ -23,6 +23,6 @@
     "spotify-uri": "^4.1.0"
   },
   "devDependencies": {
-    "electron": "npm:@castlabs/electron-releases@^34.0.0+wvvmp"
+    "electron": "npm:@castlabs/electron-releases@^34.0.0-wvvmp"
   }
 }
